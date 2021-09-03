@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start": "ts-node eth.ts"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "coinbase": "^2.0.8",
+    "ethereumjs-tx": "^2.1.2",
+    "ts-node": "^10.2.1",
+    "web3": "^1.5.2"
+  },
+  "devDependencies": {
+    "@types/coinbase": "^2.0.8"
+  }
+}
