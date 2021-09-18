@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "myapp",
-    "slug": "myapp",
+    "name": "Pebbit",
+    "slug": "pebbit",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./src/assets/images/icon.png",
+    "scheme": "pebbit",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,11 +17,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.magna-numeris.pebbit",
       "supportsTablet": true
     },
     "android": {
+      "package": "com.magna_numeris.pebbit",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     }

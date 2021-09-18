@@ -2,6 +2,7 @@ import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Text, TouchableOpacity, View } from "react-native";
 import { t } from "react-native-tailwindcss";
+import tw from "../tailwind";
 
 import { productCollection } from "../firebase";
 import ScreenLoading from "../components/ScreenLoading";
@@ -9,13 +10,13 @@ import { Product } from "../types";
 import ProductList from "../components/ProductList";
 import CategoryList from "../components/CategoryList";
 
-const HomeScreen = () => {
+const ListingScreen = () => {
   const [products, loading, error] =
     useCollectionData<Product>(productCollection);
   return (
     <ScreenLoading loading={loading} error={error}>
       {products && (
-        <View style={[t.itemsCenter, t.justifyCenter]}>
+        <View style={tw("items-center justify-center")}>
           <ProductList products={products}></ProductList>
           <ProductList products={products}></ProductList>
           <TouchableOpacity style={[t.mY2]} onPress={() => {}}>
@@ -32,7 +33,7 @@ const HomeScreen = () => {
               See all
             </Text>
           </TouchableOpacity>
-          <Text style={[t.text2xl, t.mT2, t.fontBold]}>
+          <Text style={tw("text-2xl mt-2 font-bold text-primary")}>
             Featured Categories
           </Text>
           <Text style={[t.mT2, t.textGrey, t.fontBold]}>
@@ -51,4 +52,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default ListingScreen;

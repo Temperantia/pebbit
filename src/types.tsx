@@ -31,6 +31,15 @@ export type Product = {
   name: string;
 };
 
+export type Order = {
+  id: string;
+  address: string;
+  product: string;
+  currency: string;
+  price: number;
+  status: string;
+};
+
 export type CreateProduct = {
   name: string;
 };

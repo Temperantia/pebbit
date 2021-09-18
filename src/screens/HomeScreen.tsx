@@ -9,15 +9,15 @@ import { Product } from "../types";
 import ProductList from "../components/ProductList";
 import CategoryList from "../components/CategoryList";
 
-const ListingScreen = () => {
+const HomeScreen = () => {
   const [products, loading, error] =
     useCollectionData<Product>(productCollection);
   return (
     <ScreenLoading loading={loading} error={error}>
       {products && (
         <View style={[t.itemsCenter, t.justifyCenter]}>
-          <ProductList products={products}></ProductList>
-          <ProductList products={products}></ProductList>
+          {/* <ProductList products={products}></ProductList>
+          <ProductList products={products}></ProductList> */}
           <TouchableOpacity style={[t.mY2]} onPress={() => {}}>
             <Text
               style={[
@@ -51,4 +51,4 @@ const ListingScreen = () => {
   );
 };
 
-export default ListingScreen;
+export default HomeScreen;

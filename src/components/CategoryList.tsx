@@ -3,15 +3,15 @@ import { FlatList } from "react-native";
 
 import CategoryCard from "./CategoryCard";
 
-const ProductList = ({ categories }: { categories: any }) => {
+const CategoryList = ({ categories }: { categories: any }) => {
   return (
     <FlatList
       data={categories}
       horizontal
       renderItem={({ item }) => <CategoryCard category={item}></CategoryCard>}
-      keyExtractor={({ id }) => id}
+      keyExtractor={({ name }) => name}
     ></FlatList>
   );
 };
 
-export default ProductList;
+export default CategoryList;
