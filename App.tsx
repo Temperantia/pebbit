@@ -6,6 +6,7 @@ import { RecoilRoot } from "recoil";
 
 import useCachedResources from "./src/hooks/useCachedResources";
 import Navigation from "./src/navigation";
+import { AuthProvider } from "./src/hooks/useAuth";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -33,8 +34,10 @@ export default function App() {
   } else {
     return (
       <RecoilRoot>
-        <Navigation />
-        <StatusBar />
+        <AuthProvider>
+          <Navigation />
+          <StatusBar />
+        </AuthProvider>
       </RecoilRoot>
     );
   }

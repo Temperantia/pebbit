@@ -8,6 +8,10 @@ export type RootStackParamList = {
   NotFound: undefined;
 };
 
+export type AuthStackParamList = {
+  SignIn: undefined;
+};
+
 export type BottomTabParamList = {
   Home: undefined;
   Listing: undefined;
@@ -28,8 +32,7 @@ export type CreateAdParamList = {
 
 export type Product = {
   id: string;
-  name: string;
-};
+} & CreateProduct;
 
 export type Order = {
   id: string;
@@ -38,6 +41,21 @@ export type Order = {
   currency: string;
   price: number;
   status: string;
+};
+
+export type User = {
+  id: string;
+  phone?: string;
+  address?: {
+    name: string;
+    street: string;
+    city: string;
+    country: string;
+  };
+} & CreateUser;
+
+export type CreateUser = {
+  email?: string;
 };
 
 export type CreateProduct = {

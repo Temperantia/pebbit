@@ -3,16 +3,17 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+import React from "react";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
 
-import NotFoundScreen from "../screens/NotFoundScreen";
-import { RootStackParamList } from "../types";
+import { AuthStackParamList, RootStackParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import tailwindConfig from "../../tailwind.config";
 import Header from "../components/Header";
+import AuthScreen from "../screens/AuthScreen";
+import useAuth from "../hooks/useAuth";
 
 const theme = {
   ...DefaultTheme,
@@ -22,19 +23,18 @@ const theme = {
   },
 };
 
-export default function Navigation() {
+export default () => {
+  const { user } = useAuth();
+
   return (
     <NavigationContainer theme={theme} linking={LinkingConfiguration}>
-      <RootNavigator />
+      {user ? <RootNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
-}
+};
 
-// A root stack navigator is often used for displaying modals on top of all other content
-// Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
-
-function RootNavigator() {
+const RootNavigator = () => {
   return (
     <Stack.Navigator mode="modal">
       <Stack.Screen
@@ -44,11 +44,21 @@ function RootNavigator() {
           header: () => <Header></Header>,
         }}
       />
-      <Stack.Screen
-        name="NotFound"
-        component={NotFoundScreen}
-        options={{ title: "Oops!" }}
-      />
     </Stack.Navigator>
   );
-}
+};
+
+const AuthStack = createStackNavigator<AuthStackParamList>();
+const AuthNavigator = () => {
+  return (
+    <AuthStack.Navigator mode="modal">
+      <AuthStack.Screen
+        name="SignIn"
+        component={AuthScreen}
+        options={{
+          header: () => <Header noMenu></Header>,
+        }}
+      />
+    </AuthStack.Navigator>
+  );
+};

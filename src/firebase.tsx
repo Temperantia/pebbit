@@ -3,7 +3,7 @@ import "firebase/auth";
 import "firebase/firestore";
 
 import credentials from "./firebase-credentials.json";
-import { CreateProduct, Order } from "./types";
+import { CreateProduct, CreateUser, Order } from "./types";
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(credentials);
@@ -23,4 +23,7 @@ export const productCollection = firestore
 export const orderCollection = firestore
   .collection("orders")
   .withConverter(converter<Order>());
+export const userCollection = firestore
+  .collection("users")
+  .withConverter(converter<CreateUser>());
 export default firebase;

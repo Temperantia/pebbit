@@ -26,21 +26,20 @@
     "firebase": "8.2.3",
     "react": "16.13.1",
     "react-firebase-hooks": "3.0.4",
-    "react-hook-form": "^7.12.1",
+    "react-hook-form": "^7.15.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-gesture-handler": "^1.10.3",
+    "react-native-global-props": "^1.1.5",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "^3.4.0",
-    "react-native-tailwindcss": "^1.1.11",
     "recoil": "^0.4.1",
-    "tailwind-react-native-classnames": "^1.4.1",
-    "tailwind-rn": "^3.0.1",
-    "tailwindcss": "^2.2.7"
+    "tailwind-rn": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "tailwindcss": "^2.2.16",
     "typescript": "~4.0.0"
   },
   "private": true

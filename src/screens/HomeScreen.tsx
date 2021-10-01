@@ -1,13 +1,13 @@
 import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Text, TouchableOpacity, View } from "react-native";
-import { t } from "react-native-tailwindcss";
 
 import { productCollection } from "../firebase";
 import ScreenLoading from "../components/ScreenLoading";
 import { Product } from "../types";
 import ProductList from "../components/ProductList";
 import CategoryList from "../components/CategoryList";
+import tw from "../tailwind";
 
 const HomeScreen = () => {
   const [products, loading, error] =
@@ -15,27 +15,16 @@ const HomeScreen = () => {
   return (
     <ScreenLoading loading={loading} error={error}>
       {products && (
-        <View style={[t.itemsCenter, t.justifyCenter]}>
+        <View style={tw("items-center justify-center")}>
           {/* <ProductList products={products}></ProductList>
           <ProductList products={products}></ProductList> */}
-          <TouchableOpacity style={[t.mY2]} onPress={() => {}}>
-            <Text
-              style={[
-                t.textBlack,
-                t.border2,
-                t.rounded,
-                t.pX8,
-                t.pY2,
-                t.fontBold,
-              ]}
-            >
+          <TouchableOpacity style={tw("my-2")} onPress={() => {}}>
+            <Text style={tw("text-black border-2 rounded px-8 py-2 font-bold")}>
               See all
             </Text>
           </TouchableOpacity>
-          <Text style={[t.text2xl, t.mT2, t.fontBold]}>
-            Featured Categories
-          </Text>
-          <Text style={[t.mT2, t.textGrey, t.fontBold]}>
+          <Text style={tw("text-2xl mt-2 font-bold")}>Featured Categories</Text>
+          <Text style={tw("mt-2 text-grey font-bold")}>
             Browse through our most popular categories
           </Text>
           <CategoryList

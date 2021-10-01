@@ -1,7 +1,6 @@
 import React from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { Text, TouchableOpacity, View } from "react-native";
-import { t } from "react-native-tailwindcss";
 import tw from "../tailwind";
 
 import { productCollection } from "../firebase";
@@ -19,24 +18,15 @@ const ListingScreen = () => {
         <View style={tw("items-center justify-center")}>
           <ProductList products={products}></ProductList>
           <ProductList products={products}></ProductList>
-          <TouchableOpacity style={[t.mY2]} onPress={() => {}}>
-            <Text
-              style={[
-                t.textBlack,
-                t.border2,
-                t.rounded,
-                t.pX8,
-                t.pY2,
-                t.fontBold,
-              ]}
-            >
+          <TouchableOpacity style={tw("my-2")} onPress={() => {}}>
+            <Text style={tw("text-black border-2 rounded px-8 py-2 font-bold")}>
               See all
             </Text>
           </TouchableOpacity>
           <Text style={tw("text-2xl mt-2 font-bold text-primary")}>
             Featured Categories
           </Text>
-          <Text style={[t.mT2, t.textGrey, t.fontBold]}>
+          <Text style={tw("mt-2 text-grey font-bold")}>
             Browse through our most popular categories
           </Text>
           <CategoryList

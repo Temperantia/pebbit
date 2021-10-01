@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { t } from "react-native-tailwindcss";
+
+import tw from "../tailwind";
 
 const CategoryCard = ({
   category: { name },
@@ -8,27 +9,22 @@ const CategoryCard = ({
   category: { name: string };
 }) => {
   return (
-    <View style={[t.w48, t.m4, t.shadowXl]}>
-      <View style={[t.relative]}>
+    <View style={tw("w-48 m-4")}>
+      <View style={tw("relative")}>
         <Image
-          style={[t.wFull, t.h48]}
+          style={tw("w-full h-48")}
           source={{
             uri: "https://i.pinimg.com/originals/ea/ed/80/eaed80673830c17837c7d8ec798b3da5.jpg",
           }}
         ></Image>
         <View
           style={[
-            t.absolute,
-            t.left0,
-            t.w40,
-            t.bgCard,
-            t.p2,
-            t.itemsCenter,
+            tw("absolute left-0 w-40 bg-card p-2 items-center"),
             { bottom: 20 },
           ]}
         >
-          <Text style={[t.textPrimary, t.fontBold]}>{name}</Text>
-          <Text style={[t.textGrey]}>89,343ads</Text>
+          <Text style={tw("text-primary font-bold")}>{name}</Text>
+          <Text style={tw("text-grey")}>89,343 ads</Text>
         </View>
       </View>
     </View>

@@ -1,12 +1,20 @@
 module.exports = {
   theme: {
     colors: {
-      white: "#fff",
-      black: "#4E4C54",
-      grey: "#C7C7C9",
-      primary: "#E7BA4E",
-      card: "#211F27",
-      text: "#7E7995",
+      white: "#ffffff",
+      "red-main": "#f03b32",
+      "red-gradient": "#d8302f",
+      "blue-main": "#0f9ef9",
+      "green-main": "#129a42",
+      "grey-slate": "#908aa0",
+      "black-background-1": "#323447",
+      "black-background-2": "#2c2f3e",
+      "gold-badge": "#ffd028",
+      "gold-badge-gradient": "#ffab0b",
+      "silver-badge": "#9fdde9",
+      "silver-badge-gradient": "#90addc",
+      "bronze-badge": "#d3906e",
+      "bronze-badge-gradient": "#e36a54",
     },
   },
 };
