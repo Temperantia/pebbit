@@ -11,8 +11,9 @@ import { SvgXml } from "react-native-svg";
 
 import HomeScreen from "../screens/HomeScreen";
 import CreateAdScreen from "../screens/CreateAdScreen";
-import { BottomTabParamList, CreateAdParamList, HomeParamList } from "../types";
+import { BottomTabParamList, HomeParamList, ListingParamList } from "../types";
 import ListingScreen from "../screens/ListingScreen";
+import AdScreen from "../screens/AdScreen";
 
 const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
@@ -48,7 +49,7 @@ export default function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Listing"
-        component={ListingScreen}
+        component={listingNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="windows/48/000000/list.png" color={color} />
@@ -101,12 +102,13 @@ function HomeNavigator() {
   );
 }
 
-const CreateAdStack = createStackNavigator<CreateAdParamList>();
+const ListingStack = createStackNavigator<ListingParamList>();
 
-function CreateAdNavigator() {
+function listingNavigator() {
   return (
-    <CreateAdStack.Navigator>
-      <CreateAdStack.Screen name="CreateAdScreen" component={CreateAdScreen} />
-    </CreateAdStack.Navigator>
+    <ListingStack.Navigator screenOptions={{ headerShown: false }}>
+      <ListingStack.Screen name="ListingScreen" component={ListingScreen} />
+      <ListingStack.Screen name="AdScreen" component={AdScreen} />
+    </ListingStack.Navigator>
   );
 }

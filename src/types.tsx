@@ -26,10 +26,7 @@ export type HomeParamList = {
 
 export type ListingParamList = {
   ListingScreen: undefined;
-};
-
-export type CreateAdParamList = {
-  CreateAdScreen: undefined;
+  AdScreen: { ad: Ad };
 };
 
 export type Order = {

@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+import "firebase/storage";
 import "firebase/firestore";
 
 import credentials from "./firebase-credentials.json";
@@ -16,6 +17,7 @@ const converter = <T,>() => ({
 });
 
 export const auth = firebase.auth();
+export const storage = firebase.storage();
 export const firestore = firebase.firestore();
 export const adCollection = firestore
   .collection("ads")

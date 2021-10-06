@@ -3,14 +3,28 @@ import { Text, TouchableOpacity } from "react-native";
 
 import tw from "../../tailwind";
 
-const Button = ({ title, onPress }: { title: string; onPress: () => void }) => {
+const Button = ({
+  black,
+  title,
+  onPress,
+}: {
+  black?: boolean;
+  title: string;
+  onPress: () => void;
+}) => {
   return (
     <TouchableOpacity
-      style={tw("bg-red-main w-full flex-row justify-center p-5 rounded")}
+      style={tw(
+        "w-full flex-row justify-center rounded" +
+          (black ? " bg-black-background-2 py-3" : " bg-red-main py-5")
+      )}
       onPress={onPress}
     >
       <Text
-        style={[tw("text-white text-2xl"), { fontFamily: "poppins-semibold" }]}
+        style={[
+          tw(black ? "text-red-main" : "text-white text-2xl"),
+          { fontFamily: "poppins-semibold" },
+        ]}
       >
         {title}
       </Text>

@@ -2,14 +2,14 @@ import React from "react";
 import { FlatList } from "react-native";
 
 import { Ad } from "../types";
-import Card from "./Card";
+import AdPreview from "./AdPreview";
 
 const AdList = ({ ads }: { ads: Ad[] }) => {
   return (
     <FlatList
       data={ads}
-      horizontal
-      renderItem={({ item }) => <Card ad={item}></Card>}
+      numColumns={2}
+      renderItem={({ item }) => <AdPreview ad={item}></AdPreview>}
       keyExtractor={({ id }) => id}
     ></FlatList>
   );

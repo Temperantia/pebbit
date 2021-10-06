@@ -16,6 +16,6 @@ export const categories = [
 ];
 
 export const currencies = {
-  Bitcoin: require("../assets/images/Bitcoin.png"),
-  Ethereum: require("../assets/images/Ethereum.png"),
+  Bitcoin: { symbol: "BTC", image: require("../assets/images/Bitcoin.png") },
+  Ethereum: { symbol: "ETH", image: require("../assets/images/Ethereum.png") },
 };

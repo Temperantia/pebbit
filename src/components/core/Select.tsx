@@ -43,7 +43,6 @@ const Select = ({
           )}
           renderCustomizedRowChild={(item) => <Text>{item}</Text>}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index);
             onChange(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
