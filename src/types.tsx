@@ -10,12 +10,14 @@ export type RootStackParamList = {
 
 export type AuthStackParamList = {
   SignIn: undefined;
+  Onboarding: undefined;
 };
 
 export type BottomTabParamList = {
   Home: undefined;
   Listing: undefined;
   CreateAd: undefined;
+  Exchange: undefined;
 };
 
 export type HomeParamList = {
@@ -30,34 +32,42 @@ export type CreateAdParamList = {
   CreateAdScreen: undefined;
 };
 
-export type Product = {
-  id: string;
-} & CreateProduct;
-
 export type Order = {
   id: string;
   address: string;
-  product: string;
+  ad: string;
   currency: string;
   price: number;
   status: string;
 };
 
-export type User = {
-  id: string;
-  phone?: string;
-  address?: {
-    name: string;
-    street: string;
-    city: string;
-    country: string;
-  };
-} & CreateUser;
-
-export type CreateUser = {
-  email?: string;
+export type Price = {
+  address: string;
+  amount: number;
 };
 
-export type CreateProduct = {
+export type Ad = {
+  id?: string;
+  title: string;
+  category: string;
+  condition: string;
+  description: string;
+  pictures: string[];
+  prices: { [currency: string]: Price };
+};
+
+export type User = {
+  id: string;
+  email: string;
+  username: string;
+  address: Address;
+  ads: Ad[];
+  orders: Order[];
+};
+
+export type Address = {
   name: string;
+  street: string;
+  city: string;
+  country: string;
 };

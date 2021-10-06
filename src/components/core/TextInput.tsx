@@ -1,82 +1,91 @@
 import React from "react";
 import { Control, Controller } from "react-hook-form";
-import { TextInput as RNTextInput, View } from "react-native";
+import {
+  Image,
+  ImageSourcePropType,
+  Text,
+  TextInput as RNTextInput,
+  View,
+} from "react-native";
+
+import tw from "../../tailwind";
+import tailwind from "../../../tailwind.config";
 
 const TextInput = ({
-  height,
+  email,
+  password,
   multiline,
   number,
+  label,
+  icon,
   placeholder,
   control,
   name,
-  value,
-  onChange,
 }: {
-  height?: number;
+  email?: boolean;
+  password?: boolean;
   number?: boolean;
   multiline?: boolean;
+  label?: string;
+  icon?: ImageSourcePropType;
   placeholder?: string;
-  control?: Control<any>;
-  name?: string;
-  value?: string;
-  onChange?: (value: string) => void;
-}) => {
-  return control && name ? (
-    <View
-      style={{
-        flexDirection: "row",
-        borderWidth: 1,
-        alignItems: "center",
-        paddingHorizontal: 20,
-        paddingVertical: 5,
-        marginVertical: 10,
-        borderColor: "grey",
-      }}
-    >
-      <Controller
-        name={name}
-        defaultValue=""
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({
-          field: { onChange, onBlur, value },
-          fieldState: { error },
-        }) => (
+  control: Control<any>;
+  name: string;
+}) => (
+  <Controller
+    name={name}
+    defaultValue=""
+    control={control}
+    rules={{
+      required: "Is required",
+      pattern: email
+        ? {
+            value:
+              /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/,
+            message: "Invalid",
+          }
+        : undefined,
+      minLength: password
+        ? {
+            value: 8,
+            message: "At least 8 characters",
+          }
+        : undefined,
+    }}
+    render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+      <View style={tw("my-2")}>
+        {label && <Text style={tw("text-grey-slate text-xs")}>{label}</Text>}
+        <View
+          style={tw(
+            "flex-row px-4 border border-grey-slate rounded" +
+              (multiline ? " h-24" : " h-10") +
+              (icon ? " items-center" : "")
+          )}
+        >
+          {icon && (
+            <Image
+              style={tw("w-full mr-2")}
+              width={24}
+              height={24}
+              source={icon}
+            ></Image>
+          )}
           <RNTextInput
+            style={[tw("flex-grow"), { fontFamily: "poppins-medium" }]}
+            placeholderTextColor={tailwind.theme.colors["grey-slate"]}
+            secureTextEntry={password}
             keyboardType={number ? "number-pad" : "default"}
             multiline={multiline}
-            style={{
-              flex: 1,
-              backgroundColor: "transparent",
-              height,
-              marginVertical: 5,
-              borderColor: "white",
-              borderBottomWidth: 0,
-            }}
             placeholder={placeholder}
             value={value}
             onBlur={onBlur}
             onChangeText={onChange}
           ></RNTextInput>
-        )}
-      ></Controller>
-    </View>
-  ) : (
-    <RNTextInput
-      style={{
-        width: "100%",
-        height,
-        marginVertical: 5,
-        backgroundColor: "transparent",
-      }}
-      value={value}
-      onChangeText={(newValue) => {
-        onChange?.(newValue);
-      }}
-    ></RNTextInput>
-  );
-};
+        </View>
+        {error && <Text style={tw("text-red-main")}>{error.message}</Text>}
+      </View>
+    )}
+  ></Controller>
+);
 
 export default TextInput;

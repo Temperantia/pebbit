@@ -36,7 +36,7 @@ export default function App() {
       <RecoilRoot>
         <AuthProvider>
           <Navigation />
-          <StatusBar />
+          <StatusBar style="light" />
         </AuthProvider>
       </RecoilRoot>
     );

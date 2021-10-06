@@ -14,12 +14,16 @@ import tailwindConfig from "../../tailwind.config";
 import Header from "../components/Header";
 import AuthScreen from "../screens/AuthScreen";
 import useAuth from "../hooks/useAuth";
+import OnboardingScreen from "../screens/OnboardingScreen";
 
 const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
     ...tailwindConfig.theme.colors,
+    primary: tailwindConfig.theme.colors["red-main"],
+    card: tailwindConfig.theme.colors["black-background-2"],
+    text: tailwindConfig.theme.colors["grey-slate"],
   },
 };
 
@@ -51,14 +55,14 @@ const RootNavigator = () => {
 const AuthStack = createStackNavigator<AuthStackParamList>();
 const AuthNavigator = () => {
   return (
-    <AuthStack.Navigator mode="modal">
-      <AuthStack.Screen
-        name="SignIn"
-        component={AuthScreen}
-        options={{
-          header: () => <Header noMenu></Header>,
-        }}
-      />
+    <AuthStack.Navigator
+      mode="modal"
+      screenOptions={{
+        header: () => <Header noMenu></Header>,
+      }}
+    >
+      <AuthStack.Screen name="SignIn" component={AuthScreen} />
+      <AuthStack.Screen name="Onboarding" component={OnboardingScreen} />
     </AuthStack.Navigator>
   );
 };

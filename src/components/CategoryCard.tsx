@@ -18,13 +18,10 @@ const CategoryCard = ({
           }}
         ></Image>
         <View
-          style={[
-            tw("absolute left-0 w-40 bg-card p-2 items-center"),
-            { bottom: 20 },
-          ]}
+          style={[tw("absolute left-0 w-40 p-2 items-center"), { bottom: 20 }]}
         >
-          <Text style={tw("text-primary font-bold")}>{name}</Text>
-          <Text style={tw("text-grey")}>89,343 ads</Text>
+          <Text style={tw("font-bold")}>{name}</Text>
+          <Text style={tw("")}>89,343 ads</Text>
         </View>
       </View>
     </View>

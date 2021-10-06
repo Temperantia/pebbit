@@ -19,6 +19,7 @@
     "expo-constants": "~11.0.1",
     "expo-font": "~9.2.1",
     "expo-google-app-auth": "^8.2.2",
+    "expo-image-picker": "^10.2.3",
     "expo-linking": "~2.3.1",
     "expo-notifications": "~0.12.3",
     "expo-splash-screen": "~0.11.2",
@@ -32,6 +33,9 @@
     "react-native-global-props": "^1.1.5",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "^3.4.0",
+    "react-native-select-dropdown": "^1.1.0",
+    "react-native-svg": "^12.1.1",
+    "react-native-svg-uri": "^1.2.3",
     "recoil": "^0.4.1",
     "tailwind-rn": "^3.0.1"
   },
