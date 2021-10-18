@@ -14,6 +14,7 @@ const ScreenLoading = ({
     return <ActivityIndicator></ActivityIndicator>;
   }
   if (error) {
+    console.error(error);
     Alert.alert("Error", error.message);
   }
   return <>{children}</>;

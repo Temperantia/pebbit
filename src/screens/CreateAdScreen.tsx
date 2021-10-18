@@ -13,7 +13,12 @@ import * as ImagePicker from "expo-image-picker";
 import "react-native-get-random-values";
 import { v4 } from "uuid";
 
-import { auth, adCollection, storage } from "../firebase";
+import {
+  serverTimestamp,
+  adCollection,
+  storage,
+  userCollection,
+} from "../firebase";
 import useAuth from "../hooks/useAuth";
 import TextInput from "../components/core/TextInput";
 import Select from "../components/core/Select";
@@ -30,7 +35,7 @@ const keyboardVerticalOffset = Platform.OS === "ios" ? 100 : 0;
 
 const CreateAdScreen = () => {
   const { control, handleSubmit, watch } = useForm();
-  const { token } = useAuth();
+  const { token, user } = useAuth();
   const newAd = watch();
 
   const uploadImage = async (uri: string) => {
@@ -41,6 +46,7 @@ const CreateAdScreen = () => {
     return await ref.getDownloadURL();
   };
 
+  //todo it needs a sell function
   const onSubmit = useCallback(
     handleSubmit(async (ad: Ad) => {
       for (const [index, picture] of ad.pictures.entries()) {
@@ -48,72 +54,21 @@ const CreateAdScreen = () => {
           ad.pictures[index] = await uploadImage(picture);
         }
       }
-      await adCollection.add(ad);
+      ad.pictures.filter((picture) => !!picture);
+      ad = {
+        ...ad,
+        created: serverTimestamp(),
+        status: "new",
+        cooldown: 0,
+        userId: user.id,
+      };
+      const ref = await adCollection.add(ad);
+      await userCollection.doc(user.id).update({
+        ["ads." + ref.id]: ad,
+      });
     }),
     [handleSubmit, adCollection]
   );
-
-  const onBuy = useCallback(async () => {
-    const currency = "btc";
-    const ad = "UowXDil964nlELDJBftj";
-    const t = await auth.currentUser.getIdToken(true);
-
-    try {
-      const result = await fetch(
-        "https://us-central1-crypto-2293c.cloudfunctions.net/buy?id=" +
-          ad +
-          "&currency=" +
-          currency +
-          "&token=" +
-          token,
-        {
-          headers: {
-            Authorization: `Bearer ${t}`,
-          },
-        }
-      );
-      if (result.status === 409) {
-        throw Error("Under transaction");
-      } else if (!result.ok) {
-        throw Error("Something wrong happened");
-      }
-      const order = await result.json();
-      console.log(order.id, "pay the amount in btc at", order.inputAddress);
-      /* const timeout = setInterval(async () => {
-        const status = (await orderCollection.doc(order.id).get()).data()
-          .status;
-        //console.log(order, status);
-        if (status === "paid") {
-          console.log("paid");
-          clearTimeout(timeout);
-        }
-      }, 15000); */
-    } catch (error) {
-      alert(error.message);
-    }
-  }, [auth, fetch, token, alert]);
-
-  const onConfirm = useCallback(async () => {
-    const order = "UowXDil964nlELDJBftj";
-    const t = await auth.currentUser.getIdToken(true);
-
-    try {
-      const result = await fetch(
-        "https://us-central1-crypto-2293c.cloudfunctions.net/confirm?id=" +
-          order,
-        {
-          headers: {
-            Authorization: `Bearer ${t}`,
-          },
-        }
-      );
-      if (!result.ok) {
-        throw Error("Something wrong happened");
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  }, [auth, fetch, token, alert]);
 
   const onListItem = useCallback(
     (item: string) => (

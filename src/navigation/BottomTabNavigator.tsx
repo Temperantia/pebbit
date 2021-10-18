@@ -35,7 +35,7 @@ export default function BottomTabNavigator() {
       initialRouteName="Home"
       tabBarOptions={{ showLabel: false, style: { paddingTop: 20 } }}
     >
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={{
@@ -46,7 +46,7 @@ export default function BottomTabNavigator() {
             />
           ),
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Listing"
         component={listingNavigator}

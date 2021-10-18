@@ -26,7 +26,7 @@ export type HomeParamList = {
 
 export type ListingParamList = {
   ListingScreen: undefined;
-  AdScreen: { ad: Ad };
+  AdScreen: { id: string };
 };
 
 export type Order = {
@@ -44,13 +44,22 @@ export type Price = {
 };
 
 export type Ad = {
-  id?: string;
+  id: string;
+  created: any;
+  cooldown: number;
   title: string;
   category: string;
   condition: string;
   description: string;
   pictures: string[];
   prices: { [currency: string]: Price };
+  status: string;
+  userId: string;
+  buyer: {
+    userId: string;
+    currency: string;
+    inputAddress: string;
+  };
 };
 
 export type User = {
@@ -58,8 +67,7 @@ export type User = {
   email: string;
   username: string;
   address: Address;
-  ads: Ad[];
-  orders: Order[];
+  ads: { [id: string]: Ad };
 };
 
 export type Address = {

@@ -12,7 +12,7 @@ const AdPreview = ({ ad }: { ad: Ad }) => {
   const { navigate } = useNavigation();
 
   const onPress = useCallback(() => {
-    navigate("AdScreen", ad);
+    navigate("AdScreen", { id: ad.id });
   }, [navigate, ad]);
   return (
     <View style={tw("w-1/2 p-3")}>

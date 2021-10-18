@@ -19,6 +19,8 @@ const converter = <T,>() => ({
 export const auth = firebase.auth();
 export const storage = firebase.storage();
 export const firestore = firebase.firestore();
+export const FieldValue = firebase.firestore.FieldValue;
+export const serverTimestamp = FieldValue.serverTimestamp;
 export const adCollection = firestore
   .collection("ads")
   .withConverter(converter<Ad>());

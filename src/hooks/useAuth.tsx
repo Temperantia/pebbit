@@ -12,6 +12,7 @@ import { Platform } from "react-native";
 
 import { auth, userCollection } from "../firebase";
 import { Address, User } from "../types";
+import { useDocumentData } from "react-firebase-hooks/firestore";
 
 const google = {
   androidClientId:
@@ -41,15 +42,17 @@ export const AuthProvider: FC = ({ children }) => {
   const [newUser, setNewUser] = useState<any>();
 
   useEffect(() => {
-    auth.onAuthStateChanged(async (authUser) => {
+    auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         const { email, uid } = authUser;
-        const doc = await userCollection.doc(uid).get();
-        if (!doc.exists) {
-          setNewUser({ email, id: uid });
-          return;
-        }
-        await signIn(doc.data());
+        userCollection.doc(uid).onSnapshot(async (doc) => {
+          console.log("new snap");
+          if (!doc.exists) {
+            setNewUser({ email, id: uid });
+            return;
+          }
+          await signIn(doc.data());
+        });
       }
     });
   }, []);
@@ -86,7 +89,9 @@ export const AuthProvider: FC = ({ children }) => {
     try {
       const data = await registerForPushNotifications();
       setToken(data);
-    } catch (error) {}
+    } catch (error) {
+      setToken("ExponentPushToken[l1EyP6FP0V5CgKsNke0DbY]");
+    }
     setUser(user);
   };
 
@@ -98,7 +103,7 @@ export const AuthProvider: FC = ({ children }) => {
   };
 
   const register = async (username: string, address: Address) => {
-    const data = { ...newUser, username, address, orders: [], ads: [] };
+    const data = { ...newUser, username, address, orders: {}, ads: {} };
     await userCollection.doc(newUser.id).set(data);
     signIn(data);
   };
