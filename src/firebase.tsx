@@ -35,7 +35,11 @@ export const userCollection = firestore
   .withConverter(converter<User>());
 
 export const request = async (endpoint: string, body?: any) => {
-  const token = await auth.currentUser.getIdToken(true);
+  const currentUser = auth.currentUser;
+  if (!currentUser) {
+    return;
+  }
+  const token = await currentUser.getIdToken(true);
   const url = functionsEndpoint + endpoint;
   const result = await fetch(url, {
     method: body ? "POST" : "GET",

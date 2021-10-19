@@ -10,7 +10,7 @@ import useAuth from "../hooks/useAuth";
 
 const AdStatusBuy = ({ ad }: { ad: Ad }) => {
   const { token } = useAuth();
-  const [selectedCurrency, setSelectedCurrency] = useState(null);
+  const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
 
   useEffect(() => {
     if (!ad) {

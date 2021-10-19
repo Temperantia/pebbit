@@ -1,5 +1,11 @@
 import React, { useCallback } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ImageSourcePropType,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import useAuth from "../hooks/useAuth";
 
 import tw from "../tailwind";
@@ -7,7 +13,14 @@ import tw from "../tailwind";
 const SocialButton = ({ type }: { type: string }) => {
   const { signInWithGoogle } = useAuth();
 
-  const types = {
+  const types: {
+    [provider: string]: {
+      icon: ImageSourcePropType;
+      bgColor: string;
+      color: string;
+      handler: () => Promise<void>;
+    };
+  } = {
     Google: {
       icon: require("../assets/images/google.png"),
       bgColor: "bg-white border border-grey-slate",

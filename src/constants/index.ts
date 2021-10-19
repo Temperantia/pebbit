@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from "react-native";
+
 export const categories = [
   "Home & Garden",
   "Cars & Vehicles",
@@ -15,7 +17,9 @@ export const categories = [
   "Services For Hire",
 ];
 
-export const currencies = {
+export const currencies: {
+  [currency: string]: { symbol: string; image: ImageSourcePropType };
+} = {
   Bitcoin: { symbol: "BTC", image: require("../assets/images/Bitcoin.png") },
   Ethereum: { symbol: "ETH", image: require("../assets/images/Ethereum.png") },
 };

@@ -64,7 +64,7 @@ export type Ad = {
 
 export type User = {
   id: string;
-  email: string;
+  email: string | null;
   username: string;
   address: Address;
   ads: { [id: string]: Ad };

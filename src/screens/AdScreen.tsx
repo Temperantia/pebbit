@@ -28,14 +28,14 @@ const AdScreen = ({
   const [ad, loading, error] = useDocumentData<Ad>(adCollection.doc(id), {
     idField: "id",
   });
-  const [adStatus, setAdStatus] = useState(null);
+  const [adStatus, setAdStatus] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
     if (!ad) {
       return;
     }
 
-    if (user.id === ad.buyer?.userId) {
+    if (user?.id === ad.buyer?.userId) {
       if (ad.status === "received" || ad.status === "paid") {
         setAdStatus(<AdStatusReceived ad={ad} />);
       } else if (ad.status === "sent") {
@@ -60,7 +60,7 @@ const AdScreen = ({
 
   return (
     <ScreenLoading loading={loading}>
-      {!loading && (
+      {ad && (
         <ScrollView>
           <TouchableOpacity
             style={tw("my-5 flex-row items-center mx-3")}

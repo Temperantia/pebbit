@@ -31,7 +31,7 @@ const AdCard = ({
               source={currencies[currency].image}
             ></Image>
             <Text style={{ fontFamily: "poppins-semibold" }}>
-              {price.amount} {currencies[currency].symbol}
+              {price?.amount} {currencies[currency].symbol}
             </Text>
           </View>
         )}

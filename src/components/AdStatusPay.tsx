@@ -8,8 +8,8 @@ import tailwindConfig from "../../tailwind.config";
 import { Ad } from "../types";
 
 const AdStatusPay = ({ ad }: { ad: Ad }) => {
-  const [timeLeft, setTimeLeft] = useState(null);
-  let interval;
+  const [timeLeft, setTimeLeft] = useState<string | null>(null);
+  let interval: NodeJS.Timer;
 
   useEffect(() => {
     clearInterval(interval);
@@ -38,7 +38,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
         Please send{" "}
         <Text style={{ fontFamily: "poppins-semibold" }}>exactly</Text>
         <Image
-          style={tw("w-8 h-8")}
+          style={tw("w-6 h-6")}
           source={currencies[ad.buyer.currency].image}
         ></Image>
         <Text style={[{ fontFamily: "poppins-semibold" }]}>

@@ -23,10 +23,15 @@ const google = {
   scopes: ["email"],
 };
 
+type NewUser = {
+  email: string | null;
+  id: string;
+};
+
 type AuthContextData = {
-  token: string;
-  user: User;
-  newUser: User;
+  token: string | null;
+  user: User | null;
+  newUser: NewUser | null;
   loading: boolean;
   signInWithGoogle(): Promise<void>;
   signInWithEmail(email: string, password: string): Promise<void>;
@@ -37,9 +42,9 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: FC = ({ children }) => {
-  const [token, setToken] = useState<string>();
-  const [user, setUser] = useState<User>();
-  const [newUser, setNewUser] = useState<any>();
+  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [newUser, setNewUser] = useState<NewUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -51,7 +56,10 @@ export const AuthProvider: FC = ({ children }) => {
             setNewUser({ email, id: uid });
             return;
           }
-          await signIn(doc.data());
+          const data = doc.data();
+          if (data) {
+            await signIn(data);
+          }
           setLoading(false);
         });
       } else {
@@ -79,7 +87,7 @@ export const AuthProvider: FC = ({ children }) => {
     } catch (error) {
       try {
         await auth.signInWithEmailAndPassword(email, password);
-      } catch (error) {
+      } catch (error: any) {
         if (error.code === "auth/wrong-password") {
           alert("Incorrect credentials");
         }
@@ -91,7 +99,9 @@ export const AuthProvider: FC = ({ children }) => {
     // todo token
     try {
       const data = await registerForPushNotifications();
-      setToken(data);
+      if (data) {
+        setToken(data);
+      }
     } catch (error) {
       setToken("ExponentPushToken[l1EyP6FP0V5CgKsNke0DbY]");
     }
@@ -106,6 +116,9 @@ export const AuthProvider: FC = ({ children }) => {
   };
 
   const register = async (username: string, address: Address) => {
+    if (!newUser) {
+      return;
+    }
     const data = { ...newUser, username, address, ads: {} };
     await userCollection.doc(newUser.id).set(data);
     signIn(data);
