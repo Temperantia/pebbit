@@ -38,9 +38,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
         Please send{" "}
         <Text style={{ fontFamily: "poppins-semibold" }}>exactly</Text>
         <Image
-          style={tw("w-full")}
-          width={8}
-          height={8}
+          style={tw("w-8 h-8")}
           source={currencies[ad.buyer.currency].image}
         ></Image>
         <Text style={[{ fontFamily: "poppins-semibold" }]}>

@@ -11,6 +11,7 @@ import tailwindConfig from "../../tailwind.config";
 import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
 import Icon from "./core/Icon";
+import SafeViewAndroid from "./SafeViewAndroid";
 
 const Header = ({ noMenu }: { noMenu?: boolean }) => {
   const { signOut } = useAuth();
@@ -22,7 +23,9 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
   const onSignOut = useCallback(signOut, [signOut]);
 
   return (
-    <SafeAreaView style={tw("bg-black-background-2")}>
+    <SafeAreaView
+      style={[tw("bg-black-background-2"), SafeViewAndroid.AndroidSafeArea]}
+    >
       <View style={tw("flex-row items-center justify-between p-3")}>
         <Image
           style={{ width: 140, height: 45 }}

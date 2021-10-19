@@ -13,9 +13,7 @@ const AdStatusSold = ({ ad }: { ad: Ad }) => {
       <Text>Payment received, thank you for your purchase</Text>
       <View style={tw("my-2 flex-row items-center")}>
         <Image
-          style={tw("w-full mr-2")}
-          width={24}
-          height={24}
+          style={tw("w-12 h-12")}
           source={currencies[ad.buyer.currency].image}
         ></Image>
         <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>

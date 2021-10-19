@@ -6,38 +6,19 @@ import { currencies } from "../constants";
 import { Ad } from "../types";
 import Icon from "../components/core/Icon";
 import tailwindConfig from "../../tailwind.config";
-import { auth } from "../firebase";
+import { request } from "../firebase";
 
 const AdStatusSent = ({ ad }: { ad: Ad }) => {
-  const onConfirm = useCallback(async () => {
-    const t = await auth.currentUser.getIdToken(true);
-
-    try {
-      const result = await fetch(
-        "https://us-central1-crypto-2293c.cloudfunctions.net/confirm?ad=" +
-          ad.id,
-        {
-          headers: {
-            Authorization: `Bearer ${t}`,
-          },
-        }
-      );
-      if (!result.ok) {
-        throw Error("Something wrong happened");
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  }, [auth, fetch, alert]);
+  const onConfirm = useCallback(() => {
+    request("confirm?ad=" + ad.id);
+  }, [request, ad]);
 
   return (
     <View style={tw("my-2")}>
       <Text>Seller has indicated item was shipped</Text>
       <View style={tw("my-2 flex-row items-center")}>
         <Image
-          style={tw("w-full mr-2")}
-          width={24}
-          height={24}
+          style={tw("w-12 h-12")}
           source={currencies[ad.buyer.currency].image}
         ></Image>
         <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>

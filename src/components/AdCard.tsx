@@ -27,9 +27,7 @@ const AdCard = ({
         {currency && (
           <View style={tw("flex-row justify-between items-center")}>
             <Image
-              style={tw("w-full")}
-              width={24}
-              height={24}
+              style={tw("w-8 h-8")}
               source={currencies[currency].image}
             ></Image>
             <Text style={{ fontFamily: "poppins-semibold" }}>

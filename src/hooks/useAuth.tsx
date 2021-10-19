@@ -12,10 +12,9 @@ import { Platform } from "react-native";
 
 import { auth, userCollection } from "../firebase";
 import { Address, User } from "../types";
-import { useDocumentData } from "react-firebase-hooks/firestore";
 
 const google = {
-  androidClientId:
+  androidStandaloneAppClientId:
     "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
   iosClientId:
     "876715407348-e3i42a85ib2d18peimbjppfchj83pjru.apps.googleusercontent.com",
@@ -28,6 +27,7 @@ type AuthContextData = {
   token: string;
   user: User;
   newUser: User;
+  loading: boolean;
   signInWithGoogle(): Promise<void>;
   signInWithEmail(email: string, password: string): Promise<void>;
   signOut(): void;
@@ -40,19 +40,22 @@ export const AuthProvider: FC = ({ children }) => {
   const [token, setToken] = useState<string>();
   const [user, setUser] = useState<User>();
   const [newUser, setNewUser] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         const { email, uid } = authUser;
         userCollection.doc(uid).onSnapshot(async (doc) => {
-          console.log("new snap");
           if (!doc.exists) {
             setNewUser({ email, id: uid });
             return;
           }
           await signIn(doc.data());
+          setLoading(false);
         });
+      } else {
+        setLoading(false);
       }
     });
   }, []);
@@ -103,7 +106,7 @@ export const AuthProvider: FC = ({ children }) => {
   };
 
   const register = async (username: string, address: Address) => {
-    const data = { ...newUser, username, address, orders: {}, ads: {} };
+    const data = { ...newUser, username, address, ads: {} };
     await userCollection.doc(newUser.id).set(data);
     signIn(data);
   };
@@ -142,6 +145,7 @@ export const AuthProvider: FC = ({ children }) => {
         token,
         user,
         newUser,
+        loading,
         signInWithGoogle,
         signInWithEmail,
         signOut,

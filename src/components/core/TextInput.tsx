@@ -62,14 +62,7 @@ const TextInput = ({
               (icon ? " items-center" : "")
           )}
         >
-          {icon && (
-            <Image
-              style={tw("w-full mr-2")}
-              width={24}
-              height={24}
-              source={icon}
-            ></Image>
-          )}
+          {icon && <Image style={tw("w-8 h-8 mr-2")} source={icon}></Image>}
           <RNTextInput
             style={[tw("flex-grow"), { fontFamily: "poppins-medium" }]}
             placeholderTextColor={tailwind.theme.colors["grey-slate"]}

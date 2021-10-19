@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { auth } from "../firebase";
 
+import { request } from "../firebase";
 import tw from "../tailwind";
 import Button from "../components/core/Button";
 import { currencies } from "../constants";
@@ -18,7 +18,7 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
     }
 
     setSelectedCurrency(Object.entries(ad.prices)[0][0]);
-  }, [ad]);
+  }, [ad, setSelectedCurrency]);
 
   const onSelectCurrency = useCallback(
     (currency) => () => {
@@ -28,32 +28,10 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
   );
 
   const onBuy = useCallback(async () => {
-    const t = await auth.currentUser.getIdToken(true);
-    const url =
-      "https://us-central1-crypto-2293c.cloudfunctions.net/buy?id=" +
-      ad.id +
-      "&currency=" +
-      selectedCurrency +
-      "&token=" +
-      token;
-    console.log(url);
-    try {
-      const result = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${t}`,
-        },
-      });
-      if (result.status === 409) {
-        throw Error("Under transaction");
-      } else if (!result.ok) {
-        throw Error("Something wrong happened");
-      }
-      /* const order = await result.json();
-        console.log(order.id, "pay the amount in btc at", order.inputAddress); */
-    } catch (error) {
-      alert(error.message);
-    }
-  }, [auth, fetch, token, alert, selectedCurrency]);
+    request(
+      "buy?id=" + ad.id + "&currency=" + selectedCurrency + "&token=" + token
+    );
+  }, [ad, request, token, selectedCurrency]);
 
   return (
     <>
@@ -72,9 +50,7 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
               onPress={onSelectCurrency(currency)}
             >
               <Image
-                style={tw("w-full")}
-                width={24}
-                height={24}
+                style={tw("w-8 h-8")}
                 source={currencies[currency].image}
               ></Image>
               <Text

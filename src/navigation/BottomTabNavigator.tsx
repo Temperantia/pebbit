@@ -33,7 +33,7 @@ export default function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ showLabel: false, style: { paddingTop: 20 } }}
+      tabBarOptions={{ showLabel: false, style: { padding: 20 } }}
     >
       {/* <BottomTab.Screen
         name="Home"

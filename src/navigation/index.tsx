@@ -15,6 +15,7 @@ import Header from "../components/Header";
 import AuthScreen from "../screens/AuthScreen";
 import useAuth from "../hooks/useAuth";
 import OnboardingScreen from "../screens/OnboardingScreen";
+import { ActivityIndicator } from "react-native";
 
 const theme = {
   ...DefaultTheme,
@@ -28,7 +29,11 @@ const theme = {
 };
 
 export default () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <NavigationContainer theme={theme} linking={LinkingConfiguration}>

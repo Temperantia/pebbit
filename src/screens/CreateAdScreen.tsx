@@ -13,13 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import "react-native-get-random-values";
 import { v4 } from "uuid";
 
-import {
-  serverTimestamp,
-  adCollection,
-  storage,
-  userCollection,
-} from "../firebase";
-import useAuth from "../hooks/useAuth";
+import { request, storage } from "../firebase";
 import TextInput from "../components/core/TextInput";
 import Select from "../components/core/Select";
 import tw from "../tailwind";
@@ -33,52 +27,35 @@ import { Ad } from "../types";
 
 const keyboardVerticalOffset = Platform.OS === "ios" ? 100 : 0;
 
+const uploadImage = async (uri: string) => {
+  const response = await fetch(uri);
+  const blob = await response.blob();
+  const ref = storage.ref().child(v4());
+  await ref.put(blob);
+  return await ref.getDownloadURL();
+};
+
 const CreateAdScreen = () => {
-  const { control, handleSubmit, watch } = useForm();
-  const { token, user } = useAuth();
+  const { control, handleSubmit, reset, watch } = useForm();
   const newAd = watch();
 
-  const uploadImage = async (uri: string) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-    const ref = storage.ref().child(v4());
-    await ref.put(blob);
-    return await ref.getDownloadURL();
-  };
-
-  //todo it needs a sell function
   const onSubmit = useCallback(
     handleSubmit(async (ad: Ad) => {
+      ad.pictures = ad.pictures.filter((picture) => !!picture);
       for (const [index, picture] of ad.pictures.entries()) {
-        if (picture) {
-          ad.pictures[index] = await uploadImage(picture);
-        }
+        ad.pictures[index] = await uploadImage(picture);
       }
-      ad.pictures.filter((picture) => !!picture);
-      ad = {
-        ...ad,
-        created: serverTimestamp(),
-        status: "new",
-        cooldown: 0,
-        userId: user.id,
-      };
-      const ref = await adCollection.add(ad);
-      await userCollection.doc(user.id).update({
-        ["ads." + ref.id]: ad,
-      });
+
+      await request("sell", ad);
+      reset();
     }),
-    [handleSubmit, adCollection]
+    [handleSubmit, uploadImage, request]
   );
 
   const onListItem = useCallback(
     (item: string) => (
       <View key={item} style={tw("flex-row items-center pr-2")}>
-        <Image
-          style={tw("w-full")}
-          width={24}
-          height={24}
-          source={currencies[item].image}
-        ></Image>
+        <Image style={tw("w-8 h-8")} source={currencies[item].image}></Image>
         <Text style={[tw("pl-1"), { fontFamily: "poppins-medium" }]}>
           {item}
         </Text>
@@ -92,14 +69,12 @@ const CreateAdScreen = () => {
       async () => {
         const permissionResult =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
-
         if (permissionResult.granted === false) {
           alert("Permission to access camera roll is required!");
           return;
         }
 
         const pickerResult = await ImagePicker.launchImageLibraryAsync();
-
         if (pickerResult.cancelled === true) {
           return;
         }

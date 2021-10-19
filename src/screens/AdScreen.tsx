@@ -1,12 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  Clipboard,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";

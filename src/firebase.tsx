@@ -10,6 +10,9 @@ if (firebase.apps.length === 0) {
   firebase.initializeApp(credentials);
 }
 
+const functionsEndpoint =
+  "https://us-central1-crypto-2293c.cloudfunctions.net/";
+
 const converter = <T,>() => ({
   toFirestore: (data: T) => data,
   fromFirestore: (snap: firebase.firestore.QueryDocumentSnapshot) =>
@@ -30,4 +33,20 @@ export const orderCollection = firestore
 export const userCollection = firestore
   .collection("users")
   .withConverter(converter<User>());
+
+export const request = async (endpoint: string, body?: any) => {
+  const token = await auth.currentUser.getIdToken(true);
+  const url = functionsEndpoint + endpoint;
+  const result = await fetch(url, {
+    method: body ? "POST" : "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+  if (!result.ok) {
+    throw Error("Something wrong happened");
+  }
+};
 export default firebase;

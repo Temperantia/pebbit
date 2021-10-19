@@ -2,14 +2,15 @@
   "expo": {
     "name": "Pebbit",
     "slug": "pebbit",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
     "scheme": "pebbit",
+    "owner": "magna-numeris",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./src/assets/images/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -22,10 +23,7 @@
     },
     "android": {
       "package": "com.magna_numeris.pebbit",
-      "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+      "versionCode": 3
     }
   }
 }

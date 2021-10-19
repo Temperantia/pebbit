@@ -33,9 +33,7 @@ const AdPreview = ({ ad }: { ad: Ad }) => {
             )}
           >
             <Image
-              style={tw("w-full mr-2")}
-              width={24}
-              height={24}
+              style={tw("w-6 h-6 mr-2")}
               source={currencies[currency].image}
             ></Image>
             <Text
