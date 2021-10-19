@@ -8,7 +8,7 @@ import useCachedResources from "./src/hooks/useCachedResources";
 import Navigation from "./src/navigation";
 import { AuthProvider } from "./src/hooks/useAuth";
 
-export default function App() {
+const App = () => {
   const isLoadingComplete = useCachedResources();
 
   /* useEffect(() => {
@@ -41,4 +41,6 @@ export default function App() {
       </RecoilRoot>
     );
   }
-}
+};
+
+export default App;

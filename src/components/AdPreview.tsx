@@ -14,6 +14,7 @@ const AdPreview = ({ ad }: { ad: Ad }) => {
   const onPress = useCallback(() => {
     navigate("AdScreen", { id: ad.id });
   }, [navigate, ad]);
+
   return (
     <View style={tw("w-1/2 p-3")}>
       <TouchableOpacity

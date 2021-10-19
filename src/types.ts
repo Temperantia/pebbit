@@ -48,6 +48,7 @@ export type Ad = {
   created: any;
   cooldown: number;
   title: string;
+  currencies: string[];
   category: string;
   condition: string;
   description: string;

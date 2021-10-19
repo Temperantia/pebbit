@@ -25,7 +25,7 @@ const AdScreen = ({
 }: StackScreenProps<ListingParamList, "AdScreen">) => {
   const { user } = useAuth();
   const { goBack } = useNavigation();
-  const [ad, loading, error] = useDocumentData<Ad>(adCollection.doc(id), {
+  const [ad, loading] = useDocumentData<Ad>(adCollection.doc(id), {
     idField: "id",
   });
   const [adStatus, setAdStatus] = useState<JSX.Element | null>(null);
@@ -82,20 +82,22 @@ const AdScreen = ({
             source={{ uri: ad.pictures[0] }}
           ></Image>
           <View style={tw("p-3")}>
-            <View style={tw("flex-row w-full justify-between")}>
-              {ad.pictures.map(
-                (picture, index) =>
-                  index > 0 && (
-                    <View key={index} style={tw("p-1 w-1/5")}>
-                      <Image
-                        style={tw("h-16")}
-                        resizeMode="cover"
-                        source={{ uri: picture }}
-                      />
-                    </View>
-                  )
-              )}
-            </View>
+            {ad.pictures.length > 1 && (
+              <View style={tw("flex-row w-full justify-between")}>
+                {ad.pictures.map(
+                  (picture, index) =>
+                    index > 0 && (
+                      <View key={index} style={tw("p-1 w-1/5")}>
+                        <Image
+                          style={tw("h-16")}
+                          resizeMode="cover"
+                          source={{ uri: picture }}
+                        />
+                      </View>
+                    )
+                )}
+              </View>
+            )}
             <Text
               style={[tw("text-lg my-3"), { fontFamily: "poppins-semibold" }]}
             >

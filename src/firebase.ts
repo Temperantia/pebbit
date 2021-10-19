@@ -53,4 +53,5 @@ export const request = async (endpoint: string, body?: any) => {
     throw Error("Something wrong happened");
   }
 };
+
 export default firebase;

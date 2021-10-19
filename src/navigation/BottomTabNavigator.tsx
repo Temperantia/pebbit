@@ -29,7 +29,7 @@ const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 </svg>`;
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
+const BottomTabNavigator = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -79,10 +79,10 @@ export default function BottomTabNavigator() {
       />
     </BottomTab.Navigator>
   );
-}
+};
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon({ name, color }: { name: string; color: string }) {
+const TabBarIcon = ({ name, color }: { name: string; color: string }) => {
   return (
     <Image
       style={{ width: 36, height: 36, tintColor: color }}
@@ -90,25 +90,27 @@ function TabBarIcon({ name, color }: { name: string; color: string }) {
       source={{ uri: "https://img.icons8.com/" + name }}
     ></Image>
   );
-}
+};
 
 const HomeStack = createStackNavigator<HomeParamList>();
 
-function HomeNavigator() {
+const HomeNavigator = () => {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
     </HomeStack.Navigator>
   );
-}
+};
 
 const ListingStack = createStackNavigator<ListingParamList>();
 
-function listingNavigator() {
+const listingNavigator = () => {
   return (
     <ListingStack.Navigator screenOptions={{ headerShown: false }}>
       <ListingStack.Screen name="ListingScreen" component={ListingScreen} />
       <ListingStack.Screen name="AdScreen" component={AdScreen} />
     </ListingStack.Navigator>
   );
-}
+};
+
+export default BottomTabNavigator;
