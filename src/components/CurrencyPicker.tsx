@@ -37,8 +37,9 @@ const CurrencyPicker = ({
       ></MultiSelect>
       {newAd?.currencies?.map((currency: string) => (
         <TextInput
-          key={currency + "Amount"}
           number
+          price={currency}
+          key={currency + "Amount"}
           placeholder="Asking Price"
           icon={currencies[currency].image}
           name={"prices." + currency + ".amount"}

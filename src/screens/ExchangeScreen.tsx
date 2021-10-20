@@ -1,26 +1,47 @@
-import React, { useCallback } from "react";
-import { Button, ScrollView, Text, View } from "react-native";
-import { useForm } from "react-hook-form";
+import React, { useCallback, useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
-import { auth, adCollection } from "../firebase";
-import useAuth from "../hooks/useAuth";
-import TextInput from "../components/core/TextInput";
-import Select from "../components/core/Select";
 import tw from "../tailwind";
-import { categories } from "../constants";
+import SellingList from "../components/SellingList";
+
+const tabs: { [tab: string]: JSX.Element } = {
+  Selling: <SellingList />,
+  Buying: <SellingList />,
+  Messages: <SellingList />,
+  History: <SellingList />,
+};
 
 const ExchangeScreen = () => {
+  const [currentTab, setCurrentTab] = useState("Selling");
+
+  const onSetCurrentTab = useCallback(
+    (tab) => () => {
+      setCurrentTab(tab);
+    },
+    [setCurrentTab]
+  );
+
   return (
-    <ScrollView style={tw("mx-5")}>
-      <View style={tw("flex-row justify-center my-4")}>
-        <Text style={[tw("text-xl"), { fontFamily: "poppins-semibold" }]}>
-          Post an Ad
-        </Text>
+    <View style={tw("mx-5")}>
+      <View style={tw("flex-row justify-evenly my-4")}>
+        {Object.keys(tabs).map((tab) => (
+          <TouchableOpacity key={tab} onPress={onSetCurrentTab(tab)}>
+            <Text
+              style={[
+                tw(
+                  "text-lg" +
+                    (currentTab === tab ? " text-red-main underline" : "")
+                ),
+                { fontFamily: "poppins-semibold" },
+              ]}
+            >
+              {tab}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
-      <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>
-        Ad Details
-      </Text>
-    </ScrollView>
+      {tabs[currentTab]}
+    </View>
   );
 };
 

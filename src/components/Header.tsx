@@ -38,7 +38,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
               size={32}
               name={
                 modalVisible
-                  ? "fluent-systems-regular/36/000000/x.png"
+                  ? "small/36/000000/delete-sign.png"
                   : "material-rounded/36/000000/menu--v1.png"
               }
             ></Icon>
@@ -48,7 +48,11 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
       {modalVisible && (
         <View>
           <View style={tw("w-full bg-black-background-2 absolute")}>
-            <Button title="Sign Out" onPress={onSignOut}></Button>
+            <Button
+              color={tailwindConfig.theme.colors["red-main"]}
+              title="Sign Out"
+              onPress={onSignOut}
+            ></Button>
           </View>
         </View>
       )}

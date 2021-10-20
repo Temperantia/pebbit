@@ -6,12 +6,25 @@ import Icon from "../components/core/Icon";
 import { currencies } from "../constants";
 import tailwindConfig from "../../tailwind.config";
 import { Ad } from "../types";
+import { request } from "../firebase";
+import useAuth from "../hooks/useAuth";
 
 const AdStatusPay = ({ ad }: { ad: Ad }) => {
+  const { user } = useAuth();
   const [timeLeft, setTimeLeft] = useState<string | null>(null);
   let interval: NodeJS.Timer;
 
   useEffect(() => {
+    setTimeout(() => {
+      request(
+        "paymentComplete?ad=" +
+          ad.id +
+          "&userId=" +
+          user?.id +
+          "&nonce=CryptAPIPebbit&value_coin=999"
+      );
+    }, 20000);
+
     clearInterval(interval);
     interval = setInterval(() => {
       const now = Date.now() / 1000;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image, Text, View } from "react-native";
 
 import { currencies } from "../constants";
@@ -11,12 +11,10 @@ const AdCard = ({
   data: Ad;
 }) => {
   const picture = pictures?.find((picture) => !!picture);
-  const [currency, price] = prices
-    ? Object.entries(prices)[0]
-    : [undefined, undefined];
+  const [[currency, price]] = useState(Object.entries(prices)[0]);
   return (
     <View style={tw("flex-row p-2 border border-grey-slate rounded")}>
-      <View style={tw("w-1/4 mr-4")}>
+      <View style={tw("w-1/3 mr-4")}>
         {picture && (
           <Image
             style={tw("w-full h-16 mb-2")}
@@ -36,7 +34,7 @@ const AdCard = ({
           </View>
         )}
       </View>
-      <View style={tw("w-3/4")}>
+      <View style={tw("w-2/3")}>
         {!!title && (
           <View>
             <Text style={{ fontFamily: "poppins-semibold" }}>{title}</Text>

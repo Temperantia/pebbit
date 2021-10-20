@@ -14,6 +14,7 @@ import CreateAdScreen from "../screens/CreateAdScreen";
 import { BottomTabParamList, HomeParamList, ListingParamList } from "../types";
 import ListingScreen from "../screens/ListingScreen";
 import AdScreen from "../screens/AdScreen";
+import ExchangeScreen from "../screens/ExchangeScreen";
 
 const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
@@ -67,7 +68,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Exchange"
-        component={CreateAdScreen}
+        component={ExchangeScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon

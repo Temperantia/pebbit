@@ -18,8 +18,20 @@ export const categories = [
 ];
 
 export const currencies: {
-  [currency: string]: { symbol: string; image: ImageSourcePropType };
+  [currency: string]: {
+    symbol: string;
+    image: ImageSourcePropType;
+    minimum: number;
+  };
 } = {
-  Bitcoin: { symbol: "BTC", image: require("../assets/images/Bitcoin.png") },
-  Ethereum: { symbol: "ETH", image: require("../assets/images/Ethereum.png") },
+  Bitcoin: {
+    symbol: "BTC",
+    image: require("../assets/images/Bitcoin.png"),
+    minimum: 0.0001,
+  },
+  Ethereum: {
+    symbol: "ETH",
+    image: require("../assets/images/Ethereum.png"),
+    minimum: 0.01,
+  },
 };

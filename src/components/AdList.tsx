@@ -1,17 +1,24 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { FlatList, ListRenderItem } from "react-native";
 
 import { Ad } from "../types";
-import AdPreview from "./AdPreview";
 import tw from "../tailwind";
 
-const AdList = ({ ads }: { ads: Ad[] }) => {
+const AdList = ({
+  ads,
+  numColumns,
+  renderItem,
+}: {
+  ads: Ad[];
+  numColumns?: number;
+  renderItem: ListRenderItem<Ad>;
+}) => {
   return (
     <FlatList
       style={tw("w-full")}
       data={ads}
-      numColumns={2}
-      renderItem={({ item }) => <AdPreview ad={item}></AdPreview>}
+      numColumns={numColumns}
+      renderItem={renderItem}
       keyExtractor={({ id }) => id}
     ></FlatList>
   );
