@@ -9,6 +9,7 @@ import {
 import { useForm } from "react-hook-form";
 import "react-native-get-random-values";
 import { v4 } from "uuid";
+import { useNavigation } from "@react-navigation/core";
 
 import { request, storage } from "../firebase";
 import TextInput from "../components/core/TextInput";
@@ -32,21 +33,53 @@ const uploadImage = async (uri: string) => {
 };
 
 const CreateAdScreen = () => {
-  const { control, handleSubmit, reset, watch } = useForm();
+  const { navigate } = useNavigation();
+  const { control, handleSubmit, reset, watch } = useForm({
+    defaultValues: {
+      category: null,
+      title: "",
+      description: "",
+      prices: {},
+      currencies: [],
+      pictures: ["", "", "", "", "", ""],
+    },
+  });
   const newAd = watch();
 
   const onSubmit = useCallback(
-    handleSubmit(async (ad: Ad) => {
+    handleSubmit(async (ad) => {
+      ad.prices = Object.entries(ad.prices).reduce(
+        (prices: any, [key, price]) => {
+          const [currency, type] = key.split("-");
+          if (!prices[currency]) {
+            prices[currency] = {};
+          }
+          prices[currency][type] = price;
+          return prices;
+        },
+        {}
+      );
+
       ad.pictures = ad.pictures.filter((picture) => !!picture);
       for (const [index, picture] of ad.pictures.entries()) {
         ad.pictures[index] = await uploadImage(picture);
       }
 
       await request("sell", ad);
-      reset();
+      reset({
+        category: null,
+        title: "",
+        description: "",
+        prices: {},
+        currencies: [],
+        pictures: ["", "", "", "", "", ""],
+      });
+      navigate("Exchange", { screen: "ExchangeScreen" });
     }),
-    [handleSubmit, uploadImage, request]
+    [reset, navigate, handleSubmit, uploadImage, request]
   );
+
+  console.log(newAd);
 
   return (
     <KeyboardAvoidingView
@@ -100,14 +133,16 @@ const CreateAdScreen = () => {
           </Text>
         </View>
         <PicturePicker control={control} />
-        {!!newAd.title && !!newAd.description && (
-          <View>
-            <Text style={[tw("my-4"), { fontFamily: "poppins-semibold" }]}>
-              Ad Preview
-            </Text>
-            <AdCard data={newAd as Ad}></AdCard>
-          </View>
-        )}
+        {!!newAd.title &&
+          !!newAd.description &&
+          Object.keys(newAd.prices).length > 0 && (
+            <View>
+              <Text style={[tw("my-4"), { fontFamily: "poppins-semibold" }]}>
+                Ad Preview
+              </Text>
+              <AdCard data={newAd}></AdCard>
+            </View>
+          )}
         <View style={tw("my-4")}>
           <Button black title="Post Ad" onPress={onSubmit}></Button>
         </View>

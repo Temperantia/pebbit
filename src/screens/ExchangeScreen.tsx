@@ -3,12 +3,14 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 import tw from "../tailwind";
 import SellingList from "../components/SellingList";
+import BuyingList from "../components/BuyingList";
+import HistoryList from "../components/HistoryList";
 
 const tabs: { [tab: string]: JSX.Element } = {
   Selling: <SellingList />,
-  Buying: <SellingList />,
+  Buying: <BuyingList />,
   Messages: <SellingList />,
-  History: <SellingList />,
+  History: <HistoryList />,
 };
 
 const ExchangeScreen = () => {

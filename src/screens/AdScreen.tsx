@@ -13,7 +13,7 @@ import ScreenLoading from "../components/ScreenLoading";
 import AdStatusBuy from "../components/AdStatusBuy";
 import AdStatusPay from "../components/AdStatusPay";
 import AdStatusPending from "../components/AdStatusPending";
-import AdStatusSold from "../components/AdStatusSold";
+import AdStatusPaid from "../components/AdStatusPaid";
 import AdStatusSent from "../components/AdStatusSent";
 import AdStatusReceived from "../components/AdStatusReceived";
 import useAuth from "../hooks/useAuth";
@@ -31,17 +31,17 @@ const AdScreen = ({
   const [adStatus, setAdStatus] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
-    if (!ad) {
+    if (!ad || !user) {
       return;
     }
 
-    if (user?.id === ad.buyer?.userId) {
-      if (ad.status === "received" || ad.status === "paid") {
-        setAdStatus(<AdStatusReceived ad={ad} />);
+    if (user.id === ad.buyer?.userId) {
+      if (ad.status === "received" || ad.status === "sold") {
+        setAdStatus(<AdStatusReceived amount ad={ad} />);
       } else if (ad.status === "sent") {
-        setAdStatus(<AdStatusSent ad={ad} />);
-      } else if (ad.status === "sold") {
-        setAdStatus(<AdStatusSold ad={ad} />);
+        setAdStatus(<AdStatusSent amount ad={ad} />);
+      } else if (ad.status === "paid") {
+        setAdStatus(<AdStatusPaid amount ad={ad} />);
       } else if (ad.status === "pending") {
         setAdStatus(<AdStatusPending />);
       } else if (ad.cooldown > Date.now() / 1000) {
@@ -49,7 +49,7 @@ const AdScreen = ({
       } else {
         setAdStatus(<AdStatusBuy ad={ad} />);
       }
-    } else {
+    } else if (user.id !== ad.userId) {
       setAdStatus(<AdStatusBuy ad={ad} />);
     }
   }, [ad]);

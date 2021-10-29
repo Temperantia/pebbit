@@ -78,7 +78,6 @@ const MultiSelect = ({
   return (
     <Controller
       name={name}
-      defaultValue={[]}
       control={control}
       rules={{
         validate: (value: string[]) => {

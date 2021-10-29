@@ -42,7 +42,7 @@ const CurrencyPicker = ({
           key={currency + "Amount"}
           placeholder="Asking Price"
           icon={currencies[currency].image}
-          name={"prices." + currency + ".amount"}
+          name={"prices." + currency + "-amount"}
           control={control}
         ></TextInput>
       ))}
@@ -54,7 +54,7 @@ const CurrencyPicker = ({
             wallet address below.
           </Text>
           <TextInput
-            name={"prices." + currency + ".address"}
+            name={"prices." + currency + "-address"}
             control={control}
           ></TextInput>
         </View>

@@ -35,3 +35,10 @@ export const currencies: {
     minimum: 0.01,
   },
 };
+
+export const statusColors: { [status: string]: string } = {
+  paid: "red-main",
+  sent: "orange-main",
+  received: "gold-badge-gradient",
+  complete: "green-main",
+};

@@ -1,18 +1,23 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import tailwindConfig from "../../../tailwind.config";
 
 import tw from "../../tailwind";
 
 const Button = ({
   black,
+  loading,
   title,
   onPress,
 }: {
   black?: boolean;
+  loading?: boolean;
   title: string;
   onPress: () => void;
 }) => {
-  return (
+  return loading ? (
+    <ActivityIndicator color={tailwindConfig.theme.colors["red-main"]} />
+  ) : (
     <TouchableOpacity
       style={tw(
         "w-full flex-row justify-center rounded" +

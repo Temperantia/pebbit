@@ -5,6 +5,7 @@ module.exports = {
       white: "#ffffff",
       "red-main": "#f03b32",
       "red-gradient": "#d8302f",
+      "orange-main": "#f5844b",
       "blue-main": "#0f9ef9",
       "green-main": "#129a42",
       "grey-slate": "#908aa0",

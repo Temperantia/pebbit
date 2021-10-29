@@ -10,6 +10,7 @@ import useAuth from "../hooks/useAuth";
 
 const AdStatusBuy = ({ ad }: { ad: Ad }) => {
   const { token } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
 
   useEffect(() => {
@@ -28,10 +29,12 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
   );
 
   const onBuy = useCallback(async () => {
-    request(
+    setLoading(true);
+    await request(
       "buy?id=" + ad.id + "&currency=" + selectedCurrency + "&token=" + token
     );
-  }, [ad, request, token, selectedCurrency]);
+    setLoading(false);
+  }, [setLoading, ad, request, token, selectedCurrency]);
 
   return (
     <>
@@ -65,7 +68,12 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
           ))}
         </View>
       </View>
-      <Button black title="BUY IT NOW" onPress={onBuy}></Button>
+      <Button
+        black
+        title="BUY IT NOW"
+        loading={loading}
+        onPress={onBuy}
+      ></Button>
     </>
   );
 };

@@ -11,7 +11,12 @@ import { SvgXml } from "react-native-svg";
 
 import HomeScreen from "../screens/HomeScreen";
 import CreateAdScreen from "../screens/CreateAdScreen";
-import { BottomTabParamList, HomeParamList, ListingParamList } from "../types";
+import {
+  BottomTabParamList,
+  ExchangeParamList,
+  HomeParamList,
+  ListingParamList,
+} from "../types";
 import ListingScreen from "../screens/ListingScreen";
 import AdScreen from "../screens/AdScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
@@ -34,7 +39,7 @@ const BottomTabNavigator = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ showLabel: false, style: { padding: 20 } }}
+      tabBarOptions={{ showLabel: false, style: { paddingBottom: 20 } }}
     >
       {/* <BottomTab.Screen
         name="Home"
@@ -50,7 +55,7 @@ const BottomTabNavigator = () => {
       /> */}
       <BottomTab.Screen
         name="Listing"
-        component={listingNavigator}
+        component={ListingNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="windows/48/000000/list.png" color={color} />
@@ -68,7 +73,7 @@ const BottomTabNavigator = () => {
       />
       <BottomTab.Screen
         name="Exchange"
-        component={ExchangeScreen}
+        component={ExchangeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon
@@ -89,12 +94,11 @@ const TabBarIcon = ({ name, color }: { name: string; color: string }) => {
       style={{ width: 36, height: 36, tintColor: color }}
       resizeMode={"contain"}
       source={{ uri: "https://img.icons8.com/" + name }}
-    ></Image>
+    />
   );
 };
 
 const HomeStack = createStackNavigator<HomeParamList>();
-
 const HomeNavigator = () => {
   return (
     <HomeStack.Navigator>
@@ -104,13 +108,22 @@ const HomeNavigator = () => {
 };
 
 const ListingStack = createStackNavigator<ListingParamList>();
-
-const listingNavigator = () => {
+const ListingNavigator = () => {
   return (
     <ListingStack.Navigator screenOptions={{ headerShown: false }}>
       <ListingStack.Screen name="ListingScreen" component={ListingScreen} />
       <ListingStack.Screen name="AdScreen" component={AdScreen} />
     </ListingStack.Navigator>
+  );
+};
+
+const ExchangeStack = createStackNavigator<ExchangeParamList>();
+const ExchangeNavigator = () => {
+  return (
+    <ExchangeStack.Navigator screenOptions={{ headerShown: false }}>
+      <ExchangeStack.Screen name="ExchangeScreen" component={ExchangeScreen} />
+      <ExchangeStack.Screen name="AdScreen" component={AdScreen} />
+    </ExchangeStack.Navigator>
   );
 };
 

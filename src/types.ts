@@ -29,6 +29,11 @@ export type ListingParamList = {
   AdScreen: { id: string };
 };
 
+export type ExchangeParamList = {
+  ExchangeScreen: undefined;
+  AdScreen: { id: string };
+};
+
 export type Order = {
   id: string;
   address: string;
@@ -46,6 +51,7 @@ export type Price = {
 export type Ad = {
   id: string;
   created: any;
+  paid: any;
   cooldown: number;
   title: string;
   currencies: string[];
@@ -60,6 +66,7 @@ export type Ad = {
     userId: string;
     currency: string;
     inputAddress: string;
+    address: Address;
   };
 };
 
@@ -69,6 +76,9 @@ export type User = {
   username: string;
   address: Address;
   ads: { [id: string]: Ad };
+  buyingList?: Ad[];
+  sellingList?: Ad[];
+  history?: Ad[];
 };
 
 export type Address = {

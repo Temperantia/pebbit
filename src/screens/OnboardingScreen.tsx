@@ -23,7 +23,7 @@ const OnboardingScreen = () => {
       behavior="padding"
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
-      <ScrollView style={tw("mx-5")}>
+      <ScrollView style={tw("px-5")}>
         <View style={tw("my-2 items-center")}>
           <Text style={[tw("text-lg"), { fontFamily: "poppins-medium" }]}>
             Set up your account

@@ -46,20 +46,27 @@ export const AuthProvider: FC = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [newUser, setNewUser] = useState<NewUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  let unsubscribe: () => void;
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
       if (authUser) {
         const { email, uid } = authUser;
-        userCollection.doc(uid).onSnapshot(async (doc) => {
+        unsubscribe = userCollection.doc(uid).onSnapshot(async (doc) => {
           if (!doc.exists) {
             setNewUser({ email, id: uid });
+            setLoading(false);
             return;
           }
+
           const data = doc.data();
           if (data) {
             await signIn(data);
           }
+
           setLoading(false);
         });
       } else {
@@ -96,6 +103,17 @@ export const AuthProvider: FC = ({ children }) => {
   };
 
   const signIn = async (user: User) => {
+    const ads = Object.entries(user.ads).map(([id, ad]) => ({
+      ...ad,
+      id,
+    }));
+    user.buyingList = ads.filter(({ userId }) => userId !== user.id);
+    user.sellingList = ads.filter(({ userId }) => userId === user.id);
+    console.log(user.sellingList);
+    user.history = ads.filter(
+      ({ userId, status }) =>
+        status === "complete" || (userId !== user.id && status === "received")
+    );
     // todo token
     try {
       const data = await registerForPushNotifications();

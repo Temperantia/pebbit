@@ -33,7 +33,7 @@ const PicturePicker = ({ control }: { control: Control<any> }) => {
   return (
     <Controller
       name="pictures"
-      defaultValue={[null, null, null, null, null, null]}
+      //defaultValue={[null, null, null, null, null, null]}
       control={control}
       rules={{
         validate: (value: string[]) => {

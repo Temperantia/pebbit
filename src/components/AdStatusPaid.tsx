@@ -4,23 +4,25 @@ import { Image, Text, View } from "react-native";
 import tw from "../tailwind";
 import { currencies } from "../constants";
 import { Ad } from "../types";
-import Icon from "../components/core/Icon";
+import Icon from "./core/Icon";
 import tailwindConfig from "../../tailwind.config";
 
-const AdStatusSold = ({ ad }: { ad: Ad }) => {
+const AdStatusPaid = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
   return (
     <View style={tw("my-2")}>
       <Text>Payment received, thank you for your purchase</Text>
-      <View style={tw("my-2 flex-row items-center")}>
-        <Image
-          style={tw("w-8 h-8 mr-2")}
-          source={currencies[ad.buyer.currency].image}
-        ></Image>
-        <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>
-          {ad.prices[ad.buyer.currency].amount}{" "}
-          {currencies[ad.buyer.currency].symbol}
-        </Text>
-      </View>
+      {amount && (
+        <View style={tw("my-2 flex-row items-center")}>
+          <Image
+            style={tw("w-8 h-8 mr-2")}
+            source={currencies[ad.buyer.currency].image}
+          ></Image>
+          <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>
+            {ad.prices[ad.buyer.currency].amount}{" "}
+            {currencies[ad.buyer.currency].symbol}
+          </Text>
+        </View>
+      )}
       <View
         style={tw(
           "flex-row justify-center rounded border border-grey-slate py-2"
@@ -39,4 +41,4 @@ const AdStatusSold = ({ ad }: { ad: Ad }) => {
   );
 };
 
-export default AdStatusSold;
+export default AdStatusPaid;
