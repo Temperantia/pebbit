@@ -16,6 +16,7 @@ import Icon from "./Icon";
 import tailwindConfig from "../../../tailwind.config";
 
 const TextInput = ({
+  optional,
   email,
   copy,
   password,
@@ -24,10 +25,12 @@ const TextInput = ({
   number,
   label,
   icon,
+  value,
   placeholder,
   control,
   name,
 }: {
+  optional?: boolean;
   email?: boolean;
   copy?: boolean;
   password?: boolean;
@@ -36,6 +39,7 @@ const TextInput = ({
   multiline?: boolean;
   label?: string;
   icon?: ImageSourcePropType;
+  value?: string;
   placeholder?: string;
   control: Control<any>;
   name: string;
@@ -43,10 +47,10 @@ const TextInput = ({
   return (
     <Controller
       name={name}
-      defaultValue=""
+      defaultValue={value}
       control={control}
       rules={{
-        required: "Is required",
+        required: optional ? undefined : "Is required",
         pattern: email
           ? {
               value:

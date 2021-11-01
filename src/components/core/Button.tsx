@@ -6,11 +6,13 @@ import tw from "../../tailwind";
 
 const Button = ({
   black,
+  save,
   loading,
   title,
   onPress,
 }: {
   black?: boolean;
+  save?: boolean;
   loading?: boolean;
   title: string;
   onPress: () => void;
@@ -21,13 +23,23 @@ const Button = ({
     <TouchableOpacity
       style={tw(
         "w-full flex-row justify-center rounded" +
-          (black ? " bg-black-background-2 py-3" : " bg-red-main py-5")
+          (save
+            ? " bg-black-background-2 py-3"
+            : black
+            ? " bg-black-background-2 py-3"
+            : " bg-red-main py-5")
       )}
       onPress={onPress}
     >
       <Text
         style={[
-          tw(black ? "text-red-main" : "text-white text-2xl"),
+          tw(
+            save
+              ? "text-white"
+              : black
+              ? "text-red-main"
+              : "text-white text-2xl"
+          ),
           { fontFamily: "poppins-semibold" },
         ]}
       >

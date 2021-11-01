@@ -26,11 +26,13 @@ const google = {
 type NewUser = {
   email: string | null;
   id: string;
+  phone: string | null;
 };
 
 type AuthContextData = {
   token: string | null;
   user: User | null;
+  authUser: firebase.User | null;
   newUser: NewUser | null;
   loading: boolean;
   signInWithGoogle(): Promise<void>;
@@ -44,20 +46,22 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const AuthProvider: FC = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [authUser, setAuthUser] = useState<firebase.User | null>(null);
   const [newUser, setNewUser] = useState<NewUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   let unsubscribe: () => void;
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
+      setAuthUser(authUser);
       if (unsubscribe) {
         unsubscribe();
       }
       if (authUser) {
-        const { email, uid } = authUser;
+        const { email, uid, phoneNumber } = authUser;
         unsubscribe = userCollection.doc(uid).onSnapshot(async (doc) => {
           if (!doc.exists) {
-            setNewUser({ email, id: uid });
+            setNewUser({ email, id: uid, phone: phoneNumber });
             setLoading(false);
             return;
           }
@@ -109,7 +113,6 @@ export const AuthProvider: FC = ({ children }) => {
     }));
     user.buyingList = ads.filter(({ userId }) => userId !== user.id);
     user.sellingList = ads.filter(({ userId }) => userId === user.id);
-    console.log(user.sellingList);
     user.history = ads.filter(
       ({ userId, status }) =>
         status === "complete" || (userId !== user.id && status === "received")
@@ -175,6 +178,7 @@ export const AuthProvider: FC = ({ children }) => {
       value={{
         token,
         user,
+        authUser,
         newUser,
         loading,
         signInWithGoogle,

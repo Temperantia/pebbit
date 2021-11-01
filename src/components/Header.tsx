@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useCallback, useState } from "react";
 import {
   Button,
@@ -15,11 +16,19 @@ import SafeViewAndroid from "./SafeViewAndroid";
 
 const Header = ({ noMenu }: { noMenu?: boolean }) => {
   const { signOut } = useAuth();
+  const { navigate } = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
 
   const onSetVisible = useCallback(() => {
     setModalVisible(!modalVisible);
   }, [setModalVisible, modalVisible]);
+  const onNavigate = useCallback(
+    (route: string) => () => {
+      setModalVisible(false);
+      navigate(route);
+    },
+    [navigate]
+  );
   const onSignOut = useCallback(signOut, [signOut]);
 
   return (
@@ -48,6 +57,16 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
       {modalVisible && (
         <View>
           <View style={tw("w-full bg-black-background-2 absolute")}>
+            <Button
+              color={tailwindConfig.theme.colors["red-main"]}
+              title="Home"
+              onPress={onNavigate("Root")}
+            ></Button>
+            <Button
+              color={tailwindConfig.theme.colors["red-main"]}
+              title="Account Settings"
+              onPress={onNavigate("Settings")}
+            ></Button>
             <Button
               color={tailwindConfig.theme.colors["red-main"]}
               title="Sign Out"

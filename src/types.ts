@@ -5,6 +5,7 @@
 
 export type RootStackParamList = {
   Root: undefined;
+  Settings: undefined;
   NotFound: undefined;
 };
 
@@ -74,6 +75,7 @@ export type User = {
   id: string;
   email: string | null;
   username: string;
+  phone: string | null;
   address: Address;
   ads: { [id: string]: Ad };
   buyingList?: Ad[];

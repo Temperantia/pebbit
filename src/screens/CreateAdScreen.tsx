@@ -18,7 +18,6 @@ import tw from "../tailwind";
 import { categories } from "../constants";
 import Button from "../components/core/Button";
 import AdCard from "../components/AdCard";
-import { Ad } from "../types";
 import PicturePicker from "../components/PicturePicker";
 import CurrencyPicker from "../components/CurrencyPicker";
 
