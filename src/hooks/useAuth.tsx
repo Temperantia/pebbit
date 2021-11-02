@@ -123,7 +123,7 @@ export const AuthProvider: FC = ({ children }) => {
     );
     // todo token
     try {
-      const data = await registerForPushNotifications();
+      const data = await registerForPushNotifications(user.id);
       if (data) {
         setToken(data);
       }
@@ -149,7 +149,7 @@ export const AuthProvider: FC = ({ children }) => {
     signIn(data);
   };
 
-  const registerForPushNotifications = async () => {
+  const registerForPushNotifications = async (id: string) => {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -163,7 +163,7 @@ export const AuthProvider: FC = ({ children }) => {
     }
     const data = (await Notifications.getExpoPushTokenAsync()).data;
 
-    console.log(data);
+    await userCollection.doc(id).update({ token: data });
 
     if (Platform.OS === "android") {
       Notifications.setNotificationChannelAsync("default", {

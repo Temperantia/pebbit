@@ -1,5 +1,6 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   KeyboardAvoidingView,
   Text,
@@ -35,8 +36,9 @@ const MessagesScreen = ({
     },
   });
   const { goBack } = useNavigation();
+  const [loading, setLoading] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
-  const [userData, loading] = useDocumentData<User>(
+  const [userData, dataLoading] = useDocumentData<User>(
     userCollection.doc(user?.id),
     {
       idField: "id",
@@ -50,8 +52,10 @@ const MessagesScreen = ({
 
   const onSend = useCallback(
     handleSubmit(async ({ content }) => {
+      setLoading(true);
       await request("message", { content, id });
       reset();
+      setLoading(false);
     }),
     [handleSubmit, request, id]
   );
@@ -61,7 +65,7 @@ const MessagesScreen = ({
       behavior="padding"
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
-      <ScreenLoading loading={loading}>
+      <ScreenLoading loading={dataLoading}>
         {ad && (
           <View style={tw("h-full")}>
             <TouchableOpacity
@@ -113,7 +117,7 @@ const MessagesScreen = ({
                   </View>
                 </View>
               )}
-              keyExtractor={({ created }) => created}
+              keyExtractor={({ created }) => created.seconds.toString()}
             />
             <TextInput
               multiline
@@ -121,13 +125,19 @@ const MessagesScreen = ({
               control={control}
               placeholder="Type here to send a message..."
               right={
-                <TouchableOpacity onPress={onSend}>
-                  <Icon
-                    size={24}
+                loading ? (
+                  <ActivityIndicator
                     color={tailwindConfig.theme.colors["red-main"]}
-                    name="small/32/000000/email-send.png"
                   />
-                </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity onPress={onSend}>
+                    <Icon
+                      size={24}
+                      color={tailwindConfig.theme.colors["red-main"]}
+                      name="small/32/000000/email-send.png"
+                    />
+                  </TouchableOpacity>
+                )
               }
             />
           </View>

@@ -24,6 +24,16 @@
     "android": {
       "package": "com.magna_numeris.pebbit",
       "versionCode": 3
-    }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/assets/images/icon.png",
+          "color": "#ffffff",
+          "sounds": ["./src/assets/sounds/rock-debris-spill-SBA-300114527.wav"]
+        }
+      ]
+    ]
   }
 }

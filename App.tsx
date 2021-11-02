@@ -11,11 +11,11 @@ import { AuthProvider } from "./src/hooks/useAuth";
 const App = () => {
   const isLoadingComplete = useCachedResources();
 
-  /* useEffect(() => {
+  useEffect(() => {
     Notifications.setNotificationHandler({
       handleNotification: async () => ({
         shouldShowAlert: true,
-        shouldPlaySound: false,
+        shouldPlaySound: true,
         shouldSetBadge: false,
       }),
     });
@@ -24,10 +24,11 @@ const App = () => {
       console.log(notification);
     });
 
+    // todo route the user to the proper destination
     Notifications.addNotificationResponseReceivedListener((response) => {
       console.log(response);
     });
-  }, []); */
+  }, []);
 
   if (!isLoadingComplete) {
     return null;
