@@ -20,6 +20,7 @@ import {
 import ListingScreen from "../screens/ListingScreen";
 import AdScreen from "../screens/AdScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
+import MessagesScreen from "../screens/MessagesScreen";
 
 const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
@@ -123,6 +124,7 @@ const ExchangeNavigator = () => {
     <ExchangeStack.Navigator screenOptions={{ headerShown: false }}>
       <ExchangeStack.Screen name="ExchangeScreen" component={ExchangeScreen} />
       <ExchangeStack.Screen name="AdScreen" component={AdScreen} />
+      <ExchangeStack.Screen name="MessagesScreen" component={MessagesScreen} />
     </ExchangeStack.Navigator>
   );
 };

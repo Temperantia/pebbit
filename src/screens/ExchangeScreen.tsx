@@ -2,14 +2,15 @@ import React, { useCallback, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import tw from "../tailwind";
-import SellingList from "../components/SellingList";
+import MessagingList from "../components/MessagingList";
 import BuyingList from "../components/BuyingList";
+import SellingList from "../components/SellingList";
 import HistoryList from "../components/HistoryList";
 
 const tabs: { [tab: string]: JSX.Element } = {
   Selling: <SellingList />,
   Buying: <BuyingList />,
-  Messages: <SellingList />,
+  Messages: <MessagingList />,
   History: <HistoryList />,
 };
 

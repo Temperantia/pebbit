@@ -40,15 +40,13 @@ const AdLineSelling = ({
   const statusTextTitle = statusTexts[status]?.title ?? "";
   const statusTextDescription = statusTexts[status]?.description ?? "";
 
-  console.log(buyer);
-
   const onExpand = useCallback(() => {
     setExpanded(!expanded);
   }, [setExpanded, expanded]);
 
   const onClick = useCallback(() => {
     navigate("AdScreen", { id });
-  }, [navigate]);
+  }, [navigate, id]);
 
   useEffect(() => {
     if (status === "paid" && info.service && info.number) {

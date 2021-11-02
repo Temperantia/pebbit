@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 
@@ -11,11 +11,14 @@ import tw from "../tailwind";
 const OnboardingScreen = () => {
   const { register } = useAuth();
   const { control, handleSubmit } = useForm();
+  const [loading, setLoading] = useState<boolean>(false);
   const onRegister = useCallback(
-    handleSubmit(({ username, name, street, city, country }) =>
-      register(username, { name, street, city, country })
-    ),
-    [handleSubmit, register]
+    handleSubmit(async ({ username, name, street, city, country }) => {
+      setLoading(true);
+      await register(username, { name, street, city, country });
+      setLoading(false);
+    }),
+    [handleSubmit, register, setLoading]
   );
 
   return (
@@ -67,7 +70,11 @@ const OnboardingScreen = () => {
           ></TextInput>
         </View>
         <View style={tw("p-2 w-full")}>
-          <Button title="CONTINUE" onPress={onRegister}></Button>
+          <Button
+            title="CONTINUE"
+            loading={loading}
+            onPress={onRegister}
+          ></Button>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

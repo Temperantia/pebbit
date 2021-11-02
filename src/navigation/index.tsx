@@ -33,7 +33,9 @@ export default () => {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <ActivityIndicator />;
+    return (
+      <ActivityIndicator color={tailwindConfig.theme.colors["red-main"]} />
+    );
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { useForm } from "react-hook-form";
 import { KeyboardAvoidingView, Text, View } from "react-native";
@@ -14,9 +14,14 @@ const AuthScreen = () => {
   const { signInWithEmail, newUser } = useAuth();
   const { navigate } = useNavigation();
   const { control, handleSubmit } = useForm();
+  const [loading, setLoading] = useState<boolean>(false);
   const onSignIn = useCallback(
-    handleSubmit(({ email, password }) => signInWithEmail(email, password)),
-    [handleSubmit, signInWithEmail]
+    handleSubmit(async ({ email, password }) => {
+      setLoading(true);
+      await signInWithEmail(email, password);
+      setLoading(false);
+    }),
+    [handleSubmit, signInWithEmail, setLoading]
   );
 
   useEffect(() => {
@@ -60,7 +65,11 @@ const AuthScreen = () => {
             By signing up, you agree to our terms of service and privacy policy
           </Text>
           <View style={tw("p-2 w-full")}>
-            <Button title="SUBMIT" onPress={onSignIn}></Button>
+            <Button
+              title="SUBMIT"
+              loading={loading}
+              onPress={onSignIn}
+            ></Button>
           </View>
         </View>
       </View>

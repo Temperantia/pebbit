@@ -33,6 +33,7 @@ export type ListingParamList = {
 export type ExchangeParamList = {
   ExchangeScreen: undefined;
   AdScreen: { id: string };
+  MessagesScreen: { id: string };
 };
 
 export type Order = {
@@ -49,11 +50,21 @@ export type Price = {
   amount: number;
 };
 
+export type Message = {
+  author: {
+    id: string;
+    username: string;
+  };
+  created: any;
+  content: string;
+};
+
 export type Ad = {
   id: string;
+  userId: string;
+  username: string;
   created: any;
   paid: any;
-  cooldown: number;
   title: string;
   currencies: string[];
   category: string;
@@ -62,13 +73,15 @@ export type Ad = {
   pictures: string[];
   prices: { [currency: string]: Price };
   status: string;
-  userId: string;
+  cooldown: number;
   buyer: {
     userId: string;
+    username: string;
     currency: string;
     inputAddress: string;
     address: Address;
   };
+  messages?: Message[];
 };
 
 export type User = {
@@ -80,6 +93,7 @@ export type User = {
   ads: { [id: string]: Ad };
   buyingList?: Ad[];
   sellingList?: Ad[];
+  messagingList?: Ad[];
   history?: Ad[];
 };
 

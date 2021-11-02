@@ -37,7 +37,6 @@ const SettingsScreen = () => {
       try {
         if (user.email && email !== user.email) {
           try {
-            console.log(user.email, password);
             await auth.signInWithEmailAndPassword(user.email, password);
           } catch (error) {
             alert("Incorrect password");
@@ -64,7 +63,17 @@ const SettingsScreen = () => {
         alert(error.message);
       }
     }),
-    []
+    [
+      handleSubmit,
+      alert,
+      authUser,
+      goBack,
+      reset,
+      setLoading,
+      auth,
+      userCollection,
+      user,
+    ]
   );
   return (
     <KeyboardAvoidingView

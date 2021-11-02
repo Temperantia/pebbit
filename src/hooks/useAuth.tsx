@@ -113,6 +113,10 @@ export const AuthProvider: FC = ({ children }) => {
     }));
     user.buyingList = ads.filter(({ userId }) => userId !== user.id);
     user.sellingList = ads.filter(({ userId }) => userId === user.id);
+    user.messagingList = ads.filter(
+      ({ messages, status }) =>
+        !!messages && (status === "paid" || status === "sent")
+    );
     user.history = ads.filter(
       ({ userId, status }) =>
         status === "complete" || (userId !== user.id && status === "received")

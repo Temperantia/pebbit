@@ -25,6 +25,8 @@ const TextInput = ({
   number,
   label,
   icon,
+  height,
+  right,
   value,
   placeholder,
   control,
@@ -39,6 +41,8 @@ const TextInput = ({
   multiline?: boolean;
   label?: string;
   icon?: ImageSourcePropType;
+  height?: string;
+  right?: JSX.Element;
   value?: string;
   placeholder?: string;
   control: Control<any>;
@@ -92,9 +96,9 @@ const TextInput = ({
             )}
             <View
               style={tw(
-                "flex-row px-4 border border-grey-slate rounded" +
-                  (multiline ? " h-24" : " h-10") +
-                  (icon || copy ? " items-center" : "")
+                "flex-row px-4 border border-grey-slate rounded " +
+                  (height ?? "h-10") +
+                  (icon || copy || right ? " items-center" : "")
               )}
             >
               {copy && (
@@ -103,7 +107,7 @@ const TextInput = ({
                   color={tailwindConfig.theme.colors["red-main"]}
                   name="small/32/000000/copy.png"
                   onPress={onCopy}
-                ></Icon>
+                />
               )}
               {icon && <Image style={tw("w-8 h-8 mr-2")} source={icon}></Image>}
               <RNTextInput
@@ -117,7 +121,8 @@ const TextInput = ({
                 value={value}
                 onBlur={onBlur}
                 onChangeText={onChange}
-              ></RNTextInput>
+              />
+              {right}
             </View>
             {error && <Text style={tw("text-red-main")}>{error.message}</Text>}
           </View>

@@ -78,8 +78,6 @@ const CreateAdScreen = () => {
     [reset, navigate, handleSubmit, uploadImage, request]
   );
 
-  console.log(newAd);
-
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -107,6 +105,7 @@ const CreateAdScreen = () => {
         ></Select>
         <TextInput
           multiline
+          height="h-24"
           name="description"
           placeholder="Description"
           control={control}
