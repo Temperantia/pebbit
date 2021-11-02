@@ -72,6 +72,7 @@ export type Ad = {
   description: string;
   pictures: string[];
   prices: { [currency: string]: Price };
+  location: string;
   status: string;
   cooldown: number;
   buyer: {
