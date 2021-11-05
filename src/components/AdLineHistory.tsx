@@ -1,15 +1,13 @@
-import React, { useCallback, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import React, { useCallback } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { format } from "date-fns";
 
 import { Ad } from "../types";
 import tw from "../tailwind";
-import { currencies } from "../constants";
 import useAuth from "../hooks/useAuth";
 import StatusBanner from "./StatusBanner";
-
-const services = ["Fedex"];
+import CryptoCurrency, { Delta } from "./CryptoCurrency";
 
 const AdLineHistory = ({ ad }: { ad: Ad }) => {
   const { navigate } = useNavigation();
@@ -40,25 +38,11 @@ const AdLineHistory = ({ ad }: { ad: Ad }) => {
 
         <View style={tw("w-3/4 p-2")}>
           <Text style={{ fontFamily: "poppins-medium" }}>{ad.title}</Text>
-          <View style={tw("flex-row items-center")}>
-            <Image
-              style={tw("w-6 h-6 mr-2")}
-              source={currencies[currency].image}
-            ></Image>
-            <Text
-              style={[
-                tw(
-                  "text-xl" + (isSeller ? " text-green-main" : " text-red-main")
-                ),
-                { fontFamily: "poppins-semibold" },
-              ]}
-            >
-              {(isSeller ? "+" : "-") +
-                price.amount +
-                " " +
-                currencies[currency].symbol}
-            </Text>
-          </View>
+          <CryptoCurrency
+            currency={currency}
+            text={price.amount.toString()}
+            delta={isSeller ? Delta.Positive : Delta.Negative}
+          />
           <Text style={tw("text-xs text-grey-slate")}>
             Completed on:{" "}
             {format(new Date(ad.created.seconds * 1000), "d/M/yy h:m")}

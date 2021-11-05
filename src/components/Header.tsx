@@ -16,7 +16,8 @@ import SafeViewAndroid from "./SafeViewAndroid";
 
 const Header = ({ noMenu }: { noMenu?: boolean }) => {
   const { signOut } = useAuth();
-  const { navigate } = useNavigation();
+  const { navigate, getState } = useNavigation();
+  const { routes } = getState();
   const [modalVisible, setModalVisible] = useState(false);
 
   const onSetVisible = useCallback(() => {
@@ -58,17 +59,40 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
         <View>
           <View style={tw("w-full bg-black-background-2 absolute")}>
             <Button
-              color={tailwindConfig.theme.colors["red-main"]}
+              color={
+                tailwindConfig.theme.colors[
+                  routes[routes.length - 1].name === "Root"
+                    ? "red-main"
+                    : "white"
+                ]
+              }
               title="Home"
               onPress={onNavigate("Root")}
             ></Button>
             <Button
-              color={tailwindConfig.theme.colors["red-main"]}
+              color={
+                tailwindConfig.theme.colors[
+                  routes[routes.length - 1].name === "Profile"
+                    ? "red-main"
+                    : "white"
+                ]
+              }
+              title="My Profile"
+              onPress={onNavigate("Profile")}
+            ></Button>
+            <Button
+              color={
+                tailwindConfig.theme.colors[
+                  routes[routes.length - 1].name === "Settings"
+                    ? "red-main"
+                    : "white"
+                ]
+              }
               title="Account Settings"
               onPress={onNavigate("Settings")}
             ></Button>
             <Button
-              color={tailwindConfig.theme.colors["red-main"]}
+              color={tailwindConfig.theme.colors.white}
               title="Sign Out"
               onPress={onSignOut}
             ></Button>

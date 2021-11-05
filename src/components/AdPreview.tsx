@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 
 import { Ad } from "../types";
 import tw from "../tailwind";
-import { currencies } from "../constants";
+import CryptoCurrency from "./CryptoCurrency";
 
 const AdPreview = ({ ad }: { ad: Ad }) => {
   const picture = ad.pictures.find((picture) => !!picture);
@@ -27,21 +27,15 @@ const AdPreview = ({ ad }: { ad: Ad }) => {
             source={{
               uri: picture,
             }}
-          ></Image>
+          />
           <View
-            style={tw(
-              "flex-row items-center absolute left-0 p-2 bg-black-background-1 bottom-5"
-            )}
+            style={tw("absolute left-0 p-2 bg-black-background-1 bottom-5")}
           >
-            <Image
-              style={tw("w-6 h-6 mr-2")}
-              source={currencies[currency].image}
-            ></Image>
-            <Text
-              style={[tw("text-white"), { fontFamily: "poppins-semibold" }]}
-            >
-              {price.amount + " " + currencies[currency].symbol}
-            </Text>
+            <CryptoCurrency
+              currency={currency}
+              text={price.amount.toString()}
+              textColor="text-white"
+            />
           </View>
         </View>
         <View style={tw("p-2")}>

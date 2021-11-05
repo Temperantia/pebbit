@@ -1,20 +1,18 @@
 import React, { useCallback, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { useForm } from "react-hook-form";
+import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
 import { Ad } from "../types";
 import tw from "../tailwind";
-import { currencies, statusColors } from "../constants";
+import { statusColors } from "../constants";
 import Icon from "./core/Icon";
-import TextInput from "./core/TextInput";
-import Select from "./core/Select";
 import AdStatusSent from "./AdStatusSent";
 import AdStatusPaid from "./AdStatusPaid";
 import AdStatusPay from "./AdStatusPay";
 import AdStatusPending from "./AdStatusPending";
 import AdStatusReceived from "./AdStatusReceived";
 import StatusBanner from "./StatusBanner";
+import CryptoCurrency from "./CryptoCurrency";
 
 const services = ["Fedex"];
 
@@ -82,15 +80,10 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
                 {statusTextDescription}
               </Text>
             </View>
-            <View style={tw("flex-row items-center")}>
-              <Image
-                style={tw("w-6 h-6 mr-2")}
-                source={currencies[currency].image}
-              ></Image>
-              <Text style={[{ fontFamily: "poppins-semibold" }]}>
-                {price.amount + " " + currencies[currency].symbol}
-              </Text>
-            </View>
+            <CryptoCurrency
+              currency={currency}
+              text={price.amount.toString()}
+            />
           </View>
         </View>
       </TouchableOpacity>

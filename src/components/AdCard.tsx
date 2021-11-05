@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import { Image, Text, View } from "react-native";
 
-import { currencies } from "../constants";
 import tw from "../tailwind";
-import { Ad, Price } from "../types";
+import { Price } from "../types";
+import CryptoCurrency from "./CryptoCurrency";
 
 const AdCard = ({
   data: {
@@ -36,15 +36,7 @@ const AdCard = ({
           ></Image>
         )}
         {currency && (
-          <View style={tw("flex-row justify-between items-center")}>
-            <Image
-              style={tw("w-8 h-8")}
-              source={currencies[currency].image}
-            ></Image>
-            <Text style={{ fontFamily: "poppins-semibold" }}>
-              {price} {currencies[currency].symbol}
-            </Text>
-          </View>
+          <CryptoCurrency currency={currency} text={price.amount.toString()} />
         )}
       </View>
       <View style={tw("w-2/3")}>

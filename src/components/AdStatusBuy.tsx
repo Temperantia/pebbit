@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 import { request } from "../firebase";
 import tw from "../tailwind";
 import Button from "../components/core/Button";
-import { currencies } from "../constants";
 import { Ad } from "../types";
 import useAuth from "../hooks/useAuth";
+import CryptoCurrency from "./CryptoCurrency";
 
 const AdStatusBuy = ({ ad }: { ad: Ad }) => {
   const { token } = useAuth();
@@ -47,23 +47,18 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
             <TouchableOpacity
               key={currency}
               style={tw(
-                "flex-row justify-between rounded mx-1 w-1/3 border border-grey-slate py-1 px-2 items-center" +
+                "rounded mx-1 w-1/3 border border-grey-slate py-1 px-2 items-center" +
                   (currency === selectedCurrency ? " bg-purple-main" : "")
               )}
               onPress={onSelectCurrency(currency)}
             >
-              <Image
-                style={tw("w-8 h-8")}
-                source={currencies[currency].image}
-              ></Image>
-              <Text
-                style={[
-                  tw(currency === selectedCurrency ? "" : "text-grey-slate"),
-                  { fontFamily: "poppins-semibold" },
-                ]}
-              >
-                {price.amount} {currencies[currency].symbol}
-              </Text>
+              <CryptoCurrency
+                currency={currency}
+                text={price.amount.toString()}
+                textColor={
+                  currency === selectedCurrency ? "" : "text-grey-slate"
+                }
+              />
             </TouchableOpacity>
           ))}
         </View>

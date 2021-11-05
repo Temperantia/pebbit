@@ -87,59 +87,75 @@ const SettingsScreen = () => {
           <View style={tw("p-5 border-b border-grey-slate")}>
             <Text style={tw("text-base")}>Account Information</Text>
             <Text>Edit your email, password or phone number</Text>
-            <TextInput name="email" control={control} label="Email" />
-            <TextInput
-              password
-              optional
-              name="password"
-              control={control}
-              label="Current Password (required if changing email or password)"
-            />
-            <TextInput
-              password
-              optional
-              name="newPassword"
-              control={control}
-              label="New Password"
-            />
-            <TextInput
-              optional
-              name="phone"
-              control={control}
-              label="Phone Number"
-            />
+            <View style={tw("mb-2")}>
+              <TextInput name="email" control={control} label="Email" />
+            </View>
+            <View style={tw("mb-2")}>
+              <TextInput
+                password
+                optional
+                name="password"
+                control={control}
+                label="Current Password (required if changing email or password)"
+              />
+            </View>
+            <View style={tw("mb-2")}>
+              <TextInput
+                password
+                optional
+                name="newPassword"
+                control={control}
+                label="New Password"
+              />
+            </View>
+            <View style={tw("mb-2")}>
+              <TextInput
+                optional
+                name="phone"
+                control={control}
+                label="Phone Number"
+              />
+            </View>
           </View>
         )}
         <View style={tw("p-5")}>
-          <Text style={tw("text-base")}>Shipping Information</Text>
-          <Text>
+          <Text style={tw("mb-2 text-base")}>Shipping Information</Text>
+          <Text style={tw("mb-2")}>
             This is what sellers will use to ship your purchased items, please
             ensure this information is correct.
           </Text>
-          <TextInput
-            name="address.name"
-            control={control}
-            label="Addressee Name"
-            value={user?.address.name ?? ""}
-          />
-          <TextInput
-            name="address.street"
-            control={control}
-            label="Street Address or PO Box #"
-            value={user?.address.street ?? ""}
-          />
-          <TextInput
-            name="address.city"
-            control={control}
-            label="City or Town, other Principal Subdivision, and Postage"
-            value={user?.address.city ?? ""}
-          />
-          <TextInput
-            name="address.country"
-            control={control}
-            label="Country"
-            value={user?.address.country ?? ""}
-          />
+          <View style={tw("mb-2")}>
+            <TextInput
+              name="address.name"
+              control={control}
+              label="Addressee Name"
+              value={user?.address.name ?? ""}
+            />
+          </View>
+          <View style={tw("mb-2")}>
+            <TextInput
+              name="address.street"
+              control={control}
+              label="Street Address or PO Box #"
+              value={user?.address.street ?? ""}
+            />
+          </View>
+          <View style={tw("mb-2")}>
+            <TextInput
+              name="address.city"
+              control={control}
+              label="City or Town, other Principal Subdivision, and Postage"
+              value={user?.address.city ?? ""}
+            />
+          </View>
+          <View style={tw("mb-2")}>
+            <TextInput
+              name="address.country"
+              control={control}
+              label="Country"
+              value={user?.address.country ?? ""}
+            />
+          </View>
         </View>
         <View style={tw("justify-center flex-row")}>
           <View>

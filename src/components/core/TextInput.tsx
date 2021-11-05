@@ -10,12 +10,12 @@ import {
 } from "react-native";
 
 import tw from "../../tailwind";
-import tailwind from "../../../tailwind.config";
 import { currencies } from "../../constants";
 import Icon from "./Icon";
 import tailwindConfig from "../../../tailwind.config";
 
 const TextInput = ({
+  style,
   optional,
   email,
   copy,
@@ -26,12 +26,16 @@ const TextInput = ({
   label,
   icon,
   height,
+  left,
   right,
   value,
   placeholder,
   control,
   name,
+  onValue,
+  onEndEditing,
 }: {
+  style?: string;
   optional?: boolean;
   email?: boolean;
   copy?: boolean;
@@ -42,13 +46,63 @@ const TextInput = ({
   label?: string;
   icon?: ImageSourcePropType;
   height?: string;
+  left?: JSX.Element;
   right?: JSX.Element;
   value?: string;
   placeholder?: string;
-  control: Control<any>;
-  name: string;
+  control?: Control<any>;
+  name?: string;
+  onValue?: (value: string) => void;
+  onEndEditing?: () => void;
 }) => {
-  return (
+  const children = (
+    v: string,
+    onChange: (text: string) => void,
+    error?: any,
+    onCopy?: () => void,
+    onBlur?: () => void
+  ) => (
+    <View>
+      {label && <Text style={tw("text-grey-slate text-xs")}>{label}</Text>}
+      <View
+        style={tw(
+          "flex-row bg-white border border-grey-slate rounded " +
+            (height ?? " h-10 ") +
+            (icon || copy || right ? " items-center " : "") +
+            (style ?? "") +
+            (!left ? " px-4 " : "")
+        )}
+      >
+        {copy && (
+          <Icon
+            size={28}
+            color={tailwindConfig.theme.colors["red-main"]}
+            name="small/32/000000/copy.png"
+            onPress={onCopy}
+          />
+        )}
+        {icon && <Image style={tw("w-8 h-8 mr-2")} source={icon}></Image>}
+        {left}
+        <RNTextInput
+          editable={!copy}
+          style={[tw("flex-grow"), { fontFamily: "poppins-medium" }]}
+          placeholderTextColor={tailwindConfig.theme.colors["grey-slate"]}
+          secureTextEntry={password}
+          keyboardType={number ? "numeric" : "default"}
+          multiline={multiline}
+          placeholder={placeholder}
+          value={v}
+          onBlur={onBlur ?? (() => {})}
+          onChangeText={onChange}
+          onEndEditing={onEndEditing}
+        />
+        {right}
+      </View>
+      {error && <Text style={tw("text-red-main")}>{error.message}</Text>}
+    </View>
+  );
+
+  return name && control ? (
     <Controller
       name={name}
       defaultValue={value}
@@ -82,53 +136,20 @@ const TextInput = ({
         },
       }}
       render={({
-        field: { onChange, onBlur, value },
+        field: { onChange, onBlur, value: fieldValue },
         fieldState: { error },
       }) => {
         const onCopy = useCallback(async () => {
           onChange(await Clipboard.getString());
         }, [onChange, Clipboard]);
 
-        return (
-          <View style={tw("my-2")}>
-            {label && (
-              <Text style={tw("text-grey-slate text-xs")}>{label}</Text>
-            )}
-            <View
-              style={tw(
-                "flex-row px-4 border border-grey-slate rounded " +
-                  (height ?? "h-10") +
-                  (icon || copy || right ? " items-center" : "")
-              )}
-            >
-              {copy && (
-                <Icon
-                  size={28}
-                  color={tailwindConfig.theme.colors["red-main"]}
-                  name="small/32/000000/copy.png"
-                  onPress={onCopy}
-                />
-              )}
-              {icon && <Image style={tw("w-8 h-8 mr-2")} source={icon}></Image>}
-              <RNTextInput
-                editable={!copy}
-                style={[tw("flex-grow"), { fontFamily: "poppins-medium" }]}
-                placeholderTextColor={tailwind.theme.colors["grey-slate"]}
-                secureTextEntry={password}
-                keyboardType={number ? "numeric" : "default"}
-                multiline={multiline}
-                placeholder={placeholder}
-                value={value}
-                onBlur={onBlur}
-                onChangeText={onChange}
-              />
-              {right}
-            </View>
-            {error && <Text style={tw("text-red-main")}>{error.message}</Text>}
-          </View>
-        );
+        return children(fieldValue, onChange, error, onCopy, onBlur);
       }}
     ></Controller>
+  ) : value !== undefined && onValue ? (
+    children(value, onValue)
+  ) : (
+    <></>
   );
 };
 

@@ -5,6 +5,7 @@
 
 export type RootStackParamList = {
   Root: undefined;
+  Profile: undefined;
   Settings: undefined;
   NotFound: undefined;
 };
@@ -83,6 +84,7 @@ export type Ad = {
     address: Address;
   };
   messages?: Message[];
+  rate?: number;
 };
 
 export type User = {

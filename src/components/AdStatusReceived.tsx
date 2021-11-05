@@ -1,27 +1,29 @@
-import React from "react";
-import { Image, Text, View } from "react-native";
+import React, { useCallback } from "react";
+import { Text, View } from "react-native";
 
 import tw from "../tailwind";
-import { currencies } from "../constants";
 import { Ad } from "../types";
 import Icon from "../components/core/Icon";
 import tailwindConfig from "../../tailwind.config";
+import CryptoCurrency from "./CryptoCurrency";
+import { request } from "../firebase";
 
 const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
+  const onRate = useCallback(
+    (rate) => () => {
+      request("rate?ad=" + ad.id + "&rate=" + (rate + 1));
+    },
+    [request, ad]
+  );
+
   return (
     <View style={tw("my-2")}>
       <Text>Thank you for confirming</Text>
       {amount && (
-        <View style={tw("my-2 flex-row items-center")}>
-          <Image
-            style={tw("w-8 h-8 mr-2")}
-            source={currencies[ad.buyer.currency].image}
-          ></Image>
-          <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>
-            {ad.prices[ad.buyer.currency].amount}{" "}
-            {currencies[ad.buyer.currency].symbol}
-          </Text>
-        </View>
+        <CryptoCurrency
+          currency={ad.buyer.currency}
+          text={ad.prices[ad.buyer.currency].amount.toString()}
+        />
       )}
       <View
         style={tw(
@@ -32,10 +34,30 @@ const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
           size={32}
           color={tailwindConfig.theme.colors["green-main"]}
           name="small/32/000000/ok.png"
-        ></Icon>
+        />
         <Text style={tw("ml-3 text-grey-slate text-lg")}>
           Transaction Complete
         </Text>
+      </View>
+      <Text>Please rate your experience with this seller</Text>
+      <View style={tw("flex-row")}>
+        {[...Array(5).keys()].map((_value, index) => (
+          <Icon
+            key={index}
+            size={32}
+            color={
+              tailwindConfig.theme.colors[
+                ad.rate && ad.rate > index ? "gold-badge" : "grey-slate"
+              ]
+            }
+            name={
+              "small/32/000000/star" +
+              (ad.rate && ad.rate > index ? "-filled" : "") +
+              ".png"
+            }
+            onPress={onRate(index)}
+          />
+        ))}
       </View>
     </View>
   );

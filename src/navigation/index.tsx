@@ -17,6 +17,7 @@ import useAuth from "../hooks/useAuth";
 import OnboardingScreen from "../screens/OnboardingScreen";
 import { ActivityIndicator } from "react-native";
 import SettingsScreen from "../screens/SettingsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 const theme = {
   ...DefaultTheme,
@@ -52,6 +53,13 @@ const RootNavigator = () => {
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
+        options={{
+          header: () => <Header></Header>,
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
         options={{
           header: () => <Header></Header>,
         }}

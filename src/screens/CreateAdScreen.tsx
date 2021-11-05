@@ -20,8 +20,7 @@ import Button from "../components/core/Button";
 import AdCard from "../components/AdCard";
 import PicturePicker from "../components/PicturePicker";
 import CurrencyPicker from "../components/CurrencyPicker";
-
-const keyboardVerticalOffset = Platform.OS === "ios" ? 100 : 0;
+import { keyboardVerticalOffset } from "../constants/Layout";
 
 const uploadImage = async (uri: string) => {
   const response = await fetch(uri);
@@ -44,6 +43,9 @@ const CreateAdScreen = () => {
     },
   });
   const newAd = watch();
+
+  const onRenderItem = useCallback((item) => <Text>{item}</Text>, [Text]);
+  const onRenderButton = useCallback((item) => <Text>{item}</Text>, [Text]);
 
   const onSubmit = useCallback(
     handleSubmit(async (ad) => {
@@ -89,27 +91,33 @@ const CreateAdScreen = () => {
             Post an Ad
           </Text>
         </View>
-        <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>
-          Ad Details
-        </Text>
-        <TextInput
-          name="title"
-          placeholder="Title"
-          control={control}
-        ></TextInput>
-        <Select
-          data={categories}
-          placeholder="Category"
-          name="category"
-          control={control}
-        ></Select>
-        <TextInput
-          multiline
-          height="h-24"
-          name="description"
-          placeholder="Description"
-          control={control}
-        ></TextInput>
+        <View style={tw("mb-2")}>
+          <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>
+            Ad Details
+          </Text>
+        </View>
+        <View style={tw("mb-2")}>
+          <TextInput name="title" placeholder="Title" control={control} />
+        </View>
+        <View style={tw("mb-2")}>
+          <Select
+            data={categories}
+            placeholder="Category"
+            name="category"
+            control={control}
+            onRenderButton={onRenderButton}
+            onRenderItem={onRenderItem}
+          ></Select>
+        </View>
+        <View style={tw("mb-2")}>
+          <TextInput
+            multiline
+            height="h-24"
+            name="description"
+            placeholder="Description"
+            control={control}
+          />
+        </View>
         <Text>You may choose up to 3 currencies.</Text>
         <CurrencyPicker newAd={newAd} control={control} />
         <View style={tw("my-3")}>

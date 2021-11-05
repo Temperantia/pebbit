@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Clipboard, Image, Text, View } from "react-native";
+import { Clipboard, Text, View } from "react-native";
 
 import tw from "../tailwind";
 import Icon from "../components/core/Icon";
-import { currencies } from "../constants";
 import tailwindConfig from "../../tailwind.config";
 import { Ad } from "../types";
 import { request } from "../firebase";
 import useAuth from "../hooks/useAuth";
+import CryptoCurrency from "./CryptoCurrency";
 
 const AdStatusPay = ({ ad }: { ad: Ad }) => {
   const { user } = useAuth();
@@ -49,15 +49,11 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
     <View style={tw("my-2")}>
       <Text>
         Please send{" "}
-        <Text style={{ fontFamily: "poppins-semibold" }}>exactly</Text>
-        <Image
-          style={tw("w-6 h-6")}
-          source={currencies[ad.buyer.currency].image}
-        ></Image>
-        <Text style={[{ fontFamily: "poppins-semibold" }]}>
-          {ad.prices[ad.buyer.currency].amount}{" "}
-          {currencies[ad.buyer.currency].symbol}
-        </Text>{" "}
+        <Text style={{ fontFamily: "poppins-semibold" }}>exactly </Text>
+        <CryptoCurrency
+          currency={ad.buyer.currency}
+          text={ad.prices[ad.buyer.currency].amount.toString()}
+        />{" "}
         to the address listed below:
       </Text>
       <View

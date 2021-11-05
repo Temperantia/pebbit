@@ -1,18 +1,12 @@
 import React, { useCallback, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 import tw from "../tailwind";
-import { currencies } from "../constants";
 import { Ad } from "../types";
 import Icon from "../components/core/Icon";
 import tailwindConfig from "../../tailwind.config";
 import { request } from "../firebase";
+import CryptoCurrency from "./CryptoCurrency";
 
 const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,16 +20,10 @@ const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
     <View style={tw("my-2")}>
       <Text>Seller has indicated item was shipped</Text>
       {amount && (
-        <View style={tw("my-2 flex-row items-center")}>
-          <Image
-            style={tw("w-8 h-8 mr-2")}
-            source={currencies[ad.buyer.currency].image}
-          ></Image>
-          <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>
-            {ad.prices[ad.buyer.currency].amount}{" "}
-            {currencies[ad.buyer.currency].symbol}
-          </Text>
-        </View>
+        <CryptoCurrency
+          currency={ad.buyer.currency}
+          text={ad.prices[ad.buyer.currency].amount.toString()}
+        />
       )}
       {loading ? (
         <ActivityIndicator color={tailwindConfig.theme.colors["red-main"]} />

@@ -86,7 +86,7 @@ const MultiSelect = ({
       }}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
-          <View style={tw("my-2")}>
+          <View style={tw("my-2 bg-white")}>
             <TouchableOpacity
               style={tw(
                 "w-full flex-row items-center justify-between px-4 border border-grey-slate rounded h-10"
