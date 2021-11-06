@@ -8,13 +8,10 @@ import tw from "../tailwind";
 import { statusColors } from "../constants";
 import Icon from "./core/Icon";
 import TextInput from "./core/TextInput";
-import Select from "./core/Select";
 import { request } from "../firebase";
 import StatusBanner from "./StatusBanner";
 import tailwindConfig from "../../tailwind.config";
 import CryptoCurrency from "./CryptoCurrency";
-
-const services = ["Fedex"];
 
 const statusTexts: {
   [status: string]: { title?: string; description: string };
@@ -40,9 +37,6 @@ const AdLineSelling = ({
   const statusColor = statusColors[status] ?? "";
   const statusTextTitle = statusTexts[status]?.title ?? "";
   const statusTextDescription = statusTexts[status]?.description ?? "";
-
-  const onRenderButton = useCallback((item) => <Text>{item}</Text>, [Text]);
-  const onRenderItem = useCallback((item) => <Text>{item}</Text>, [Text]);
 
   const onExpand = useCallback(() => {
     setExpanded(!expanded);
@@ -117,20 +111,19 @@ const AdLineSelling = ({
                 ].join(" ")}
               </Text>
             </View>
-            <Select
-              data={services}
-              label="Shipping service:"
-              name="service"
-              control={control}
-              onRenderButton={onRenderButton}
-              onRenderItem={onRenderItem}
-            />
             <TextInput
-              copy
-              label="Tracking number:"
+              label="Shipping service:"
               control={control}
-              name="number"
+              name="service"
             />
+            {!!info.service && (
+              <TextInput
+                copy
+                label="Tracking number:"
+                control={control}
+                name="number"
+              />
+            )}
             <TouchableOpacity
               style={tw(
                 "py-2 flex-row items-center justify-center border rounded border-grey-slate"

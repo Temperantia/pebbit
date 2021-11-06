@@ -26,14 +26,16 @@ const Select = ({
   name?: string;
   value?: any;
   onValue?: (value: any) => void;
-  onRenderButton: (item: any) => JSX.Element;
-  onRenderItem: (item: any) => JSX.Element;
+  onRenderButton?: (item: any) => JSX.Element;
+  onRenderItem?: (item: any) => JSX.Element;
 }) => {
   const onRenderCustomizedButtonChild = useCallback(
     (item) => (
       <View style={tw("flex-row items-center justify-between")}>
-        {item ? (
+        {item && onRenderButton ? (
           onRenderButton(item)
+        ) : item ? (
+          <Text>{item}</Text>
         ) : (
           <Text style={tw("text-grey-slate")}>{placeholder}</Text>
         )}
@@ -41,6 +43,11 @@ const Select = ({
       </View>
     ),
     [View, tw, Text, placeholder, Icon]
+  );
+
+  const onRenderItemDefault = useCallback(
+    (item) => <Text>{item}</Text>,
+    [Text]
   );
 
   const children = (
@@ -59,7 +66,7 @@ const Select = ({
         )}
         rowStyle={{}}
         renderCustomizedButtonChild={onRenderCustomizedButtonChild}
-        renderCustomizedRowChild={onRenderItem}
+        renderCustomizedRowChild={onRenderItem ?? onRenderItemDefault}
         onSelect={(selectedItem, index) => {
           onChange(selectedItem);
         }}

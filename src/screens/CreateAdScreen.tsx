@@ -44,9 +44,6 @@ const CreateAdScreen = () => {
   });
   const newAd = watch();
 
-  const onRenderItem = useCallback((item) => <Text>{item}</Text>, [Text]);
-  const onRenderButton = useCallback((item) => <Text>{item}</Text>, [Text]);
-
   const onSubmit = useCallback(
     handleSubmit(async (ad) => {
       ad.prices = Object.entries(ad.prices).reduce(
@@ -105,8 +102,6 @@ const CreateAdScreen = () => {
             placeholder="Category"
             name="category"
             control={control}
-            onRenderButton={onRenderButton}
-            onRenderItem={onRenderItem}
           />
         </View>
         <View style={tw("mb-2")}>

@@ -15,7 +15,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
   let interval: NodeJS.Timer;
 
   useEffect(() => {
-    setTimeout(() => {
+    /*  setTimeout(() => {
       request(
         "paymentComplete?ad=" +
           ad.id +
@@ -23,7 +23,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
           user?.id +
           "&nonce=CryptAPIPebbit&value_coin=999"
       );
-    }, 20000);
+    }, 20000); */
 
     clearInterval(interval);
     interval = setInterval(() => {
@@ -47,15 +47,16 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
 
   return (
     <View style={tw("my-2")}>
-      <Text>
-        Please send{" "}
+      <View style={tw("flex-row flex-wrap")}>
+        <Text>Please send </Text>
         <Text style={{ fontFamily: "poppins-semibold" }}>exactly </Text>
         <CryptoCurrency
           currency={ad.buyer.currency}
           text={ad.prices[ad.buyer.currency].amount.toString()}
-        />{" "}
-        to the address listed below:
-      </Text>
+        />
+        <Text> to the address listed below:</Text>
+      </View>
+
       <View
         style={tw(
           "flex-row justify-between items-center my-2 p-2 border border-black rounded bg-purple-main"

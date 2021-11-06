@@ -12,10 +12,8 @@ import AdPreview from "../components/AdPreview";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "../components/core/Icon";
 import tailwindConfig from "../../tailwind.config";
-import { categories, currencies } from "../constants";
-import TextInput from "../components/core/TextInput";
+import { categories, countries, currencies } from "../constants";
 import Select from "../components/core/Select";
-import SearchBar from "../components/SearchBar";
 import CryptoCurrency from "../components/CryptoCurrency";
 
 const ListingScreen = () => {
@@ -23,20 +21,19 @@ const ListingScreen = () => {
   const [now] = useState<number>(Math.round(Date.now() / 1000));
   const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("All");
-  //const [term, setTerm] = useState<string | null>(null);
-  const [locationInput, setLocationInput] = useState<string>("");
-  const [location, setLocation] = useState<string>(user?.address.country ?? "");
+  const [location, setLocation] = useState<string>("All");
   const [currency, setCurrency] = useState<string>("All");
   const [order, setOrder] = useState<string>("Newest first");
 
-  const [searchCategory, setSearchCategory] = useState<string>("All");
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const adCollectionFiltered = useMemo(() => {
     let collection = adCollection.where("status", "==", "new");
-    //.where("location", "==", location);
 
     if (category !== "All") {
       collection = collection.where("category", "==", category);
+    }
+
+    if (location !== "All") {
+      collection = collection.where("location", "==", location);
     }
 
     if (currency !== "All") {
@@ -87,10 +84,6 @@ const ListingScreen = () => {
     [setCategory]
   );
 
-  const onEndEditingLocation = useCallback(() => {
-    setLocation(locationInput);
-  }, [setLocation, locationInput]);
-
   const onRenderCurrencyButton = useCallback(
     (currency) => <CryptoCurrency raw currency={currency} text={currency} />,
     [CryptoCurrency]
@@ -99,16 +92,6 @@ const ListingScreen = () => {
   const onRenderCurrencyItem = useCallback(
     (currency) => <CryptoCurrency raw currency={currency} text={currency} />,
     [CryptoCurrency]
-  );
-
-  const onRenderOrderButton = useCallback(
-    (order) => <Text>{order}</Text>,
-    [Text]
-  );
-
-  const onRenderOrderItem = useCallback(
-    (order) => <Text>{order}</Text>,
-    [Text]
   );
 
   return (
@@ -131,7 +114,7 @@ const ListingScreen = () => {
                 <Text style={{ fontFamily: "poppins-semibold" }}>
                   {category}
                 </Text>{" "}
-                {/* in {location} */}
+                in {location}
               </Text>
               <View style={tw("flex-row justify-end")}>
                 <TouchableOpacity
@@ -200,20 +183,19 @@ const ListingScreen = () => {
                     </TouchableOpacity>
                   ))}
                 </View>
-                {/*  <View style={tw("py-2 border-b border-grey-slate")}>
+                <View style={tw("py-2 border-b border-grey-slate")}>
                   <Text
                     style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}
                   >
                     Location
                   </Text>
-                  <TextInput
-                    style="border border-red-main"
-                    placeholder="Leave blank for device location"
-                    value={locationInput}
-                    onValue={setLocationInput}
-                    onEndEditing={onEndEditingLocation}
+                  <Select
+                    style="border-red-main"
+                    data={["All", ...countries]}
+                    value={location}
+                    onValue={setLocation}
                   />
-                </View> */}
+                </View>
                 <View style={tw("py-2 border-b border-grey-slate")}>
                   <Text
                     style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}
@@ -240,8 +222,6 @@ const ListingScreen = () => {
                     data={["Newest first", "Oldest first"]}
                     value={order}
                     onValue={setOrder}
-                    onRenderButton={onRenderOrderButton}
-                    onRenderItem={onRenderOrderItem}
                   />
                 </View>
               </ScrollView>
