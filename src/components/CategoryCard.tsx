@@ -16,7 +16,7 @@ const CategoryCard = ({
           source={{
             uri: "https://i.pinimg.com/originals/ea/ed/80/eaed80673830c17837c7d8ec798b3da5.jpg",
           }}
-        ></Image>
+        />
         <View
           style={[tw("absolute left-0 w-40 p-2 items-center"), { bottom: 20 }]}
         >

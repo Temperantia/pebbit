@@ -11,7 +11,7 @@ const ScreenLoading = ({
   error?: firebase.FirebaseError;
 }>): JSX.Element => {
   if (loading) {
-    return <ActivityIndicator></ActivityIndicator>;
+    return <ActivityIndicator />;
   }
   if (error) {
     console.error(error);

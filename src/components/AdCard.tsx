@@ -33,10 +33,10 @@ const AdCard = ({
             style={tw("w-full h-16 mb-2")}
             resizeMode="cover"
             source={{ uri: picture }}
-          ></Image>
+          />
         )}
-        {currency && (
-          <CryptoCurrency currency={currency} text={price.amount.toString()} />
+        {currency && price && (
+          <CryptoCurrency currency={currency} text={price.toString()} />
         )}
       </View>
       <View style={tw("w-2/3")}>

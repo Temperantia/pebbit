@@ -38,12 +38,7 @@ const SocialButton = ({ type }: { type: string }) => {
       onPress={onPress}
     >
       <View style={tw("pl-2 pr-6")}>
-        <Image
-          width={16}
-          height={16}
-          style={tw("w-8 h-8")}
-          source={icon}
-        ></Image>
+        <Image width={16} height={16} style={tw("w-8 h-8")} source={icon} />
       </View>
       <Text
         style={[tw("text-lg " + color), { fontFamily: "poppins-semibold" }]}

@@ -41,35 +41,26 @@ const AuthScreen = () => {
             Sign in or Create an Account
           </Text>
         </View>
-        <SocialButton type="Google"></SocialButton>
+        <SocialButton type="Google" />
         <View style={tw("my-10")}>
           <Text style={tw("my-4 text-xs")}>
             Otherwise, enter your email and password to sign in or create an
             account
           </Text>
-          <TextInput
-            email
-            label="Email"
-            name="email"
-            control={control}
-          ></TextInput>
+          <TextInput email label="Email" name="email" control={control} />
           <TextInput
             password
             label="Password"
             name="password"
             control={control}
-          ></TextInput>
+          />
         </View>
         <View style={tw("items-center bg-black-background-1 bg-opacity-5")}>
           <Text style={tw("px-4 py-3 text-grey-slate")}>
             By signing up, you agree to our terms of service and privacy policy
           </Text>
           <View style={tw("p-2 w-full")}>
-            <Button
-              title="SUBMIT"
-              loading={loading}
-              onPress={onSignIn}
-            ></Button>
+            <Button title="SUBMIT" loading={loading} onPress={onSignIn} />
           </View>
         </View>
       </View>

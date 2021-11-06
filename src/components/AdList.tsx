@@ -20,7 +20,7 @@ const AdList = ({
       numColumns={numColumns}
       renderItem={renderItem}
       keyExtractor={({ id }) => id}
-    ></FlatList>
+    />
   );
 };
 

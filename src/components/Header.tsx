@@ -40,7 +40,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
         <Image
           style={{ width: 140, height: 45 }}
           source={require("../assets/images/logoWh.png")}
-        ></Image>
+        />
         {!noMenu && (
           <TouchableOpacity onPress={onSetVisible}>
             <Icon
@@ -51,7 +51,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
                   ? "small/36/000000/delete-sign.png"
                   : "material-rounded/36/000000/menu--v1.png"
               }
-            ></Icon>
+            />
           </TouchableOpacity>
         )}
       </View>
@@ -68,7 +68,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
               }
               title="Home"
               onPress={onNavigate("Root")}
-            ></Button>
+            />
             <Button
               color={
                 tailwindConfig.theme.colors[
@@ -79,7 +79,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
               }
               title="My Profile"
               onPress={onNavigate("Profile")}
-            ></Button>
+            />
             <Button
               color={
                 tailwindConfig.theme.colors[
@@ -90,12 +90,12 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
               }
               title="Account Settings"
               onPress={onNavigate("Settings")}
-            ></Button>
+            />
             <Button
               color={tailwindConfig.theme.colors.white}
               title="Sign Out"
               onPress={onSignOut}
-            ></Button>
+            />
           </View>
         </View>
       )}

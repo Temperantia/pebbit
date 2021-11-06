@@ -18,7 +18,7 @@ const StatusBanner = ({
       source={{
         uri: picture,
       }}
-    ></Image>
+    />
     <View style={tw("absolute h-full w-1/3" + (color ? " bg-" + color : ""))}>
       <View style={tw("justify-center h-full")} />
     </View>

@@ -68,7 +68,7 @@ const ListingScreen = () => {
   }, [setCategory, searchCategory, setTerm, searchTerm]); */
 
   const onRenderAdLine = useCallback(
-    ({ item }) => <AdPreview ad={item}></AdPreview>,
+    ({ item }) => <AdPreview ad={item} />,
     [AdPreview]
   );
 
@@ -143,7 +143,7 @@ const ListingScreen = () => {
                       color={tailwindConfig.theme.colors["red-main"]}
                       size={16}
                       name="small/16/000000/filter.png"
-                    ></Icon>
+                    />
                     <Text>Filter</Text>
                   </View>
                 </TouchableOpacity>
@@ -152,7 +152,7 @@ const ListingScreen = () => {
                 ads={adsFiltered}
                 numColumns={2}
                 renderItem={onRenderAdLine}
-              ></AdList>
+              />
             </View>
             {filtersOpened && (
               <ScrollView style={tw("absolute right-0 w-4/5 bg-white p-4")}>
@@ -169,7 +169,7 @@ const ListingScreen = () => {
                       color={tailwindConfig.theme.colors["red-main"]}
                       size={20}
                       name={"small/36/000000/delete-sign.png"}
-                    ></Icon>
+                    />
                   </TouchableOpacity>
                 </View>
                 <View style={tw("py-2 border-b border-grey-slate")}>

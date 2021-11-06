@@ -26,7 +26,7 @@ const Icon = ({
         width={size}
         height={size}
         source={{ uri: "https://img.icons8.com/" + name }}
-      ></Image>
+      />
     </TouchableOpacity>
   ) : (
     <Image
@@ -34,7 +34,7 @@ const Icon = ({
       width={size}
       height={size}
       source={{ uri: "https://img.icons8.com/" + name }}
-    ></Image>
+    />
   );
 
 export default Icon;

@@ -56,13 +56,13 @@ const PicturePicker = ({ control }: { control: Control<any> }) => {
                   style={tw("w-24 h-24")}
                   resizeMode="cover"
                   source={{ uri: picture }}
-                ></Image>
+                />
               ) : (
                 <Icon
                   size={36}
                   name="small/32/000000/plus-math.png"
                   color={tailwindConfig.theme.colors["grey-slate"]}
-                ></Icon>
+                />
               )}
             </TouchableOpacity>
           ))}

@@ -10,7 +10,7 @@ const CategoryList = ({ categories }: { categories: any }) => {
       horizontal
       renderItem={({ item }) => <CategoryCard category={item}></CategoryCard>}
       keyExtractor={({ name }) => name}
-    ></FlatList>
+    />
   );
 };
 

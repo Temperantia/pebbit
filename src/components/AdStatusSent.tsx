@@ -38,7 +38,7 @@ const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
             size={32}
             color={tailwindConfig.theme.colors["gold-badge-gradient"]}
             name="small/32/000000/ok.png"
-          ></Icon>
+          />
           <Text
             style={[
               tw("ml-3 text-white text-lg"),

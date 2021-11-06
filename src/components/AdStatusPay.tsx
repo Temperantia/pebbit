@@ -67,7 +67,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
           color={tailwindConfig.theme.colors["red-main"]}
           name="small/32/000000/copy.png"
           onPress={onCopy}
-        ></Icon>
+        />
       </View>
       <View style={tw("items-center")}>
         <Text style={tw("text-xs")}>
@@ -79,7 +79,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
           size={16}
           color={tailwindConfig.theme.colors["red-main"]}
           name="small/16/000000/clock.png"
-        ></Icon>
+        />
         <Text style={tw("ml-1")}>{timeLeft}</Text>
       </View>
     </View>

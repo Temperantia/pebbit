@@ -24,14 +24,11 @@ const CryptoCurrency = ({
 }) => (
   <View style={tw("flex-row items-center")}>
     {currency !== "All" && (
-      <Image
-        style={tw("w-6 h-6 mr-2")}
-        source={currencies[currency].image}
-      ></Image>
+      <Image style={tw("w-6 h-6 mr-2")} source={currencies[currency].image} />
     )}
     <Text
       style={[
-        delta || textColor
+        delta !== undefined || textColor
           ? tw(
               (delta === Delta.Positive
                 ? "text-green-main"
@@ -45,7 +42,7 @@ const CryptoCurrency = ({
         { fontFamily: "poppins-semibold" },
       ]}
     >
-      {(Delta.Positive ? "+" : delta === Delta.Negative ? "-" : "") +
+      {(delta === Delta.Positive ? "+" : delta === Delta.Negative ? "-" : "") +
         text +
         (raw ? "" : " " + currencies[currency].symbol)}
     </Text>

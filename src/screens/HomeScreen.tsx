@@ -14,8 +14,8 @@ const HomeScreen = () => {
     <ScreenLoading loading={loading} error={error}>
       {ads && (
         <View style={tw("items-center justify-center")}>
-          {/* <ProductList products={products}></ProductList>
-          <ProductList products={products}></ProductList> */}
+          {/* <ProductList products={products}/>
+          <ProductList products={products}/> */}
           <TouchableOpacity style={tw("my-2")} onPress={() => {}}>
             <Text style={tw("border-2 rounded px-8 py-2 font-bold")}>
               See all
@@ -31,7 +31,7 @@ const HomeScreen = () => {
               { name: "Vehicles" },
               { name: "Home & Garden" },
             ]}
-          ></CategoryList>
+          />
         </View>
       )}
     </ScreenLoading>

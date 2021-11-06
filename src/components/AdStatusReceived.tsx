@@ -39,7 +39,11 @@ const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
           Transaction Complete
         </Text>
       </View>
-      <Text>Please rate your experience with this seller</Text>
+      <Text>
+        {ad.rate
+          ? "Thank you for rating"
+          : "Please rate your experience with this seller"}
+      </Text>
       <View style={tw("flex-row")}>
         {[...Array(5).keys()].map((_value, index) => (
           <Icon
@@ -55,7 +59,7 @@ const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
               (ad.rate && ad.rate > index ? "-filled" : "") +
               ".png"
             }
-            onPress={onRate(index)}
+            onPress={ad.rate ? undefined : onRate(index)}
           />
         ))}
       </View>

@@ -107,7 +107,7 @@ const CreateAdScreen = () => {
             control={control}
             onRenderButton={onRenderButton}
             onRenderItem={onRenderItem}
-          ></Select>
+          />
         </View>
         <View style={tw("mb-2")}>
           <TextInput
@@ -146,11 +146,11 @@ const CreateAdScreen = () => {
               <Text style={[tw("my-4"), { fontFamily: "poppins-semibold" }]}>
                 Ad Preview
               </Text>
-              <AdCard data={newAd}></AdCard>
+              <AdCard data={newAd} />
             </View>
           )}
         <View style={tw("my-4")}>
-          <Button black title="Post Ad" onPress={onSubmit}></Button>
+          <Button black title="Post Ad" onPress={onSubmit} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

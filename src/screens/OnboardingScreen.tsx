@@ -36,11 +36,7 @@ const OnboardingScreen = () => {
           <Text style={tw("my-4 text-xs")}>
             Please create a username, you cannot change this later
           </Text>
-          <TextInput
-            label="Username"
-            name="username"
-            control={control}
-          ></TextInput>
+          <TextInput label="Username" name="username" control={control} />
         </View>
         <View style={tw("my-2")}>
           <Text style={tw("my-4 text-xs")}>
@@ -48,33 +44,21 @@ const OnboardingScreen = () => {
             use to ship your purchased items, please ensure this information is
             correct. You can change this later.
           </Text>
-          <TextInput
-            label="Your Name"
-            name="name"
-            control={control}
-          ></TextInput>
+          <TextInput label="Your Name" name="name" control={control} />
           <TextInput
             label="Street Address or PO Box #"
             name="street"
             control={control}
-          ></TextInput>
+          />
           <TextInput
             label="City or Town, other Principal Subdivision, and Postage"
             name="city"
             control={control}
-          ></TextInput>
-          <TextInput
-            label="Country"
-            name="country"
-            control={control}
-          ></TextInput>
+          />
+          <TextInput label="Country" name="country" control={control} />
         </View>
         <View style={tw("p-2 w-full")}>
-          <Button
-            title="CONTINUE"
-            loading={loading}
-            onPress={onRegister}
-          ></Button>
+          <Button title="CONTINUE" loading={loading} onPress={onRegister} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

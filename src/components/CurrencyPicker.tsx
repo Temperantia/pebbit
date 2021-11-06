@@ -29,7 +29,7 @@ const CurrencyPicker = ({
         placeholder="Currencies"
         control={control}
         onListItem={onListItem}
-      ></MultiSelect>
+      />
       {newAd?.currencies?.map((currency: string) => (
         <TextInput
           number
@@ -39,7 +39,7 @@ const CurrencyPicker = ({
           icon={currencies[currency].image}
           name={"prices." + currency + "-amount"}
           control={control}
-        ></TextInput>
+        />
       ))}
       {newAd?.currencies?.map((currency: string) => (
         <View key={currency + "Address"}>
@@ -51,7 +51,7 @@ const CurrencyPicker = ({
           <TextInput
             name={"prices." + currency + "-address"}
             control={control}
-          ></TextInput>
+          />
         </View>
       ))}
     </>

@@ -54,21 +54,21 @@ const RootNavigator = () => {
         name="Root"
         component={BottomTabNavigator}
         options={{
-          header: () => <Header></Header>,
+          header: () => <Header />,
         }}
       />
       <Stack.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
-          header: () => <Header></Header>,
+          header: () => <Header />,
         }}
       />
       <Stack.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          header: () => <Header></Header>,
+          header: () => <Header />,
         }}
       />
     </Stack.Navigator>

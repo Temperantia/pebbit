@@ -14,7 +14,7 @@ const AdStatusPending = () => {
           size={64}
           color={tailwindConfig.theme.colors["red-main"]}
           name="small/64/000000/wait.png"
-        ></Icon>
+        />
       </View>
       <Text style={tw("text-lg text-center mb-1")}>Please Wait...</Text>
       <Text style={tw("text-xs text-center text-grey-slate")}>

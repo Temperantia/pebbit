@@ -81,7 +81,7 @@ const TextInput = ({
             onPress={onCopy}
           />
         )}
-        {icon && <Image style={tw("w-8 h-8 mr-2")} source={icon}></Image>}
+        {icon && <Image style={tw("w-8 h-8 mr-2")} source={icon} />}
         {left}
         <RNTextInput
           editable={!copy}
@@ -145,7 +145,7 @@ const TextInput = ({
 
         return children(fieldValue, onChange, error, onCopy, onBlur);
       }}
-    ></Controller>
+    />
   ) : value !== undefined && onValue ? (
     children(value, onValue)
   ) : (

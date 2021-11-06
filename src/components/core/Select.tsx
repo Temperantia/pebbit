@@ -37,7 +37,7 @@ const Select = ({
         ) : (
           <Text style={tw("text-grey-slate")}>{placeholder}</Text>
         )}
-        <Icon size={16} name="small/16/000000/expand-arrow.png"></Icon>
+        <Icon size={16} name="small/16/000000/expand-arrow.png" />
       </View>
     ),
     [View, tw, Text, placeholder, Icon]
@@ -87,7 +87,7 @@ const Select = ({
       render={({ field: { value, onChange }, fieldState: { error } }) =>
         children(value, onChange, error)
       }
-    ></Controller>
+    />
   ) : value !== undefined && onValue ? (
     children(value, onValue)
   ) : (

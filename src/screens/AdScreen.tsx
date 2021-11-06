@@ -36,7 +36,13 @@ const AdScreen = ({
     }
 
     if (user.id === ad.buyer?.userId) {
-      if (ad.status === "received" || ad.status === "sold") {
+      console.log(ad.status);
+      if (
+        ad.status === "received" ||
+        ad.status === "sold" ||
+        ad.status === "aborted" ||
+        ad.status === "complete"
+      ) {
         setAdStatus(<AdStatusReceived amount ad={ad} />);
       } else if (ad.status === "sent") {
         setAdStatus(<AdStatusSent amount ad={ad} />);
@@ -66,7 +72,7 @@ const AdScreen = ({
             style={tw("my-5 flex-row items-center mx-3")}
             onPress={onBack}
           >
-            <Icon size={16} name="small/16/000000/back.png"></Icon>
+            <Icon size={16} name="small/16/000000/back.png" />
             <Text
               style={[
                 tw("ml-2 text-red-main"),
@@ -80,7 +86,7 @@ const AdScreen = ({
             style={tw("h-1/2")}
             resizeMode="cover"
             source={{ uri: ad.pictures[0] }}
-          ></Image>
+          />
           <View style={tw("p-3")}>
             {ad.pictures.length > 1 && (
               <View style={tw("flex-row w-full justify-between")}>

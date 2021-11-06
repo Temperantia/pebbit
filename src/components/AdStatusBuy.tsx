@@ -63,12 +63,7 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
           ))}
         </View>
       </View>
-      <Button
-        black
-        title="BUY IT NOW"
-        loading={loading}
-        onPress={onBuy}
-      ></Button>
+      <Button black title="BUY IT NOW" loading={loading} onPress={onBuy} />
     </>
   );
 };

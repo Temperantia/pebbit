@@ -48,7 +48,7 @@ const SelectList = ({
                 isSelected ? tailwindConfig.theme.colors["red-main"] : undefined
               }
               size={16}
-            ></Icon>
+            />
             {onListItem(item)}
           </TouchableOpacity>
         );
@@ -116,7 +116,7 @@ const MultiSelect = ({
                     ? "small/16/000000/collapse-arrow.png"
                     : "small/16/000000/expand-arrow.png"
                 }
-              ></Icon>
+              />
             </TouchableOpacity>
             {visible && (
               <SelectList
@@ -124,13 +124,13 @@ const MultiSelect = ({
                 onChange={onChange}
                 value={value}
                 onListItem={onListItem}
-              ></SelectList>
+              />
             )}
             {error && <Text style={tw("text-red-main")}>{error.message}</Text>}
           </View>
         );
       }}
-    ></Controller>
+    />
   );
 };
 
