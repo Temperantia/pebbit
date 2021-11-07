@@ -36,7 +36,6 @@ const AdScreen = ({
     }
 
     if (user.id === ad.buyer?.userId) {
-      console.log(ad.status);
       if (
         ad.status === "received" ||
         ad.status === "sold" ||

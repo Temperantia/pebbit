@@ -52,22 +52,31 @@ const ProfileScreen = () => {
           const picture = pictures.find((picture) => !!picture);
           const [currency, price] = Object.entries(prices)[0];
           return (
-            <TouchableOpacity style={tw("flex-row my-4")} key={id}>
+            <View style={tw("flex-row items-center my-4")} key={id}>
               <Image
-                style={tw("w-full h-32")}
+                style={tw("w-1/5 h-full")}
                 source={{
                   uri: picture,
                 }}
               />
-              <View>
+              <View style={tw("w-2/5 pl-2")}>
                 <Text>{title}</Text>
-                <Text>{isSeller ? "Sold" : "Bought"}</Text>
+                <Text
+                  style={[
+                    tw(isSeller ? "text-green-main" : "text-red-main"),
+                    { fontFamily: "poppins-semibold" },
+                  ]}
+                >
+                  {isSeller ? "Sold" : "Bought"}
+                </Text>
               </View>
-              <CryptoCurrency
-                currency={currency}
-                text={price.amount.toString()}
-              />
-            </TouchableOpacity>
+              <View style={tw("w-2/5")}>
+                <CryptoCurrency
+                  currency={currency}
+                  text={price.amount.toString()}
+                />
+              </View>
+            </View>
           );
         })}
       </View>

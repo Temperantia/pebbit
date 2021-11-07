@@ -1,38 +1,75 @@
-import React from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import { Text, TouchableOpacity, View } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 
 import { adCollection } from "../firebase";
 import ScreenLoading from "../components/ScreenLoading";
 import { Ad } from "../types";
 import CategoryList from "../components/CategoryList";
 import tw from "../tailwind";
+import AdPreview from "../components/AdPreview";
+import useAuth from "../hooks/useAuth";
 
 const HomeScreen = () => {
-  const [ads, loading, error] = useCollectionData<Ad>(adCollection);
+  const now = Math.round(Date.now() / 1000);
+  const { user } = useAuth();
+  const { navigate } = useNavigation();
+  const [ads, loading, error] = useCollectionDataOnce<Ad>(
+    adCollection
+      .where("status", "==", "new")
+      .orderBy("created", "desc")
+      .limit(4),
+    { idField: "id" }
+  );
+
+  const adsFiltered = useMemo(() => {
+    if (!ads) {
+      return [];
+    }
+    return ads.filter(
+      ({ userId, cooldown }) => userId !== user?.id && cooldown < now
+    );
+  }, [ads]);
+
+  const onSeeAll = useCallback(() => {
+    navigate("Listing");
+  }, [navigate]);
+
   return (
     <ScreenLoading loading={loading} error={error}>
       {ads && (
-        <View style={tw("items-center justify-center")}>
-          {/* <ProductList products={products}/>
-          <ProductList products={products}/> */}
-          <TouchableOpacity style={tw("my-2")} onPress={() => {}}>
-            <Text style={tw("border-2 rounded px-8 py-2 font-bold")}>
-              See all
-            </Text>
-          </TouchableOpacity>
-          <Text style={tw("text-2xl mt-2 font-bold")}>Featured Categories</Text>
-          <Text style={tw("mt-2 font-bold")}>
-            Browse through our most popular categories
+        <ScrollView>
+          <Text style={tw("text-center underline my-4 text-red-main")}>
+            Recently Posted
           </Text>
-          <CategoryList
+          <View style={tw("flex-row flex-wrap")}>
+            {adsFiltered.map((ad) => (
+              <AdPreview key={ad.id} ad={ad} />
+            ))}
+          </View>
+          <View style={tw("items-center")}>
+            <TouchableOpacity
+              style={tw("border border-black rounded px-8 py-2")}
+              onPress={onSeeAll}
+            >
+              <Text>See all</Text>
+            </TouchableOpacity>
+            {/*  <Text style={[tw("text-xl mt-2"), { fontFamily: "poppins-bold" }]}>
+              Featured Categories
+            </Text>
+            <Text style={tw("mt-2 text-grey-slate")}>
+              Browse through our most popular categories
+            </Text> */}
+          </View>
+          {/* <CategoryList
             categories={[
               { name: "Electronics & Computer" },
               { name: "Vehicles" },
               { name: "Home & Garden" },
             ]}
-          />
-        </View>
+          /> */}
+        </ScrollView>
       )}
     </ScreenLoading>
   );

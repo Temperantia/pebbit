@@ -42,7 +42,7 @@ const BottomTabNavigator = () => {
       initialRouteName="Home"
       tabBarOptions={{ showLabel: false, style: { paddingBottom: 20 } }}
     >
-      {/* <BottomTab.Screen
+      <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={{
@@ -53,7 +53,7 @@ const BottomTabNavigator = () => {
             />
           ),
         }}
-      /> */}
+      />
       <BottomTab.Screen
         name="Listing"
         component={ListingNavigator}
