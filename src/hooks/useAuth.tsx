@@ -9,6 +9,7 @@ import firebase from "firebase";
 import * as GoogleAuthentication from "expo-google-app-auth";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+import * as AppleAuthentication from "expo-apple-authentication";
 
 import { auth, userCollection } from "../firebase";
 import { Address, User } from "../types";
@@ -36,6 +37,7 @@ type AuthContextData = {
   newUser: NewUser | null;
   loading: boolean;
   signInWithGoogle(): Promise<void>;
+  signInWithApple(): Promise<void>;
   signInWithEmail(email: string, password: string): Promise<void>;
   signOut(): void;
   register(username: string, address: Address): void;
@@ -89,6 +91,30 @@ export const AuthProvider: FC = ({ children }) => {
       );
 
       await auth.signInWithCredential(credentials);
+    }
+  };
+
+  const signInWithApple = async () => {
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+      const { identityToken } = credential;
+      console.log(credential);
+      if (!identityToken) {
+        return;
+      }
+      const provider = new firebase.auth.OAuthProvider("apple.com");
+      const authCredential = provider.credential({
+        idToken: identityToken,
+      });
+
+      await auth.signInWithCredential(authCredential);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -186,6 +212,7 @@ export const AuthProvider: FC = ({ children }) => {
         newUser,
         loading,
         signInWithGoogle,
+        signInWithApple,
         signInWithEmail,
         signOut,
         register,

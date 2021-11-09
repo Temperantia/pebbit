@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Text, View } from "react-native";
+import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
 
 import Button from "../components/core/Button";
 import TextInput from "../components/core/TextInput";
@@ -41,7 +41,11 @@ const AuthScreen = () => {
             Sign in or Create an Account
           </Text>
         </View>
-        <SocialButton type="Google" />
+        {Platform.OS === "ios" ? (
+          <SocialButton type="Apple" />
+        ) : (
+          <SocialButton type="Google" />
+        )}
         <View style={tw("my-10")}>
           <Text style={tw("my-4 text-xs")}>
             Otherwise, enter your email and password to sign in or create an

@@ -17,6 +17,7 @@
     "@react-navigation/stack": "~5.12.8",
     "date-fns": "^2.25.0",
     "expo": "~42.0.1",
+    "expo-apple-authentication": "^4.0.3",
     "expo-asset": "~8.3.2",
     "expo-constants": "~11.0.1",
     "expo-font": "~9.2.1",
