@@ -2,9 +2,9 @@
   "expo": {
     "name": "Pebbit",
     "slug": "pebbit",
-    "version": "0.9.0",
+    "version": "0.9.2",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
+    "icon": "./src/assets/images/appIcon.png",
     "scheme": "pebbit",
     "owner": "magna-numeris",
     "userInterfaceStyle": "automatic",
@@ -18,8 +18,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "bundleIdentifier": "com.magna-numeris.pebbit",
-      "supportsTablet": true
+      "bundleIdentifier": "com.magnanumeris.pebbit",
+      "supportsTablet": true,
+      "usesAppleSignIn": true
     },
     "android": {
       "package": "com.magna_numeris.pebbit",
