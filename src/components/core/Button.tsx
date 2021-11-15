@@ -36,7 +36,9 @@ const Button = ({
       <Text
         style={[
           tw(
-            color ?? save
+            !!color
+              ? color
+              : save
               ? "text-white"
               : black
               ? "text-red-main"

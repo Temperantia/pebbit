@@ -55,42 +55,32 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
           <View style={tw("w-full bg-black-background-2")}>
             <Button
               color={
-                tailwindConfig.theme.colors[
-                  routes[routes.length - 1].name === "Root"
-                    ? "red-main"
-                    : "white"
-                ]
+                routes[routes.length - 1].name === "Root"
+                  ? "text-red-main"
+                  : "text-white"
               }
               title="Home"
               onPress={onNavigate("Root")}
             />
             <Button
               color={
-                tailwindConfig.theme.colors[
-                  routes[routes.length - 1].name === "Profile"
-                    ? "red-main"
-                    : "white"
-                ]
+                routes[routes.length - 1].name === "Profile"
+                  ? "text-red-main"
+                  : "text-white"
               }
               title="My Profile"
               onPress={onNavigate("Profile")}
             />
             <Button
               color={
-                tailwindConfig.theme.colors[
-                  routes[routes.length - 1].name === "Settings"
-                    ? "red-main"
-                    : "white"
-                ]
+                routes[routes.length - 1].name === "Settings"
+                  ? "text-red-main"
+                  : "text-white"
               }
               title="Account Settings"
               onPress={onNavigate("Settings")}
             />
-            <Button
-              color={tailwindConfig.theme.colors.white}
-              title="Sign Out"
-              onPress={onSignOut}
-            />
+            <Button color="text-white" title="Sign Out" onPress={onSignOut} />
           </View>
         </View>
       )}
