@@ -4,8 +4,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject",
+    "build:android": "expo build:android",
+    "build:ios": "expo build:ios",
     "tailwind": "npx create-tailwind-rn"
   },
   "dependencies": {
