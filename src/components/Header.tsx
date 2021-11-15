@@ -1,16 +1,11 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useCallback, useState } from "react";
-import {
-  Button,
-  Image,
-  SafeAreaView,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import tailwindConfig from "../../tailwind.config";
+import { Image, SafeAreaView, TouchableOpacity, View } from "react-native";
 
+import tailwindConfig from "../../tailwind.config";
 import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
+import Button from "./core/Button";
 import Icon from "./core/Icon";
 import SafeViewAndroid from "./SafeViewAndroid";
 
@@ -57,7 +52,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
       </View>
       {modalVisible && (
         <View>
-          <View style={tw("w-full bg-black-background-2 absolute")}>
+          <View style={tw("w-full bg-black-background-2")}>
             <Button
               color={
                 tailwindConfig.theme.colors[

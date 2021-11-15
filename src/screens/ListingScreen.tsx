@@ -97,7 +97,7 @@ const ListingScreen = () => {
   return (
     <ScreenLoading loading={loading} error={error}>
       {ads && (
-        <View>
+        <View style={tw("h-full")}>
           {/* <View style={tw("px-4 py-2 bg-grey-slate")}>
             <SearchBar
               category={searchCategory}
@@ -107,29 +107,31 @@ const ListingScreen = () => {
               onSearch={onSearch}
             />
           </View> */}
-          <View style={tw("relative")}>
-            <View style={tw("px-3 py-1 justify-center")}>
-              <Text>
-                {adsFiltered.length} Results:{" "}
-                <Text style={{ fontFamily: "poppins-semibold" }}>
-                  {category}
-                </Text>{" "}
-                in {location}
-              </Text>
-              <View style={tw("flex-row justify-end")}>
-                <TouchableOpacity
-                  style={tw("border border-red-main p-1")}
-                  onPress={onOpenFilters}
-                >
-                  <View style={tw("flex-row items-center")}>
-                    <Icon
-                      color={tailwindConfig.theme.colors["red-main"]}
-                      size={16}
-                      name="small/16/000000/filter.png"
-                    />
-                    <Text>Filter</Text>
-                  </View>
-                </TouchableOpacity>
+          <View style={tw("relative flex-1")}>
+            <View style={tw("justify-center")}>
+              <View style={tw("px-3 py-1")}>
+                <Text>
+                  {adsFiltered.length} Results:{" "}
+                  <Text style={{ fontFamily: "poppins-semibold" }}>
+                    {category}
+                  </Text>{" "}
+                  in {location}
+                </Text>
+                <View style={tw("flex-row justify-end")}>
+                  <TouchableOpacity
+                    style={tw("border border-red-main p-1")}
+                    onPress={onOpenFilters}
+                  >
+                    <View style={tw("flex-row items-center")}>
+                      <Icon
+                        color={tailwindConfig.theme.colors["red-main"]}
+                        size={16}
+                        name="small/16/000000/filter.png"
+                      />
+                      <Text>Filter</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
               <AdList
                 ads={adsFiltered}
@@ -138,10 +140,13 @@ const ListingScreen = () => {
               />
             </View>
             {filtersOpened && (
-              <ScrollView style={tw("absolute right-0 w-4/5 bg-white p-4")}>
+              <ScrollView
+                contentContainerStyle={tw("p-4")}
+                style={tw("w-4/5 bg-white absolute top-0 bottom-0 right-0")}
+              >
                 <View
                   style={tw(
-                    "pb-4 flex-row justify-between border-b border-grey-slate"
+                    "flex-row justify-between border-b border-grey-slate"
                   )}
                 >
                   <Text style={{ fontFamily: "poppins-semibold" }}>

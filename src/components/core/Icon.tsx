@@ -22,7 +22,7 @@ const Icon = ({
       onPress={onPress}
     >
       <Image
-        style={{ tintColor: color }}
+        style={{ tintColor: color, width: size, height: size }}
         width={size}
         height={size}
         source={{ uri: "https://img.icons8.com/" + name }}
@@ -30,7 +30,7 @@ const Icon = ({
     </TouchableOpacity>
   ) : (
     <Image
-      style={[tw(style ?? ""), { tintColor: color }]}
+      style={[tw(style ?? ""), { tintColor: color, width: size, height: size }]}
       width={size}
       height={size}
       source={{ uri: "https://img.icons8.com/" + name }}

@@ -37,7 +37,7 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
   }, [setLoading, ad, request, token, selectedCurrency]);
 
   return (
-    <>
+    <View style={tw("h-96")}>
       <View style={tw("my-2")}>
         <Text style={[tw("my-3"), { fontFamily: "poppins-medium" }]}>
           Price <Text style={tw("text-grey-slate text-xs")}>(select one)</Text>
@@ -56,7 +56,9 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
                 currency={currency}
                 text={price.amount.toString()}
                 textColor={
-                  currency === selectedCurrency ? "" : "text-grey-slate"
+                  currency === selectedCurrency
+                    ? "text-black"
+                    : "text-grey-slate"
                 }
               />
             </TouchableOpacity>
@@ -64,7 +66,7 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
         </View>
       </View>
       <Button black title="BUY IT NOW" loading={loading} onPress={onBuy} />
-    </>
+    </View>
   );
 };
 

@@ -40,11 +40,11 @@ const BottomTabNavigator = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ showLabel: false, style: { paddingBottom: 20 } }}
+      tabBarOptions={{ showLabel: false }}
     >
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <TabBarIcon
@@ -102,8 +102,9 @@ const TabBarIcon = ({ name, color }: { name: string; color: string }) => {
 const HomeStack = createStackNavigator<HomeParamList>();
 const HomeNavigator = () => {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
+      <ListingStack.Screen name="AdScreen" component={AdScreen} />
     </HomeStack.Navigator>
   );
 };

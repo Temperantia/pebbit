@@ -1,17 +1,19 @@
 import React from "react";
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
-import tailwindConfig from "../../../tailwind.config";
 
+import tailwindConfig from "../../../tailwind.config";
 import tw from "../../tailwind";
 
 const Button = ({
   black,
+  color,
   save,
   loading,
   title,
   onPress,
 }: {
   black?: boolean;
+  color?: string;
   save?: boolean;
   loading?: boolean;
   title: string;
@@ -23,9 +25,9 @@ const Button = ({
     <TouchableOpacity
       style={tw(
         "w-full flex-row justify-center rounded" +
-          (save
-            ? " bg-black-background-2 py-3"
-            : black
+          (color
+            ? ""
+            : save || black
             ? " bg-black-background-2 py-3"
             : " bg-red-main py-5")
       )}
@@ -34,7 +36,7 @@ const Button = ({
       <Text
         style={[
           tw(
-            save
+            color ?? save
               ? "text-white"
               : black
               ? "text-red-main"

@@ -25,7 +25,7 @@ const ExchangeScreen = () => {
   );
 
   return (
-    <View style={tw("mx-5")}>
+    <View style={tw("mx-5 h-full")}>
       <View style={tw("flex-row justify-evenly my-4")}>
         {Object.keys(tabs).map((tab) => (
           <TouchableOpacity key={tab} onPress={onSetCurrentTab(tab)}>
@@ -33,7 +33,9 @@ const ExchangeScreen = () => {
               style={[
                 tw(
                   "text-lg" +
-                    (currentTab === tab ? " text-red-main underline" : "")
+                    (currentTab === tab
+                      ? " text-red-main underline"
+                      : " text-black")
                 ),
                 { fontFamily: "poppins-semibold" },
               ]}

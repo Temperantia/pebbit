@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/core";
 import { useForm } from "react-hook-form";
-import { KeyboardAvoidingView, Platform, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  ScrollView,
+  View,
+} from "react-native";
 
 import Button from "../components/core/Button";
 import TextInput from "../components/core/TextInput";
@@ -32,10 +38,10 @@ const AuthScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior="position"
+      behavior="height"
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
-      <View style={tw("justify-evenly h-full mx-5")}>
+      <ScrollView contentContainerStyle={tw("justify-evenly h-full mx-5")}>
         <View style={tw("my-6 items-center")}>
           <Text style={[tw("text-lg"), { fontFamily: "poppins-medium" }]}>
             Sign in or Create an Account
@@ -67,7 +73,7 @@ const AuthScreen = () => {
             <Button title="SUBMIT" loading={loading} onPress={onSignIn} />
           </View>
         </View>
-      </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

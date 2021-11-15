@@ -57,7 +57,7 @@ const AdScreen = ({
     } else if (user.id !== ad.userId) {
       setAdStatus(<AdStatusBuy ad={ad} />);
     }
-  }, [ad]);
+  }, [ad, user]);
 
   const onBack = useCallback(() => {
     goBack();
@@ -67,56 +67,60 @@ const AdScreen = ({
     <ScreenLoading loading={loading}>
       {ad && (
         <ScrollView>
-          <TouchableOpacity
-            style={tw("my-5 flex-row items-center mx-3")}
-            onPress={onBack}
-          >
-            <Icon size={16} name="small/16/000000/back.png" />
-            <Text
-              style={[
-                tw("ml-2 text-red-main"),
-                { fontFamily: "poppins-medium" },
-              ]}
+          <View style={{ flex: 1 }}>
+            <TouchableOpacity
+              style={[tw("my-5 flex-row items-center mx-3")]}
+              onPress={onBack}
             >
-              Back to Results
-            </Text>
-          </TouchableOpacity>
-          <Image
-            style={tw("h-1/2")}
-            resizeMode="cover"
-            source={{ uri: ad.pictures[0] }}
-          />
-          <View style={tw("p-3")}>
-            {ad.pictures.length > 1 && (
-              <View style={tw("flex-row w-full justify-between")}>
-                {ad.pictures.map(
-                  (picture, index) =>
-                    index > 0 && (
-                      <View key={index} style={tw("p-1 w-1/5")}>
-                        <Image
-                          style={tw("h-16")}
-                          resizeMode="cover"
-                          source={{ uri: picture }}
-                        />
-                      </View>
-                    )
-                )}
-              </View>
-            )}
-            <Text
-              style={[tw("text-lg my-3"), { fontFamily: "poppins-semibold" }]}
-            >
-              {ad.title}
-            </Text>
-            <Text>{ad.description}</Text>
-            <View
-              style={tw("flex-row justify-end border-b border-grey-slate py-4")}
-            >
-              <Text style={tw("text-grey-slate")}>
-                {timeAgo.format(new Date(ad.created.seconds * 1000))}
+              <Icon size={16} name="small/16/000000/back.png" />
+              <Text
+                style={[
+                  tw("ml-2 text-red-main"),
+                  { fontFamily: "poppins-medium" },
+                ]}
+              >
+                Back to Results
               </Text>
+            </TouchableOpacity>
+            <Image
+              style={tw("h-96")}
+              resizeMode="contain"
+              source={{ uri: ad.pictures[0] }}
+            />
+            <View style={tw("p-3")}>
+              {ad.pictures.length > 1 && (
+                <View style={tw("flex-row w-full justify-between")}>
+                  {ad.pictures.map(
+                    (picture, index) =>
+                      index > 0 && (
+                        <View key={index} style={tw("p-1 w-1/5")}>
+                          <Image
+                            style={tw("h-16")}
+                            resizeMode="cover"
+                            source={{ uri: picture }}
+                          />
+                        </View>
+                      )
+                  )}
+                </View>
+              )}
+              <Text
+                style={[tw("text-lg my-3"), { fontFamily: "poppins-semibold" }]}
+              >
+                {ad.title}
+              </Text>
+              <Text>{ad.description}</Text>
+              <View
+                style={tw(
+                  "flex-row justify-end border-b border-grey-slate py-4"
+                )}
+              >
+                <Text style={tw("text-grey-slate")}>
+                  {timeAgo.format(new Date(ad.created.seconds * 1000))}
+                </Text>
+              </View>
+              {adStatus}
             </View>
-            {adStatus}
           </View>
         </ScrollView>
       )}

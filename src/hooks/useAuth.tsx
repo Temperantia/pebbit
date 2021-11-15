@@ -15,12 +15,14 @@ import { auth, userCollection } from "../firebase";
 import { Address, User } from "../types";
 
 const google = {
+  clientId:
+    "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
   androidStandaloneAppClientId:
     "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
-  iosClientId:
+  /* iosClientId:
     "876715407348-e3i42a85ib2d18peimbjppfchj83pjru.apps.googleusercontent.com",
   iosStandaloneAppClientId:
-    "876715407348-2uon6puq90m7b5as4nffa7e6nbpqkofk.apps.googleusercontent.com",
+    "876715407348-2uon6puq90m7b5as4nffa7e6nbpqkofk.apps.googleusercontent.com", */
   scopes: ["email"],
 };
 
