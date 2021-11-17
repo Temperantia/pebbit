@@ -28,14 +28,14 @@ const AdCard = ({
   return (
     <View style={tw("flex-row p-2 border border-grey-slate rounded")}>
       <View style={tw("w-1/3 mr-4")}>
-        {picture && (
+        {!!picture && (
           <Image
             style={tw("w-full h-16 mb-2")}
             resizeMode="cover"
             source={{ uri: picture }}
           />
         )}
-        {currency && price && (
+        {!!currency && !!price && (
           <CryptoCurrency currency={currency} text={price.toString()} />
         )}
       </View>

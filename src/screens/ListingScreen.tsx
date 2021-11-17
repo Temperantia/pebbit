@@ -1,6 +1,7 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
-import { Text, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useRecoilState } from "recoil";
 
 import tw from "../tailwind";
 import { adCollection } from "../firebase";
@@ -9,17 +10,17 @@ import { Ad } from "../types";
 import AdList from "../components/AdList";
 import useAuth from "../hooks/useAuth";
 import AdPreview from "../components/AdPreview";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "../components/core/Icon";
 import tailwindConfig from "../../tailwind.config";
 import { categories, countries, currencies } from "../constants";
 import Select from "../components/core/Select";
 import CryptoCurrency from "../components/CryptoCurrency";
+import { openedFiltersState } from "../atoms";
 
 const ListingScreen = () => {
   const { user } = useAuth();
+  const [openedFilters, setOpenedFilters] = useRecoilState(openedFiltersState);
   const [now] = useState<number>(Math.round(Date.now() / 1000));
-  const [filtersOpened, setFiltersOpened] = useState<boolean>(false);
   const [category, setCategory] = useState<string>("All");
   const [location, setLocation] = useState<string>("All");
   const [currency, setCurrency] = useState<string>("All");
@@ -70,12 +71,12 @@ const ListingScreen = () => {
   );
 
   const onOpenFilters = useCallback(() => {
-    setFiltersOpened(true);
-  }, [setFiltersOpened]);
+    setOpenedFilters(true);
+  }, [setOpenedFilters]);
 
   const onCloseFilters = useCallback(() => {
-    setFiltersOpened(false);
-  }, [setFiltersOpened]);
+    setOpenedFilters(false);
+  }, [setOpenedFilters]);
 
   const onSetCategory = useCallback(
     (category: string) => () => {
@@ -139,7 +140,7 @@ const ListingScreen = () => {
                 renderItem={onRenderAdLine}
               />
             </View>
-            {filtersOpened && (
+            {openedFilters && (
               <ScrollView
                 contentContainerStyle={tw("p-4")}
                 style={tw("w-4/5 bg-white absolute top-0 bottom-0 right-0")}

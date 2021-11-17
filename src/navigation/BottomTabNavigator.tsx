@@ -8,6 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { Image } from "react-native";
 import { SvgXml } from "react-native-svg";
+import { useSetRecoilState } from "recoil";
 
 import HomeScreen from "../screens/HomeScreen";
 import CreateAdScreen from "../screens/CreateAdScreen";
@@ -21,6 +22,7 @@ import ListingScreen from "../screens/ListingScreen";
 import AdScreen from "../screens/AdScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
 import MessagesScreen from "../screens/MessagesScreen";
+import { openedFiltersState } from "../atoms";
 
 const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
@@ -34,9 +36,16 @@ const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 	<rect x="83" y="219.9" width="80" height="26"/>
 </g>
 </svg>`;
-const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
+const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const BottomTabNavigator = () => {
+  const setOpenedFilters = useSetRecoilState(openedFiltersState);
+
+  const listeners = {
+    tabPress: () => {
+      setOpenedFilters(false);
+    },
+  };
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -53,6 +62,7 @@ const BottomTabNavigator = () => {
             />
           ),
         }}
+        listeners={listeners}
       />
       <BottomTab.Screen
         name="Listing"
@@ -71,6 +81,7 @@ const BottomTabNavigator = () => {
             <SvgXml width={30} height={30} xml={postAdSvg} fill={color} />
           ),
         }}
+        listeners={listeners}
       />
       <BottomTab.Screen
         name="Exchange"
@@ -83,6 +94,7 @@ const BottomTabNavigator = () => {
             />
           ),
         }}
+        listeners={listeners}
       />
     </BottomTab.Navigator>
   );

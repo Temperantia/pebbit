@@ -1,11 +1,5 @@
-import React, { useCallback } from "react";
-import {
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import React, { useCallback, useState } from "react";
+import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import { useForm } from "react-hook-form";
 import "react-native-get-random-values";
 import { v4 } from "uuid";
@@ -32,6 +26,7 @@ const uploadImage = async (uri: string) => {
 
 const CreateAdScreen = () => {
   const { navigate } = useNavigation();
+  const [loading, setLoading] = useState(false);
   const { control, handleSubmit, reset, watch } = useForm({
     defaultValues: {
       category: null,
@@ -46,6 +41,7 @@ const CreateAdScreen = () => {
 
   const onSubmit = useCallback(
     handleSubmit(async (ad) => {
+      setLoading(true);
       ad.prices = Object.entries(ad.prices).reduce(
         (prices: any, [key, price]) => {
           const [currency, type] = key.split("-");
@@ -64,6 +60,7 @@ const CreateAdScreen = () => {
       }
 
       await request("sell", ad);
+      setLoading(false);
       reset({
         category: null,
         title: "",
@@ -145,7 +142,7 @@ const CreateAdScreen = () => {
             </View>
           )}
         <View style={tw("my-4")}>
-          <Button black title="Post Ad" onPress={onSubmit} />
+          <Button black title="Post Ad" loading={loading} onPress={onSubmit} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
