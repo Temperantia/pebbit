@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pebbit",
     "slug": "pebbit",
-    "version": "0.9.4",
+    "version": "0.9.5",
     "orientation": "portrait",
     "icon": "./src/assets/images/appIcon.png",
     "scheme": "pebbit",
@@ -20,10 +20,14 @@
     "ios": {
       "bundleIdentifier": "com.magnanumeris.pebbit",
       "supportsTablet": true,
-      "usesAppleSignIn": true
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "We need to access user's picture / camera in order to allow them to publish their item on the application. The pictures will be displayed on the listing of the application and on the sales section"
+      }
     },
     "android": {
-      "package": "com.magna_numeris.pebbit"
+      "package": "com.magna_numeris.pebbit",
+      "versionCode": 5
     },
     "plugins": [
       [
