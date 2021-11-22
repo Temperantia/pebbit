@@ -84,6 +84,7 @@ const TextInput = ({
         {icon && <Image style={tw("w-8 h-8 mr-2")} source={icon} />}
         {left}
         <RNTextInput
+          autoCorrect={false}
           editable={!copy}
           style={[tw("flex-grow"), { fontFamily: "poppins-medium" }]}
           placeholderTextColor={tailwindConfig.theme.colors["grey-slate"]}
@@ -127,6 +128,7 @@ const TextInput = ({
           if (!price) {
             return true;
           }
+          value = value.replace(",", ".");
           return isNaN(value) || parseFloat(value) < currencies[price].minimum
             ? "Price must be at least " +
                 currencies[price].minimum +

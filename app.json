@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pebbit",
     "slug": "pebbit",
-    "version": "0.9.5",
+    "version": "0.9.7",
     "orientation": "portrait",
     "icon": "./src/assets/images/appIcon.png",
     "scheme": "pebbit",
@@ -22,7 +22,7 @@
       "supportsTablet": true,
       "usesAppleSignIn": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "We need to access user's picture / camera in order to allow them to publish their item on the application. The pictures will be displayed on the listing of the application and on the sales section"
+        "NSCameraUsageDescription": "This app needs to access your pictures or camera to publish your item on the application. The pictures will be displayed on the listing of the application and on the sales section."
       }
     },
     "android": {
@@ -30,6 +30,12 @@
       "versionCode": 5
     },
     "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "This app needs to access your pictures to publish your item on the application. The pictures will be displayed on the listing of the application and on the sales section."
+        }
+      ],
       [
         "expo-notifications",
         {

@@ -27,11 +27,21 @@ export const currencies: {
     image: require("../assets/images/Bitcoin.png"),
     minimum: 0.0001,
   },
-  Ethereum: {
+  Litecoin: {
+    symbol: "LTC",
+    image: require("../assets/images/Litecoin.png"),
+    minimum: 0.0001,
+  },
+  "Binance Coin": {
+    symbol: "BNB",
+    image: require("../assets/images/BinanceCoin.png"),
+    minimum: 0.0001,
+  },
+  /*  Ethereum: {
     symbol: "ETH",
     image: require("../assets/images/Ethereum.png"),
     minimum: 0.16,
-  },
+  }, */
 };
 
 export const statusColors: { [status: string]: string } = {

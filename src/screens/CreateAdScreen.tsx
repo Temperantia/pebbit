@@ -9,7 +9,7 @@ import { request, storage } from "../firebase";
 import TextInput from "../components/core/TextInput";
 import Select from "../components/core/Select";
 import tw from "../tailwind";
-import { categories } from "../constants";
+import { categories, currencies } from "../constants";
 import Button from "../components/core/Button";
 import AdCard from "../components/AdCard";
 import PicturePicker from "../components/PicturePicker";
@@ -58,7 +58,6 @@ const CreateAdScreen = () => {
       for (const [index, picture] of ad.pictures.entries()) {
         ad.pictures[index] = await uploadImage(picture);
       }
-
       await request("sell", ad);
       setLoading(false);
       reset({
@@ -71,7 +70,7 @@ const CreateAdScreen = () => {
       });
       navigate("Exchange", { screen: "ExchangeScreen" });
     }),
-    [reset, navigate, handleSubmit, uploadImage, request]
+    [reset, navigate, handleSubmit, setLoading, uploadImage, request]
   );
 
   return (
@@ -110,7 +109,9 @@ const CreateAdScreen = () => {
             control={control}
           />
         </View>
-        <Text>You may choose up to 3 currencies.</Text>
+        <Text>
+          You may choose up to {Object.keys(currencies).length} currencies.
+        </Text>
         <CurrencyPicker newAd={newAd} control={control} />
         <View style={tw("my-3")}>
           <Text style={[tw("text-grey-slate"), { fontFamily: "poppins-bold" }]}>
