@@ -1,39 +1,31 @@
 import React, { useCallback, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { useTranslation } from "react-i18next";
 
-import { Ad } from "../types";
-import tw from "../tailwind";
-import { statusColors } from "../constants";
-import Icon from "./core/Icon";
-import AdStatusSent from "./AdStatusSent";
-import AdStatusPaid from "./AdStatusPaid";
-import AdStatusPay from "./AdStatusPay";
-import AdStatusPending from "./AdStatusPending";
-import AdStatusReceived from "./AdStatusReceived";
-import StatusBanner from "./StatusBanner";
-import CryptoCurrency from "./CryptoCurrency";
-
-const services = ["Fedex"];
-
-const statusTexts: {
-  [status: string]: { title?: string; description: string };
-} = {
-  new: { description: "Listed" },
-  paid: { title: "PAID", description: "Waiting for seller..." },
-  sent: { title: "SENT", description: "" },
-  received: { title: "RECEIVED", description: "" },
-  complete: { title: "SOLD", description: "Sold" },
-};
+import { Ad } from "../../types";
+import tw from "../../tailwind";
+import { statusColors } from "../../constants";
+import Icon from "../core/Icon";
+import AdStatusSent from "../status/AdStatusSent";
+import AdStatusPaid from "../status/AdStatusPaid";
+import AdStatusPay from "../status/AdStatusPay";
+import AdStatusPending from "../status/AdStatusPending";
+import AdStatusReceived from "../status/AdStatusReceived";
+import StatusBanner from "../status/StatusBanner";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdLineBuying = ({ ad }: { ad: Ad }) => {
+  const { t } = useTranslation(["common", "statuses"]);
   const { navigate } = useNavigation();
   const [expanded, setExpanded] = useState(false);
   const picture = ad.pictures.find((picture) => !!picture);
   const [currency, price] = Object.entries(ad.prices)[0];
   const statusColor = statusColors[ad.status] ?? "";
-  const statusTextTitle = statusTexts[ad.status]?.title ?? "";
-  const statusTextDescription = statusTexts[ad.status]?.description ?? "";
+  const statusTextTitle = t("statuses:" + ad.status + ".buying.title");
+  const statusTextDescription = t(
+    "statuses:" + ad.status + ".buying.description"
+  );
 
   let statusComponent;
   if (ad.status === "received" || ad.status === "sold") {
@@ -54,7 +46,7 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
 
   const onClick = useCallback(() => {
     navigate("AdScreen", { id: ad.id });
-  }, [navigate]);
+  }, [navigate, ad]);
 
   return (
     <View style={tw("my-2")}>
@@ -98,7 +90,7 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
           >
             <Icon size={12} name="small/8/000000/collapse-arrow.png" />
             <Text style={[tw("ml-2"), { fontFamily: "poppins-medium" }]}>
-              Collapse Details
+              {t("accordionCollapse")}
             </Text>
           </TouchableOpacity>
         </View>
@@ -111,7 +103,7 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
         >
           <Icon size={12} name="small/8/000000/expand-arrow.png" />
           <Text style={[tw("ml-2"), { fontFamily: "poppins-medium" }]}>
-            Expand Details
+            {t("accordionExpand")}
           </Text>
         </TouchableOpacity>
       )}

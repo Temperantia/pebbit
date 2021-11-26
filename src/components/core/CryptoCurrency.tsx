@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
 
-import { currencies } from "../constants";
-import tw from "../tailwind";
+import { currencies } from "../../constants";
+import tw from "../../tailwind";
 
 export enum Delta {
   Positive,
@@ -27,6 +27,7 @@ const CryptoCurrency = ({
       <Image style={tw("w-6 h-6 mr-2")} source={currencies[currency].image} />
     )}
     <Text
+      numberOfLines={1}
       style={[
         delta !== undefined || textColor
           ? tw(

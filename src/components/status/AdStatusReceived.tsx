@@ -1,12 +1,12 @@
 import React, { useCallback } from "react";
 import { Text, View } from "react-native";
 
-import tw from "../tailwind";
-import { Ad } from "../types";
-import Icon from "../components/core/Icon";
-import tailwindConfig from "../../tailwind.config";
-import CryptoCurrency from "./CryptoCurrency";
-import { request } from "../firebase";
+import tw from "../../tailwind";
+import { Ad } from "../../types";
+import Icon from "../core/Icon";
+import tailwindConfig from "../../../tailwind.config";
+import CryptoCurrency from "../core/CryptoCurrency";
+import { request } from "../../firebase";
 
 const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
   const onRate = useCallback(

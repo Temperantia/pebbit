@@ -9,13 +9,13 @@ import Icon from "../components/core/Icon";
 import { Ad, ListingParamList } from "../types";
 import { timeAgo } from "../utils/time";
 import { adCollection } from "../firebase";
-import ScreenLoading from "../components/ScreenLoading";
-import AdStatusBuy from "../components/AdStatusBuy";
-import AdStatusPay from "../components/AdStatusPay";
-import AdStatusPending from "../components/AdStatusPending";
-import AdStatusPaid from "../components/AdStatusPaid";
-import AdStatusSent from "../components/AdStatusSent";
-import AdStatusReceived from "../components/AdStatusReceived";
+import ScreenLoading from "../components/core/ScreenLoading";
+import AdStatusBuy from "../components/status/AdStatusBuy";
+import AdStatusPay from "../components/status/AdStatusPay";
+import AdStatusPending from "../components/status/AdStatusPending";
+import AdStatusPaid from "../components/status/AdStatusPaid";
+import AdStatusSent from "../components/status/AdStatusSent";
+import AdStatusReceived from "../components/status/AdStatusReceived";
 import useAuth from "../hooks/useAuth";
 
 const AdScreen = ({

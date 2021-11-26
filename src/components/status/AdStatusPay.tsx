@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Clipboard, Text, View } from "react-native";
 
-import tw from "../tailwind";
-import Icon from "../components/core/Icon";
-import tailwindConfig from "../../tailwind.config";
-import { Ad } from "../types";
-import { request } from "../firebase";
-import useAuth from "../hooks/useAuth";
-import CryptoCurrency from "./CryptoCurrency";
+import tw from "../../tailwind";
+import Icon from "../core/Icon";
+import tailwindConfig from "../../../tailwind.config";
+import { Ad } from "../../types";
+import { request } from "../../firebase";
+import useAuth from "../../hooks/useAuth";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdStatusPay = ({ ad }: { ad: Ad }) => {
   const { user } = useAuth();

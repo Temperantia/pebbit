@@ -1,8 +1,8 @@
 import React from "react";
 import { FlatList, ListRenderItem } from "react-native";
 
-import { Ad } from "../types";
-import tw from "../tailwind";
+import { Ad } from "../../types";
+import tw from "../../tailwind";
 
 const AdList = ({
   ads,
@@ -15,7 +15,7 @@ const AdList = ({
 }) => {
   return (
     <FlatList
-      style={tw("w-full")}
+      style={tw("w-full px-5")}
       data={ads}
       numColumns={numColumns}
       renderItem={renderItem}

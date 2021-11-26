@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Image, Text } from "react-native";
 
-import tw from "../tailwind";
+import tw from "../../tailwind";
 
 const StatusBanner = ({
   picture,

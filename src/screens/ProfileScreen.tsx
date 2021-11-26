@@ -1,9 +1,9 @@
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, View } from "react-native";
 
 import tailwindConfig from "../../tailwind.config";
 import Icon from "../components/core/Icon";
-import CryptoCurrency from "../components/CryptoCurrency";
+import CryptoCurrency from "../components/core/CryptoCurrency";
 import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
 

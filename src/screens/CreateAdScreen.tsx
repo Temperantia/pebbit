@@ -11,9 +11,9 @@ import Select from "../components/core/Select";
 import tw from "../tailwind";
 import { categories, currencies } from "../constants";
 import Button from "../components/core/Button";
-import AdCard from "../components/AdCard";
-import PicturePicker from "../components/PicturePicker";
-import CurrencyPicker from "../components/CurrencyPicker";
+import AdCard from "../components/cards/AdCard";
+import PicturePicker from "../components/pickers/PicturePicker";
+import CurrencyPicker from "../components/pickers/CurrencyPicker";
 import { keyboardVerticalOffset } from "../constants/Layout";
 
 const uploadImage = async (uri: string) => {
@@ -70,7 +70,7 @@ const CreateAdScreen = () => {
       });
       navigate("Exchange", { screen: "ExchangeScreen" });
     }),
-    [reset, navigate, handleSubmit, setLoading, uploadImage, request]
+    [reset, navigate, handleSubmit, setLoading, uploadImage, request, Object]
   );
 
   return (

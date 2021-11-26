@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
 
-import tw from "../tailwind";
-import { Price } from "../types";
-import CryptoCurrency from "./CryptoCurrency";
+import tw from "../../tailwind";
+import { Price } from "../../types";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdCard = ({
   data: {

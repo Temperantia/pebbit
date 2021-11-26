@@ -15,9 +15,9 @@ import { useForm } from "react-hook-form";
 import tw from "../tailwind";
 import Icon from "../components/core/Icon";
 import { ExchangeParamList, User } from "../types";
-import ScreenLoading from "../components/ScreenLoading";
+import ScreenLoading from "../components/core/ScreenLoading";
 import useAuth from "../hooks/useAuth";
-import AdLineMessaging from "../components/AdLineMessaging";
+import AdLineMessaging from "../components/lines/AdLineMessaging";
 import TextInput from "../components/core/TextInput";
 import { request, userCollection } from "../firebase";
 import tailwindConfig from "../../tailwind.config";
@@ -57,7 +57,7 @@ const MessagesScreen = ({
       reset();
       setLoading(false);
     }),
-    [handleSubmit, request, id]
+    [handleSubmit, request, setLoading, id, reset]
   );
 
   return (

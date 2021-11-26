@@ -7,11 +7,13 @@ import {
   View,
 } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
+import { useTranslation } from "react-i18next";
 
-import useAuth from "../hooks/useAuth";
-import tw from "../tailwind";
+import useAuth from "../../hooks/useAuth";
+import tw from "../../tailwind";
 
 const SocialButton = ({ type }: { type: string }) => {
+  const { t } = useTranslation(["auth"]);
   const { signInWithGoogle, signInWithApple } = useAuth();
 
   const types: {
@@ -23,13 +25,13 @@ const SocialButton = ({ type }: { type: string }) => {
     };
   } = {
     Google: {
-      icon: require("../assets/images/google.png"),
+      icon: require("../../assets/images/google.png"),
       bgColor: "bg-white border border-grey-slate",
       color: "text-grey-slate",
       handler: signInWithGoogle,
     },
     Apple: {
-      icon: require("../assets/images/google.png"),
+      icon: require("../../assets/images/google.png"),
       bgColor: "bg-white border border-grey-slate",
       color: "text-grey-slate",
       handler: signInWithApple,
@@ -61,7 +63,7 @@ const SocialButton = ({ type }: { type: string }) => {
       <Text
         style={[tw("text-lg " + color), { fontFamily: "poppins-semibold" }]}
       >
-        {"Sign in with " + type}
+        {t("signInWith") + " " + type}
       </Text>
     </TouchableOpacity>
   ) : (

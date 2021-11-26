@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 
-import ScreenLoading from "./ScreenLoading";
+import ScreenLoading from "../core/ScreenLoading";
 import AdList from "./AdList";
-import useAuth from "../hooks/useAuth";
-import AdLineHistory from "./AdLineHistory";
+import useAuth from "../../hooks/useAuth";
+import AdLineHistory from "../lines/AdLineHistory";
 
 const HistoryList = () => {
   const { user } = useAuth();

@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList } from "react-native";
 
-import CategoryCard from "./CategoryCard";
+import CategoryCard from "../cards/CategoryCard";
 
 const CategoryList = ({ categories }: { categories: any }) => {
   return (

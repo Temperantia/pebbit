@@ -3,10 +3,12 @@ import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import * as Notifications from "expo-notifications";
 import { RecoilRoot } from "recoil";
+import { I18nextProvider } from "react-i18next";
 
 import useCachedResources from "./src/hooks/useCachedResources";
 import Navigation from "./src/navigation";
 import { AuthProvider } from "./src/hooks/useAuth";
+import i18n from "./src/i18n";
 
 const App = () => {
   const isLoadingComplete = useCachedResources();
@@ -35,10 +37,12 @@ const App = () => {
   } else {
     return (
       <RecoilRoot>
-        <AuthProvider>
-          <Navigation />
-          <StatusBar style="light" />
-        </AuthProvider>
+        <I18nextProvider i18n={i18n}>
+          <AuthProvider>
+            <Navigation />
+            <StatusBar style="light" />
+          </AuthProvider>
+        </I18nextProvider>
       </RecoilRoot>
     );
   }

@@ -11,7 +11,7 @@ import {
 
 import Button from "../components/core/Button";
 import TextInput from "../components/core/TextInput";
-import SocialButton from "../components/SocialButton";
+import SocialButton from "../components/auth/SocialButton";
 import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
 import { keyboardVerticalOffset } from "../constants/Layout";
@@ -38,7 +38,7 @@ const AuthScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior="height"
+      behavior="padding"
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
       <ScrollView contentContainerStyle={tw("justify-evenly h-full mx-5")}>

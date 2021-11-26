@@ -2,6 +2,8 @@ import React, { PropsWithChildren } from "react";
 import { ActivityIndicator, Alert } from "react-native";
 import firebase from "firebase";
 
+import tailwindConfig from "../../../tailwind.config";
+
 const ScreenLoading = ({
   loading,
   error,
@@ -11,7 +13,9 @@ const ScreenLoading = ({
   error?: firebase.FirebaseError;
 }>): JSX.Element => {
   if (loading) {
-    return <ActivityIndicator />;
+    return (
+      <ActivityIndicator color={tailwindConfig.theme.colors["red-main"]} />
+    );
   }
   if (error) {
     console.error(error);

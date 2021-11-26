@@ -11,7 +11,7 @@ import { AuthStackParamList, RootStackParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import tailwindConfig from "../../tailwind.config";
-import Header from "../components/Header";
+import Header from "../components/core/Header";
 import AuthScreen from "../screens/AuthScreen";
 import useAuth from "../hooks/useAuth";
 import OnboardingScreen from "../screens/OnboardingScreen";

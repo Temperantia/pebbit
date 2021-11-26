@@ -2,17 +2,16 @@ import { useNavigation } from "@react-navigation/core";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
-import Button from "../components/core/Button";
 
+import Button from "../components/core/Button";
 import TextInput from "../components/core/TextInput";
 import { keyboardVerticalOffset } from "../constants/Layout";
-import { auth, userCollection } from "../firebase";
 import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
 
 const SettingsScreen = () => {
   const { goBack } = useNavigation();
-  const { user, authUser } = useAuth();
+  const { user, authUser, saveProfile } = useAuth();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       email: user?.email ?? "",
@@ -29,51 +28,14 @@ const SettingsScreen = () => {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const onSave = useCallback(
-    handleSubmit(async ({ email, phone, address, password, newPassword }) => {
-      if (!user) {
-        return;
-      }
+    handleSubmit(async (data) => {
       setLoading(true);
-      try {
-        if (user.email && email !== user.email) {
-          try {
-            await auth.signInWithEmailAndPassword(user.email, password);
-          } catch (error) {
-            alert("Incorrect password");
-            setLoading(false);
-            return;
-          }
-          await authUser?.updateEmail(email);
-        }
-        if (user.email && password && newPassword) {
-          try {
-            await auth.signInWithEmailAndPassword(user.email, password);
-          } catch (error) {
-            alert("Incorrect password");
-            setLoading(false);
-            return;
-          }
-          await authUser?.updatePassword(newPassword);
-        }
-        await userCollection.doc(user?.id).update({ email, phone, address });
-        goBack();
-        reset();
-        setLoading(false);
-      } catch (error: any) {
-        alert(error.message);
-      }
+      await saveProfile(data);
+      goBack();
+      reset();
+      setLoading(false);
     }),
-    [
-      handleSubmit,
-      alert,
-      authUser,
-      goBack,
-      reset,
-      setLoading,
-      auth,
-      userCollection,
-      user,
-    ]
+    [saveProfile, handleSubmit, goBack, reset, setLoading]
   );
   return (
     <KeyboardAvoidingView

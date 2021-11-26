@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
-import tw from "../tailwind";
-import { Ad } from "../types";
-import Icon from "../components/core/Icon";
-import tailwindConfig from "../../tailwind.config";
-import { request } from "../firebase";
-import CryptoCurrency from "./CryptoCurrency";
+import tw from "../../tailwind";
+import { Ad } from "../../types";
+import Icon from "../core/Icon";
+import tailwindConfig from "../../../tailwind.config";
+import { request } from "../../firebase";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
   const [loading, setLoading] = useState<boolean>(false);

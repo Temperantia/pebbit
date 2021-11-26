@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 
-import ScreenLoading from "./ScreenLoading";
+import ScreenLoading from "../core/ScreenLoading";
 import AdList from "./AdList";
-import useAuth from "../hooks/useAuth";
-import AdLineBuying from "./AdLineBuying";
+import useAuth from "../../hooks/useAuth";
+import AdLineBuying from "../lines/AdLineBuying";
 
 const BuyingList = () => {
   const { user } = useAuth();

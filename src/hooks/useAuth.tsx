@@ -19,10 +19,6 @@ const google = {
     "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
   androidStandaloneAppClientId:
     "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
-  /* iosClientId:
-    "876715407348-e3i42a85ib2d18peimbjppfchj83pjru.apps.googleusercontent.com",
-  iosStandaloneAppClientId:
-    "876715407348-2uon6puq90m7b5as4nffa7e6nbpqkofk.apps.googleusercontent.com", */
   scopes: ["email"],
 };
 
@@ -33,7 +29,6 @@ type NewUser = {
 };
 
 type AuthContextData = {
-  token: string | null;
   user: User | null;
   authUser: firebase.User | null;
   newUser: NewUser | null;
@@ -42,13 +37,19 @@ type AuthContextData = {
   signInWithApple(): Promise<void>;
   signInWithEmail(email: string, password: string): Promise<void>;
   signOut(): void;
-  register(username: string, address: Address): void;
+  register(username: string, address: Address): Promise<void>;
+  saveProfile(data: {
+    email: string;
+    phone: string;
+    address: Address;
+    password: string;
+    newPassword: string;
+  }): Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: FC = ({ children }) => {
-  const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [authUser, setAuthUser] = useState<firebase.User | null>(null);
   const [newUser, setNewUser] = useState<NewUser | null>(null);
@@ -58,9 +59,6 @@ export const AuthProvider: FC = ({ children }) => {
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       setAuthUser(authUser);
-      if (unsubscribe) {
-        unsubscribe();
-      }
       if (authUser) {
         const { email, uid, phoneNumber } = authUser;
         unsubscribe = userCollection.doc(uid).onSnapshot(async (doc) => {
@@ -81,6 +79,9 @@ export const AuthProvider: FC = ({ children }) => {
         setLoading(false);
       }
     });
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const signInWithGoogle = async () => {
@@ -105,7 +106,6 @@ export const AuthProvider: FC = ({ children }) => {
         ],
       });
       const { identityToken } = credential;
-      console.log(credential);
       if (!identityToken) {
         return;
       }
@@ -116,7 +116,7 @@ export const AuthProvider: FC = ({ children }) => {
 
       await auth.signInWithCredential(authCredential);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -149,21 +149,15 @@ export const AuthProvider: FC = ({ children }) => {
       ({ userId, status }) =>
         status === "complete" || (userId !== user.id && status === "received")
     );
-    // todo token
+    // emulator crashes on that
     try {
-      const data = await registerForPushNotifications(user.id);
-      if (data) {
-        setToken(data);
-      }
-    } catch (error) {
-      setToken("ExponentPushToken[l1EyP6FP0V5CgKsNke0DbY]");
-    }
+      await registerForPushNotifications(user.id);
+    } catch (error) {}
     setUser(user);
   };
 
   const signOut = async () => {
     await auth.signOut();
-    setToken(null);
     setUser(null);
     setNewUser(null);
   };
@@ -205,10 +199,50 @@ export const AuthProvider: FC = ({ children }) => {
     return data;
   };
 
+  const saveProfile = async ({
+    email,
+    phone,
+    address,
+    password,
+    newPassword,
+  }: {
+    email: string;
+    phone: string;
+    address: Address;
+    password: string;
+    newPassword: string;
+  }) => {
+    if (!user) {
+      return;
+    }
+    try {
+      if (user.email && email !== user.email) {
+        try {
+          await auth.signInWithEmailAndPassword(user.email, password);
+        } catch (error) {
+          alert("Incorrect password");
+          return;
+        }
+        await authUser?.updateEmail(email);
+      }
+      if (user.email && password && newPassword) {
+        try {
+          await auth.signInWithEmailAndPassword(user.email, password);
+        } catch (error) {
+          alert("Incorrect password");
+          return;
+        }
+        await authUser?.updatePassword(newPassword);
+      }
+      await userCollection.doc(user?.id).update({ email, phone, address });
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
-        token,
         user,
         authUser,
         newUser,
@@ -218,6 +252,7 @@ export const AuthProvider: FC = ({ children }) => {
         signInWithEmail,
         signOut,
         register,
+        saveProfile,
       }}
     >
       {children}

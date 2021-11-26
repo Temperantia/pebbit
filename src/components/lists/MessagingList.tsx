@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 
-import ScreenLoading from "./ScreenLoading";
+import ScreenLoading from "../core/ScreenLoading";
 import AdList from "./AdList";
-import useAuth from "../hooks/useAuth";
-import AdLineMessaging from "./AdLineMessaging";
+import useAuth from "../../hooks/useAuth";
+import AdLineMessaging from "../lines/AdLineMessaging";
 
 const MessagingList = () => {
   const { user } = useAuth();

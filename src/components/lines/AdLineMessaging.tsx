@@ -1,22 +1,13 @@
 import React, { useCallback } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { useTranslation } from "react-i18next";
 
-import { Ad } from "../types";
-import tw from "../tailwind";
-import { statusColors } from "../constants";
-import StatusBanner from "./StatusBanner";
-import CryptoCurrency from "./CryptoCurrency";
-
-const statusTexts: {
-  [status: string]: { title?: string; description: string };
-} = {
-  new: { description: "Listed" },
-  paid: { title: "PAID", description: "Waiting for seller..." },
-  sent: { title: "SENT", description: "Waiting for buyer..." },
-  received: { title: "RECEIVED", description: "" },
-  complete: { title: "SOLD", description: "Sold" },
-};
+import { Ad } from "../../types";
+import tw from "../../tailwind";
+import { statusColors } from "../../constants";
+import StatusBanner from "../status/StatusBanner";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdLineMessaging = ({
   disabled,
@@ -25,12 +16,14 @@ const AdLineMessaging = ({
   disabled?: boolean;
   ad: Ad;
 }) => {
+  const { t } = useTranslation(["statuses"]);
   const { navigate } = useNavigation();
   const picture = pictures.find((picture) => !!picture);
   const [currency, price] = Object.entries(prices)[0];
   const statusColor = statusColors[status] ?? "";
-  const statusTextTitle = statusTexts[status]?.title ?? "";
-  const statusTextDescription = statusTexts[status]?.description ?? "";
+  const statusTextTitle = t("statuses:" + status + ".messaging.title") ?? "";
+  const statusTextDescription =
+    t("statuses:" + status + ".messaging.description") ?? "";
 
   const onClick = useCallback(() => {
     navigate("MessagesScreen", { id });

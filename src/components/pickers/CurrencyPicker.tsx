@@ -2,10 +2,10 @@ import React, { useCallback } from "react";
 import { Text, View } from "react-native";
 import { Control } from "react-hook-form";
 
-import { currencies } from "../constants";
-import MultiSelect from "./core/MultiSelect";
-import TextInput from "./core/TextInput";
-import CryptoCurrency from "./CryptoCurrency";
+import { currencies } from "../../constants";
+import MultiSelect from "../core/MultiSelect";
+import TextInput from "../core/TextInput";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const CurrencyPicker = ({
   newAd,

@@ -1,9 +1,9 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-import tw from "../tailwind";
-import Icon from "../components/core/Icon";
-import tailwindConfig from "../../tailwind.config";
+import tw from "../../tailwind";
+import Icon from "../core/Icon";
+import tailwindConfig from "../../../tailwind.config";
 
 const AdStatusPending = () => {
   return (

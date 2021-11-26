@@ -4,11 +4,11 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
 import { adCollection } from "../firebase";
-import ScreenLoading from "../components/ScreenLoading";
+import ScreenLoading from "../components/core/ScreenLoading";
 import { Ad } from "../types";
-import CategoryList from "../components/CategoryList";
+import CategoryList from "../components/lists/CategoryList";
 import tw from "../tailwind";
-import AdPreview from "../components/AdPreview";
+import AdPreview from "../components/cards/AdPreview";
 import useAuth from "../hooks/useAuth";
 
 const HomeScreen = () => {

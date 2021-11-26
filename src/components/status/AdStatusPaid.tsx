@@ -1,11 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-import tw from "../tailwind";
-import { Ad } from "../types";
-import Icon from "./core/Icon";
-import tailwindConfig from "../../tailwind.config";
-import CryptoCurrency from "./CryptoCurrency";
+import tw from "../../tailwind";
+import { Ad } from "../../types";
+import Icon from "../core/Icon";
+import tailwindConfig from "../../../tailwind.config";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdStatusPaid = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
   return (

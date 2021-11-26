@@ -3,9 +3,9 @@ import { Image, Text, View, TouchableOpacity } from "react-native";
 import { Control, Controller } from "react-hook-form";
 import * as ImagePicker from "expo-image-picker";
 
-import tailwindConfig from "../../tailwind.config";
-import Icon from "./core/Icon";
-import tw from "../tailwind";
+import tailwindConfig from "../../../tailwind.config";
+import Icon from "../core/Icon";
+import tw from "../../tailwind";
 
 const PicturePicker = ({ control }: { control: Control<any> }) => {
   const onPickPicture = useCallback(

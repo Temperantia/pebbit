@@ -24,6 +24,7 @@ export type BottomTabParamList = {
 
 export type HomeParamList = {
   HomeScreen: undefined;
+  AdScreen: { id: string };
 };
 
 export type ListingParamList = {

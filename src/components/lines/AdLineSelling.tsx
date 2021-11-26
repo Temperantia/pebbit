@@ -2,16 +2,17 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/core";
+import { useTranslation } from "react-i18next";
 
-import { Ad } from "../types";
-import tw from "../tailwind";
-import { statusColors } from "../constants";
-import Icon from "./core/Icon";
-import TextInput from "./core/TextInput";
-import { request } from "../firebase";
-import StatusBanner from "./StatusBanner";
-import tailwindConfig from "../../tailwind.config";
-import CryptoCurrency from "./CryptoCurrency";
+import { Ad } from "../../types";
+import tw from "../../tailwind";
+import { statusColors } from "../../constants";
+import Icon from "../core/Icon";
+import TextInput from "../core/TextInput";
+import { request } from "../../firebase";
+import StatusBanner from "../status/StatusBanner";
+import tailwindConfig from "../../../tailwind.config";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const statusTexts: {
   [status: string]: { title?: string; description: string };
@@ -28,6 +29,7 @@ const AdLineSelling = ({
 }: {
   ad: Ad;
 }) => {
+  const { t } = useTranslation(["statuses"]);
   const { navigate } = useNavigation();
   const [expanded, setExpanded] = useState(false);
   const { control, watch } = useForm();

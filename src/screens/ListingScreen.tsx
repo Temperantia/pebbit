@@ -1,25 +1,23 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useRecoilState } from "recoil";
+import { Text, TouchableOpacity, View } from "react-native";
+import { useSetRecoilState } from "recoil";
 
 import tw from "../tailwind";
 import { adCollection } from "../firebase";
-import ScreenLoading from "../components/ScreenLoading";
+import ScreenLoading from "../components/core/ScreenLoading";
 import { Ad } from "../types";
-import AdList from "../components/AdList";
+import AdList from "../components/lists/AdList";
 import useAuth from "../hooks/useAuth";
-import AdPreview from "../components/AdPreview";
+import AdPreview from "../components/cards/AdPreview";
 import Icon from "../components/core/Icon";
 import tailwindConfig from "../../tailwind.config";
-import { categories, countries, currencies } from "../constants";
-import Select from "../components/core/Select";
-import CryptoCurrency from "../components/CryptoCurrency";
 import { openedFiltersState } from "../atoms";
+import FiltersListing from "../components/panels/FiltersListing";
 
 const ListingScreen = () => {
   const { user } = useAuth();
-  const [openedFilters, setOpenedFilters] = useRecoilState(openedFiltersState);
+  const setOpenedFilters = useSetRecoilState(openedFiltersState);
   const [now] = useState<number>(Math.round(Date.now() / 1000));
   const [category, setCategory] = useState<string>("All");
   const [location, setLocation] = useState<string>("All");
@@ -74,27 +72,6 @@ const ListingScreen = () => {
     setOpenedFilters(true);
   }, [setOpenedFilters]);
 
-  const onCloseFilters = useCallback(() => {
-    setOpenedFilters(false);
-  }, [setOpenedFilters]);
-
-  const onSetCategory = useCallback(
-    (category: string) => () => {
-      setCategory(category);
-    },
-    [setCategory]
-  );
-
-  const onRenderCurrencyButton = useCallback(
-    (currency) => <CryptoCurrency raw currency={currency} text={currency} />,
-    [CryptoCurrency]
-  );
-
-  const onRenderCurrencyItem = useCallback(
-    (currency) => <CryptoCurrency raw currency={currency} text={currency} />,
-    [CryptoCurrency]
-  );
-
   return (
     <ScreenLoading loading={loading} error={error}>
       {ads && (
@@ -140,98 +117,16 @@ const ListingScreen = () => {
                 renderItem={onRenderAdLine}
               />
             </View>
-            {openedFilters && (
-              <ScrollView
-                contentContainerStyle={tw("p-4")}
-                style={tw("w-4/5 bg-white absolute top-0 bottom-0 right-0")}
-              >
-                <View
-                  style={tw(
-                    "flex-row justify-between border-b border-grey-slate"
-                  )}
-                >
-                  <Text style={{ fontFamily: "poppins-semibold" }}>
-                    Filter & Refine
-                  </Text>
-                  <TouchableOpacity onPress={onCloseFilters}>
-                    <Icon
-                      color={tailwindConfig.theme.colors["red-main"]}
-                      size={20}
-                      name={"small/36/000000/delete-sign.png"}
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View style={tw("py-2 border-b border-grey-slate")}>
-                  <Text
-                    style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}
-                  >
-                    Category
-                  </Text>
-                  <TouchableOpacity
-                    style={tw(
-                      "p-1 " +
-                        ("All" === category ? "bg-red-main bg-opacity-30" : "")
-                    )}
-                    onPress={onSetCategory("All")}
-                  >
-                    <Text>All</Text>
-                  </TouchableOpacity>
-                  {categories.map((c) => (
-                    <TouchableOpacity
-                      key={c}
-                      style={tw(
-                        "px-1 " +
-                          (c === category ? "bg-red-main bg-opacity-30" : "")
-                      )}
-                      onPress={onSetCategory(c)}
-                    >
-                      <Text>{c}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-                <View style={tw("py-2 border-b border-grey-slate")}>
-                  <Text
-                    style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}
-                  >
-                    Location
-                  </Text>
-                  <Select
-                    style="border-red-main"
-                    data={["All", ...countries]}
-                    value={location}
-                    onValue={setLocation}
-                  />
-                </View>
-                <View style={tw("py-2 border-b border-grey-slate")}>
-                  <Text
-                    style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}
-                  >
-                    Currency
-                  </Text>
-                  <Select
-                    style="border-red-main"
-                    data={["All", ...Object.keys(currencies)]}
-                    value={currency}
-                    onValue={setCurrency}
-                    onRenderButton={onRenderCurrencyButton}
-                    onRenderItem={onRenderCurrencyItem}
-                  />
-                </View>
-                <View style={tw("py-2")}>
-                  <Text
-                    style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}
-                  >
-                    Date Listed
-                  </Text>
-                  <Select
-                    style="border-red-main"
-                    data={["Newest first", "Oldest first"]}
-                    value={order}
-                    onValue={setOrder}
-                  />
-                </View>
-              </ScrollView>
-            )}
+            <FiltersListing
+              category={category}
+              location={location}
+              currency={currency}
+              order={order}
+              setCategory={setCategory}
+              setLocation={setLocation}
+              setCurrency={setCurrency}
+              setOrder={setOrder}
+            />
           </View>
         </View>
       )}

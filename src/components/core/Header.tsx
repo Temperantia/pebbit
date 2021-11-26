@@ -1,15 +1,17 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useCallback, useState } from "react";
 import { Image, SafeAreaView, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
-import tailwindConfig from "../../tailwind.config";
-import useAuth from "../hooks/useAuth";
-import tw from "../tailwind";
-import Button from "./core/Button";
-import Icon from "./core/Icon";
+import tailwindConfig from "../../../tailwind.config";
+import useAuth from "../../hooks/useAuth";
+import tw from "../../tailwind";
+import Button from "./Button";
+import Icon from "./Icon";
 import SafeViewAndroid from "./SafeViewAndroid";
 
 const Header = ({ noMenu }: { noMenu?: boolean }) => {
+  const { t } = useTranslation(["navigation"]);
   const { signOut } = useAuth();
   const { navigate, getState } = useNavigation();
   const { routes } = getState();
@@ -23,7 +25,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
       setModalVisible(false);
       navigate(route);
     },
-    [navigate]
+    [navigate, setModalVisible]
   );
   const onSignOut = useCallback(signOut, [signOut]);
 
@@ -34,7 +36,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
       <View style={tw("flex-row items-center justify-between p-3")}>
         <Image
           style={{ width: 140, height: 45 }}
-          source={require("../assets/images/logoWh.png")}
+          source={require("../../assets/images/logoWh.png")}
         />
         {!noMenu && (
           <TouchableOpacity onPress={onSetVisible}>
@@ -59,7 +61,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
                   ? "text-red-main"
                   : "text-white"
               }
-              title="Home"
+              title={t("home")}
               onPress={onNavigate("Root")}
             />
             <Button
@@ -68,7 +70,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
                   ? "text-red-main"
                   : "text-white"
               }
-              title="My Profile"
+              title={t("myProfile")}
               onPress={onNavigate("Profile")}
             />
             <Button
@@ -77,10 +79,14 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
                   ? "text-red-main"
                   : "text-white"
               }
-              title="Account Settings"
+              title={t("accountSettings")}
               onPress={onNavigate("Settings")}
             />
-            <Button color="text-white" title="Sign Out" onPress={onSignOut} />
+            <Button
+              color="text-white"
+              title={t("signOut")}
+              onPress={onSignOut}
+            />
           </View>
         </View>
       )}

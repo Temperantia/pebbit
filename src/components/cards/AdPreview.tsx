@@ -2,9 +2,9 @@ import React, { useCallback } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 
-import { Ad } from "../types";
-import tw from "../tailwind";
-import CryptoCurrency from "./CryptoCurrency";
+import { Ad } from "../../types";
+import tw from "../../tailwind";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdPreview = ({ ad }: { ad: Ad }) => {
   const picture = ad.pictures.find((picture) => !!picture);
@@ -33,7 +33,7 @@ const AdPreview = ({ ad }: { ad: Ad }) => {
           >
             <CryptoCurrency
               currency={currency}
-              text={price.amount.toString()}
+              text={price?.amount?.toString()}
               textColor="text-white"
             />
           </View>

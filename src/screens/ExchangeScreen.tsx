@@ -2,10 +2,10 @@ import React, { useCallback, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 import tw from "../tailwind";
-import MessagingList from "../components/MessagingList";
-import BuyingList from "../components/BuyingList";
-import SellingList from "../components/SellingList";
-import HistoryList from "../components/HistoryList";
+import MessagingList from "../components/lists/MessagingList";
+import BuyingList from "../components/lists/BuyingList";
+import SellingList from "../components/lists/SellingList";
+import HistoryList from "../components/lists/HistoryList";
 
 const tabs: { [tab: string]: JSX.Element } = {
   Selling: <SellingList />,
@@ -25,17 +25,16 @@ const ExchangeScreen = () => {
   );
 
   return (
-    <View style={tw("mx-5 h-full")}>
+    <View style={tw("h-full")}>
       <View style={tw("flex-row justify-evenly my-4")}>
         {Object.keys(tabs).map((tab) => (
           <TouchableOpacity key={tab} onPress={onSetCurrentTab(tab)}>
             <Text
               style={[
                 tw(
-                  "text-lg" +
-                    (currentTab === tab
-                      ? " text-red-main underline"
-                      : " text-black")
+                  currentTab === tab
+                    ? " text-red-main underline"
+                    : " text-black"
                 ),
                 { fontFamily: "poppins-semibold" },
               ]}

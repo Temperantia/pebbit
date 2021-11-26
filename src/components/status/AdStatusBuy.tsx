@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-import { request } from "../firebase";
-import tw from "../tailwind";
-import Button from "../components/core/Button";
-import { Ad } from "../types";
-import useAuth from "../hooks/useAuth";
-import CryptoCurrency from "./CryptoCurrency";
+import { request } from "../../firebase";
+import tw from "../../tailwind";
+import Button from "../core/Button";
+import { Ad } from "../../types";
+import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdStatusBuy = ({ ad }: { ad: Ad }) => {
-  const { token } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
 
@@ -30,11 +28,9 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
 
   const onBuy = useCallback(async () => {
     setLoading(true);
-    await request(
-      "buy?id=" + ad.id + "&currency=" + selectedCurrency + "&token=" + token
-    );
+    await request("buy?id=" + ad.id + "&currency=" + selectedCurrency);
     setLoading(false);
-  }, [setLoading, ad, request, token, selectedCurrency]);
+  }, [setLoading, ad, request, selectedCurrency]);
 
   return (
     <View style={tw("h-96")}>

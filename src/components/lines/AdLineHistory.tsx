@@ -2,25 +2,29 @@ import React, { useCallback } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
 
-import { Ad } from "../types";
-import tw from "../tailwind";
-import useAuth from "../hooks/useAuth";
-import StatusBanner from "./StatusBanner";
-import CryptoCurrency, { Delta } from "./CryptoCurrency";
+import { Ad } from "../../types";
+import tw from "../../tailwind";
+import useAuth from "../../hooks/useAuth";
+import StatusBanner from "../status/StatusBanner";
+import CryptoCurrency, { Delta } from "../core/CryptoCurrency";
 
 const AdLineHistory = ({ ad }: { ad: Ad }) => {
+  const { t } = useTranslation(["common", "statuses"]);
   const { navigate } = useNavigation();
   const { user } = useAuth();
   const isSeller = user?.id === ad.userId;
   const picture = ad.pictures.find((picture) => !!picture);
   const [currency, price] = Object.entries(ad.prices)[0];
   const statusColor = isSeller ? "blue-main" : "green-main";
-  const statusTextTitle = isSeller ? "SOLD" : "BOUGHT";
+  const statusTextTitle = isSeller
+    ? t("statuses:complete.history.sold")
+    : t("statuses:complete.history.bought");
 
   const onClick = useCallback(() => {
     navigate("AdScreen", { id: ad.id });
-  }, [navigate]);
+  }, [navigate, ad]);
 
   return (
     <View style={tw("my-2")}>
@@ -44,7 +48,7 @@ const AdLineHistory = ({ ad }: { ad: Ad }) => {
             delta={isSeller ? Delta.Positive : Delta.Negative}
           />
           <Text style={tw("text-xs text-grey-slate")}>
-            Completed on:{" "}
+            {t("completedOn") + ": "}
             {format(new Date(ad.created.seconds * 1000), "d/M/yy h:m")}
           </Text>
         </View>

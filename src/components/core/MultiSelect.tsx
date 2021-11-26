@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { Control, Controller } from "react-hook-form";
 import { Text, TouchableOpacity, View } from "react-native";
-import tailwindConfig from "../../../tailwind.config";
+import { useTranslation } from "react-i18next";
 
+import tailwindConfig from "../../../tailwind.config";
 import tw from "../../tailwind";
 import Icon from "./Icon";
 
@@ -70,6 +71,7 @@ const MultiSelect = ({
   control: Control<any>;
   onListItem: (element: string) => JSX.Element;
 }) => {
+  const { t } = useTranslation(["errors"]);
   const [visible, setVisible] = useState<boolean>(false);
   const toggleVisible = useCallback(() => {
     setVisible(!visible);
@@ -81,7 +83,7 @@ const MultiSelect = ({
       control={control}
       rules={{
         validate: (value: string[]) => {
-          return value.length === 0 ? "At least 1 currency" : true;
+          return value.length === 0 ? t("noCurrencySelected") : true;
         },
       }}
       render={({ field: { onChange, value }, fieldState: { error } }) => {
