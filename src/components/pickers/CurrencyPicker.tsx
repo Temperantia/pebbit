@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { Text, View } from "react-native";
 import { Control } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import { currencies } from "../../constants";
 import MultiSelect from "../core/MultiSelect";
@@ -14,6 +15,7 @@ const CurrencyPicker = ({
   newAd: any;
   control: Control<any>;
 }) => {
+  const { t } = useTranslation(["common", "adCreation"]);
   const onListItem = useCallback(
     (currency: string) => (
       <CryptoCurrency raw key={currency} currency={currency} text={currency} />
@@ -26,7 +28,7 @@ const CurrencyPicker = ({
       <MultiSelect
         data={Object.keys(currencies)}
         name="currencies"
-        placeholder="Currencies"
+        placeholder={t("common:currencies")}
         control={control}
         onListItem={onListItem}
       />
@@ -35,7 +37,7 @@ const CurrencyPicker = ({
           number
           price={currency}
           key={currency + "Amount"}
-          placeholder="Asking Price"
+          placeholder={"adCreation:askingPrice"}
           icon={currencies[currency].image}
           name={"prices." + currency + "-amount"}
           control={control}
@@ -44,9 +46,9 @@ const CurrencyPicker = ({
       {newAd?.currencies?.map((currency: string) => (
         <View key={currency + "Address"}>
           <Text>
-            Add your{" "}
-            <Text style={{ fontFamily: "poppins-bold" }}>{currency}</Text>{" "}
-            wallet address below.
+            {t("adCreation:addAddress1")}
+            <Text style={{ fontFamily: "poppins-bold" }}>{currency}</Text>
+            {t("adCreation:addAddress2")}
           </Text>
           <TextInput
             name={"prices." + currency + "-address"}

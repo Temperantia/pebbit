@@ -14,22 +14,12 @@ import StatusBanner from "../status/StatusBanner";
 import tailwindConfig from "../../../tailwind.config";
 import CryptoCurrency from "../core/CryptoCurrency";
 
-const statusTexts: {
-  [status: string]: { title?: string; description: string };
-} = {
-  new: { description: "Listed" },
-  paid: { title: "PAID", description: "Waiting for seller..." },
-  sent: { title: "SENT", description: "" },
-  received: { title: "RECEIVED", description: "" },
-  complete: { title: "SOLD", description: "Sold" },
-};
-
 const AdLineSelling = ({
   ad: { id, title, pictures, prices, status, buyer },
 }: {
   ad: Ad;
 }) => {
-  const { t } = useTranslation(["statuses"]);
+  const { t } = useTranslation(["common", "statuses", "shipping"]);
   const { navigate } = useNavigation();
   const [expanded, setExpanded] = useState(false);
   const { control, watch } = useForm();
@@ -37,8 +27,8 @@ const AdLineSelling = ({
   const picture = pictures.find((picture) => !!picture);
   const [currency, price] = Object.entries(prices)[0];
   const statusColor = statusColors[status] ?? "";
-  const statusTextTitle = statusTexts[status]?.title ?? "";
-  const statusTextDescription = statusTexts[status]?.description ?? "";
+  const statusTextTitle = t("statuses:" + status + ".buying.title");
+  const statusTextDescription = t("statuses:" + status + ".buying.description");
 
   const onExpand = useCallback(() => {
     setExpanded(!expanded);
@@ -114,14 +104,14 @@ const AdLineSelling = ({
               </Text>
             </View>
             <TextInput
-              label="Shipping service:"
+              label={t("shipping:service")}
               control={control}
               name="service"
             />
             {!!info.service && (
               <TextInput
                 copy
-                label="Tracking number:"
+                label={t("shipping:trackingNumber")}
                 control={control}
                 name="number"
               />
@@ -134,7 +124,7 @@ const AdLineSelling = ({
             >
               <Icon size={12} name="small/8/000000/collapse-arrow.png" />
               <Text style={[tw("ml-2"), { fontFamily: "poppins-medium" }]}>
-                Collapse Details
+                {t("common:accordionCollapse")}
               </Text>
             </TouchableOpacity>
           </View>
@@ -147,7 +137,7 @@ const AdLineSelling = ({
           >
             <Icon size={12} name="small/8/000000/expand-arrow.png" />
             <Text style={[tw("ml-2"), { fontFamily: "poppins-medium" }]}>
-              Expand Details
+              {t("common:accordionExpand")}
             </Text>
           </TouchableOpacity>
         ))}

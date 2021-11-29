@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 import tw from "../../tailwind";
@@ -9,6 +10,7 @@ import { request } from "../../firebase";
 import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
+  const { t } = useTranslation(["adBuying"]);
   const [loading, setLoading] = useState<boolean>(false);
   const onConfirm = useCallback(async () => {
     setLoading(true);
@@ -18,7 +20,7 @@ const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
 
   return (
     <View style={tw("my-2")}>
-      <Text>Seller has indicated item was shipped</Text>
+      <Text>{t("adBuying:sentIndication")}</Text>
       {amount && (
         <CryptoCurrency
           currency={ad.buyer.currency}
@@ -45,14 +47,11 @@ const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
               { fontFamily: "poppins-medium" },
             ]}
           >
-            Confirm Transaction Success
+            {t("adBuying:sentConfirmation")}
           </Text>
         </TouchableOpacity>
       )}
-      <Text style={tw("text-xs my-2")}>
-        If no action is taken within 14 days funds will be released
-        automatically
-      </Text>
+      <Text style={tw("text-xs my-2")}>{t("adBuying:sentGuarantee")}</Text>
     </View>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import tw from "../../tailwind";
 import { Ad } from "../../types";
@@ -8,9 +9,10 @@ import tailwindConfig from "../../../tailwind.config";
 import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdStatusPaid = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
+  const { t } = useTranslation(["adBuying"]);
   return (
     <View style={tw("my-2")}>
-      <Text>Payment received, thank you for your purchase</Text>
+      <Text>{t("adBuying:paymentReceived")}</Text>
       {amount && (
         <CryptoCurrency
           currency={ad.buyer.currency}
@@ -28,7 +30,7 @@ const AdStatusPaid = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
           name="small/32/000000/in-progress.png"
         />
         <Text style={tw("ml-3 text-grey-slate text-lg")}>
-          Waiting for Seller...
+          {t("adBuying:waitingSeller")}
         </Text>
       </View>
     </View>

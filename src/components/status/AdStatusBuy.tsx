@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import { request } from "../../firebase";
 import tw from "../../tailwind";
@@ -8,6 +9,7 @@ import { Ad } from "../../types";
 import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdStatusBuy = ({ ad }: { ad: Ad }) => {
+  const { t } = useTranslation(["adBuying"]);
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
 
@@ -36,7 +38,10 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
     <View style={tw("h-96")}>
       <View style={tw("my-2")}>
         <Text style={[tw("my-3"), { fontFamily: "poppins-medium" }]}>
-          Price <Text style={tw("text-grey-slate text-xs")}>(select one)</Text>
+          {t("adBuying:priceSelection1")}
+          <Text style={tw("text-grey-slate text-xs")}>
+            {t("adBuying:priceSelection2")}
+          </Text>
         </Text>
         <View style={tw("flex-row")}>
           {Object.entries(ad.prices).map(([currency, price]) => (
@@ -61,7 +66,12 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
           ))}
         </View>
       </View>
-      <Button black title="BUY IT NOW" loading={loading} onPress={onBuy} />
+      <Button
+        black
+        title={t("adBuying:buy")}
+        loading={loading}
+        onPress={onBuy}
+      />
     </View>
   );
 };

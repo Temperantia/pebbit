@@ -10,6 +10,7 @@ import * as GoogleAuthentication from "expo-google-app-auth";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
+import { useTranslation } from "react-i18next";
 
 import { auth, userCollection } from "../firebase";
 import { Address, User } from "../types";
@@ -50,6 +51,7 @@ type AuthContextData = {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: FC = ({ children }) => {
+  const { t } = useTranslation(["errors"]);
   const [user, setUser] = useState<User | null>(null);
   const [authUser, setAuthUser] = useState<firebase.User | null>(null);
   const [newUser, setNewUser] = useState<NewUser | null>(null);
@@ -128,7 +130,7 @@ export const AuthProvider: FC = ({ children }) => {
         await auth.signInWithEmailAndPassword(email, password);
       } catch (error: any) {
         if (error.code === "auth/wrong-password") {
-          alert("Incorrect credentials");
+          alert(t("errors:wrongCredentials"));
         }
       }
     }
@@ -180,7 +182,7 @@ export const AuthProvider: FC = ({ children }) => {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
-      alert("Failed to get push token for push notification!");
+      alert(t("errors:notificationToken"));
       return;
     }
     const data = (await Notifications.getExpoPushTokenAsync()).data;
@@ -220,7 +222,7 @@ export const AuthProvider: FC = ({ children }) => {
         try {
           await auth.signInWithEmailAndPassword(user.email, password);
         } catch (error) {
-          alert("Incorrect password");
+          alert(t("errors:wrongPassword"));
           return;
         }
         await authUser?.updateEmail(email);
@@ -229,7 +231,7 @@ export const AuthProvider: FC = ({ children }) => {
         try {
           await auth.signInWithEmailAndPassword(user.email, password);
         } catch (error) {
-          alert("Incorrect password");
+          alert(t("errors:wrongPassword"));
           return;
         }
         await authUser?.updatePassword(newPassword);

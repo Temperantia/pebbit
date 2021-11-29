@@ -30,12 +30,12 @@ export const currencies: {
   Litecoin: {
     symbol: "LTC",
     image: require("../assets/images/Litecoin.png"),
-    minimum: 0.0001,
+    minimum: 0.002,
   },
   "Binance Coin": {
     symbol: "BNB",
     image: require("../assets/images/BinanceCoin.png"),
-    minimum: 0.0001,
+    minimum: 0.015,
   },
   /*  Ethereum: {
     symbol: "ETH",

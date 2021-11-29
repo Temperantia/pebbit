@@ -64,7 +64,7 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
 
         <View style={tw("p-2 w-3/4")}>
           <View style={tw("flex-row justify-between items-start")}>
-            <View>
+            <View style={tw("w-1/2")}>
               <Text style={{ fontFamily: "poppins-medium" }}>{ad.title}</Text>
               <Text
                 style={tw("text-" + (statusColor ? statusColor : "grey-slate"))}
@@ -72,10 +72,12 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
                 {statusTextDescription}
               </Text>
             </View>
-            <CryptoCurrency
-              currency={currency}
-              text={price.amount.toString()}
-            />
+            <View>
+              <CryptoCurrency
+                currency={currency}
+                text={price.amount.toString()}
+              />
+            </View>
           </View>
         </View>
       </TouchableOpacity>

@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { Text, ScrollView, View, TouchableOpacity } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import tailwindConfig from "../../../tailwind.config";
 import { categories, countries, currencies } from "../../constants";
@@ -29,6 +30,7 @@ const FiltersListing = ({
   setCurrency: (currency: string) => void;
   setOrder: (order: string) => void;
 }) => {
+  const { t } = useTranslation(["common"]);
   const [openedFilters, setOpenedFilters] = useRecoilState(openedFiltersState);
 
   const onCloseFilters = useCallback(() => {
@@ -69,7 +71,7 @@ const FiltersListing = ({
       </View>
       <View style={tw("py-2 border-b border-grey-slate")}>
         <Text style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}>
-          Category
+          {t("common:category")}
         </Text>
         <TouchableOpacity
           style={tw(
@@ -77,7 +79,7 @@ const FiltersListing = ({
           )}
           onPress={onSetCategory("All")}
         >
-          <Text>All</Text>
+          <Text>{t("common:all")}</Text>
         </TouchableOpacity>
         {categories.map((c) => (
           <TouchableOpacity
@@ -93,22 +95,22 @@ const FiltersListing = ({
       </View>
       <View style={tw("py-2 border-b border-grey-slate")}>
         <Text style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}>
-          Location
+          {t("common:location")}
         </Text>
         <Select
           style="border-red-main"
-          data={["All", ...countries]}
+          data={[t("common:all"), ...countries]}
           value={location}
           onValue={setLocation}
         />
       </View>
       <View style={tw("py-2 border-b border-grey-slate")}>
         <Text style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}>
-          Currency
+          {t("common:currency")}
         </Text>
         <Select
           style="border-red-main"
-          data={["All", ...Object.keys(currencies)]}
+          data={[t("common:all"), ...Object.keys(currencies)]}
           value={currency}
           onValue={setCurrency}
           onRenderButton={onRenderCurrencyButton}
@@ -117,11 +119,11 @@ const FiltersListing = ({
       </View>
       <View style={tw("py-2")}>
         <Text style={[tw("py-1"), { fontFamily: "poppins-semibold" }]}>
-          Date Listed
+          {t("common:dateListed")}
         </Text>
         <Select
           style="border-red-main"
-          data={["Newest first", "Oldest first"]}
+          data={[t("common:newestFirst"), t("common:oldestFirst")]}
           value={order}
           onValue={setOrder}
         />

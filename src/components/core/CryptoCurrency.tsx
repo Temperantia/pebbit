@@ -27,7 +27,6 @@ const CryptoCurrency = ({
       <Image style={tw("w-6 h-6 mr-2")} source={currencies[currency].image} />
     )}
     <Text
-      numberOfLines={1}
       style={[
         delta !== undefined || textColor
           ? tw(

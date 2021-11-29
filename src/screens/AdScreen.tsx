@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { useNavigation } from "@react-navigation/core";
+import { useTranslation } from "react-i18next";
 import { StackScreenProps } from "@react-navigation/stack";
 
 import tw from "../tailwind";
@@ -23,6 +24,7 @@ const AdScreen = ({
     params: { id },
   },
 }: StackScreenProps<ListingParamList, "AdScreen">) => {
+  const { t } = useTranslation(["navigation"]);
   const { user } = useAuth();
   const { goBack } = useNavigation();
   const [ad, loading] = useDocumentData<Ad>(adCollection.doc(id), {
@@ -79,7 +81,7 @@ const AdScreen = ({
                   { fontFamily: "poppins-medium" },
                 ]}
               >
-                Back to Results
+                {t("navigation:backToResults")}
               </Text>
             </TouchableOpacity>
             <Image

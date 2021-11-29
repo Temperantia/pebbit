@@ -2,19 +2,21 @@ import React, { useCallback } from "react";
 import { Image, Text, View, TouchableOpacity } from "react-native";
 import { Control, Controller } from "react-hook-form";
 import * as ImagePicker from "expo-image-picker";
+import { useTranslation } from "react-i18next";
 
 import tailwindConfig from "../../../tailwind.config";
 import Icon from "../core/Icon";
 import tw from "../../tailwind";
 
 const PicturePicker = ({ control }: { control: Control<any> }) => {
+  const { t } = useTranslation(["errors"]);
   const onPickPicture = useCallback(
     (index: number, pictures: any[], onChange: (pictures: any) => void) =>
       async () => {
         const permissionResult =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (permissionResult.granted === false) {
-          alert("Permission to access camera roll is required!");
+          alert(t("errors:cameraPermission"));
           return;
         }
 
@@ -37,7 +39,7 @@ const PicturePicker = ({ control }: { control: Control<any> }) => {
       rules={{
         validate: (value: string[]) => {
           return value.filter((picture) => !!picture).length === 0
-            ? "At least 1 picture"
+            ? (t("errors:noPictureSelected") as string)
             : true;
         },
       }}

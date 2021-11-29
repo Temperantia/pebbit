@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Clipboard, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import tw from "../../tailwind";
 import Icon from "../core/Icon";
@@ -10,6 +11,7 @@ import useAuth from "../../hooks/useAuth";
 import CryptoCurrency from "../core/CryptoCurrency";
 
 const AdStatusPay = ({ ad }: { ad: Ad }) => {
+  const { t } = useTranslation(["adBuying"]);
   const { user } = useAuth();
   const [timeLeft, setTimeLeft] = useState<string | null>(null);
   let interval: NodeJS.Timer;
@@ -48,13 +50,15 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
   return (
     <View style={tw("my-2")}>
       <View style={tw("flex-row flex-wrap")}>
-        <Text>Please send </Text>
-        <Text style={{ fontFamily: "poppins-semibold" }}>exactly </Text>
+        <Text>{t("adBuying:send1")}</Text>
+        <Text style={{ fontFamily: "poppins-semibold" }}>
+          {t("adBuying:sendBold")}
+        </Text>
         <CryptoCurrency
           currency={ad.buyer.currency}
           text={ad.prices[ad.buyer.currency].amount.toString()}
         />
-        <Text> to the address listed below:</Text>
+        <Text>{t("adBuying:send2")}</Text>
       </View>
 
       <View
@@ -71,9 +75,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
         />
       </View>
       <View style={tw("items-center")}>
-        <Text style={tw("text-xs")}>
-          This cannot be refunded, please ensure the amount is correct.
-        </Text>
+        <Text style={tw("text-xs")}>{t("adBuying:sendDisclaimer")}</Text>
       </View>
       <View style={tw("flex-row items-center justify-end")}>
         <Icon

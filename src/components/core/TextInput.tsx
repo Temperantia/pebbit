@@ -98,6 +98,11 @@ const TextInput = ({
           onBlur={onBlur ?? (() => {})}
           onChangeText={onChange}
           onEndEditing={onEndEditing}
+          returnKeyType="done"
+          blurOnSubmit={true}
+          onSubmitEditing={() => {
+            Keyboard.dismiss();
+          }}
         />
         {right}
       </View>
