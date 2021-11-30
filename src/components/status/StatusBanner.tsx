@@ -24,7 +24,7 @@ const StatusBanner = ({
     </View>
     <View
       style={[
-        tw("absolute w-full h-full items-center"),
+        tw("absolute ml-2 w-full h-full items-center"),
         {
           transform: [{ rotate: "270deg" }],
         },

@@ -18,6 +18,8 @@ import { Address, User } from "../types";
 const google = {
   clientId:
     "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
+  androidClientId:
+    "876715407348-j2ai3kjuibqr48cs6l1kkhgbk0r0qlj1.apps.googleusercontent.com",
   androidStandaloneAppClientId:
     "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
   scopes: ["email"],
@@ -82,7 +84,9 @@ export const AuthProvider: FC = ({ children }) => {
       }
     });
     return () => {
-      unsubscribe();
+      if (unsubscribe) {
+        unsubscribe();
+      }
     };
   }, []);
 

@@ -35,7 +35,7 @@ const Select = ({
         {item && onRenderButton ? (
           onRenderButton(item)
         ) : item ? (
-          <Text>{item}</Text>
+          <Text style={tw("text-black")}>{item}</Text>
         ) : (
           <Text style={tw("text-grey-slate")}>{placeholder}</Text>
         )}

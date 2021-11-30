@@ -15,7 +15,7 @@ const AdList = ({
 }) => {
   return (
     <FlatList
-      style={tw("w-full px-5")}
+      style={tw("w-full px-2")}
       data={ads}
       numColumns={numColumns}
       renderItem={renderItem}

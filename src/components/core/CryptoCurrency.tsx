@@ -3,6 +3,7 @@ import { Image, Text, View } from "react-native";
 
 import { currencies } from "../../constants";
 import tw from "../../tailwind";
+import { ellipsis } from "../../utils/string";
 
 export enum Delta {
   Positive,
@@ -28,6 +29,7 @@ const CryptoCurrency = ({
     )}
     <Text
       style={[
+        tw("text-xs"),
         delta !== undefined || textColor
           ? tw(
               (delta === Delta.Positive
@@ -43,7 +45,7 @@ const CryptoCurrency = ({
       ]}
     >
       {(delta === Delta.Positive ? "+" : delta === Delta.Negative ? "-" : "") +
-        text +
+        ellipsis(text, 8) +
         (raw ? "" : " " + currencies[currency].symbol)}
     </Text>
   </View>

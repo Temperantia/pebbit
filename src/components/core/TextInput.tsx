@@ -1,9 +1,13 @@
 import React, { useCallback } from "react";
 import { Control, Controller } from "react-hook-form";
 import {
+  Button,
   Clipboard,
   Image,
   ImageSourcePropType,
+  InputAccessoryView,
+  Keyboard,
+  Platform,
   Text,
   TextInput as RNTextInput,
   View,
@@ -34,7 +38,6 @@ const TextInput = ({
   control,
   name,
   onValue,
-  onEndEditing,
 }: {
   style?: string;
   optional?: boolean;
@@ -54,9 +57,13 @@ const TextInput = ({
   control?: Control<any>;
   name?: string;
   onValue?: (value: string) => void;
-  onEndEditing?: () => void;
 }) => {
   const { t } = useTranslation(["errors"]);
+
+  const onDismiss = useCallback(() => {
+    Keyboard.dismiss();
+  }, [Keyboard]);
+
   const children = (
     v: string,
     onChange: (text: string) => void,
@@ -97,16 +104,16 @@ const TextInput = ({
           value={v}
           onBlur={onBlur ?? (() => {})}
           onChangeText={onChange}
-          onEndEditing={onEndEditing}
-          returnKeyType="done"
-          blurOnSubmit={true}
-          onSubmitEditing={() => {
-            Keyboard.dismiss();
-          }}
+          inputAccessoryViewID="done"
         />
         {right}
       </View>
       {error && <Text style={tw("text-red-main")}>{error.message}</Text>}
+      {Platform.OS === "ios" && (
+        <InputAccessoryView nativeID="done">
+          <Button onPress={onDismiss} title="Done" />
+        </InputAccessoryView>
+      )}
     </View>
   );
 
@@ -116,7 +123,7 @@ const TextInput = ({
       defaultValue={value}
       control={control}
       rules={{
-        required: optional ? undefined : t("isRequired"),
+        required: optional ? undefined : (t("isRequired") as string),
         pattern: email
           ? {
               value:

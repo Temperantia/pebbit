@@ -29,7 +29,7 @@ const AdLineHistory = ({ ad }: { ad: Ad }) => {
   return (
     <View style={tw("my-2")}>
       <TouchableOpacity
-        style={tw("flex-row h-20 w-full border border-grey-slate rounded")}
+        style={tw("flex-row h-24 w-full border border-grey-slate rounded")}
         onPress={onClick}
       >
         {picture && (

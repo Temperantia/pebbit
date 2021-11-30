@@ -38,7 +38,7 @@ const AdPreview = ({ ad }: { ad: Ad }) => {
             />
           </View>
         </View>
-        <View style={tw("p-2")}>
+        <View style={tw("p-2 h-20")}>
           <Text>{ad.title}</Text>
         </View>
       </TouchableOpacity>

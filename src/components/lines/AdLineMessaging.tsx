@@ -8,6 +8,7 @@ import tw from "../../tailwind";
 import { statusColors } from "../../constants";
 import StatusBanner from "../status/StatusBanner";
 import CryptoCurrency from "../core/CryptoCurrency";
+import { ellipsis } from "../../utils/string";
 
 const AdLineMessaging = ({
   disabled,
@@ -41,10 +42,14 @@ const AdLineMessaging = ({
 
       <View style={tw("p-2 w-3/4")}>
         <View style={tw("flex-row justify-between items-start")}>
-          <View>
-            <Text style={{ fontFamily: "poppins-medium" }}>{title}</Text>
+          <View style={tw("w-2/5")}>
+            <Text style={[tw("text-xs"), { fontFamily: "poppins-medium" }]}>
+              {ellipsis(title, 30)}
+            </Text>
             <Text
-              style={tw("text-" + (statusColor ? statusColor : "grey-slate"))}
+              style={tw(
+                "text-xs text-" + (statusColor ? statusColor : "grey-slate")
+              )}
             >
               {statusTextDescription}
             </Text>
@@ -59,13 +64,13 @@ const AdLineMessaging = ({
     <View style={tw("my-2")}>
       {disabled ? (
         <View
-          style={tw("flex-row h-20 w-full border border-grey-slate rounded")}
+          style={tw("flex-row h-24 w-full border border-grey-slate rounded")}
         >
           {children}
         </View>
       ) : (
         <TouchableOpacity
-          style={tw("flex-row h-20 w-full border border-grey-slate rounded")}
+          style={tw("flex-row h-24 w-full border border-grey-slate rounded")}
           onPress={onClick}
         >
           {children}

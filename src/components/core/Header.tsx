@@ -11,7 +11,7 @@ import Icon from "./Icon";
 import SafeViewAndroid from "./SafeViewAndroid";
 
 const Header = ({ noMenu }: { noMenu?: boolean }) => {
-  const { t } = useTranslation(["navigation"]);
+  const { t } = useTranslation(["auth", "navigation"]);
   const { signOut } = useAuth();
   const { navigate, getState } = useNavigation();
   const { routes } = getState();
@@ -61,7 +61,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
                   ? "text-red-main"
                   : "text-white"
               }
-              title={t("home")}
+              title={t("navigation:home")}
               onPress={onNavigate("Root")}
             />
             <Button
@@ -70,7 +70,7 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
                   ? "text-red-main"
                   : "text-white"
               }
-              title={t("myProfile")}
+              title={t("navigation:myProfile")}
               onPress={onNavigate("Profile")}
             />
             <Button
@@ -79,12 +79,12 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
                   ? "text-red-main"
                   : "text-white"
               }
-              title={t("accountSettings")}
+              title={t("navigation:accountSettings")}
               onPress={onNavigate("Settings")}
             />
             <Button
               color="text-white"
-              title={t("signOut")}
+              title={t("auth:signOut")}
               onPress={onSignOut}
             />
           </View>

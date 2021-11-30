@@ -13,6 +13,7 @@ import { request } from "../../firebase";
 import StatusBanner from "../status/StatusBanner";
 import tailwindConfig from "../../../tailwind.config";
 import CryptoCurrency from "../core/CryptoCurrency";
+import { ellipsis } from "../../utils/string";
 
 const AdLineSelling = ({
   ad: { id, title, pictures, prices, status, buyer },
@@ -49,7 +50,7 @@ const AdLineSelling = ({
   return (
     <View style={tw("my-2")}>
       <TouchableOpacity
-        style={tw("flex-row h-20 w-full border border-grey-slate rounded")}
+        style={tw("flex-row h-24 w-full border border-grey-slate rounded")}
         onPress={onClick}
       >
         {picture && (
@@ -62,8 +63,10 @@ const AdLineSelling = ({
 
         <View style={tw("p-2 w-3/4")}>
           <View style={tw("flex-row justify-between items-start")}>
-            <View>
-              <Text style={{ fontFamily: "poppins-medium" }}>{title}</Text>
+            <View style={tw("w-2/5")}>
+              <Text style={{ fontFamily: "poppins-medium" }}>
+                {ellipsis(title, 30)}
+              </Text>
               <Text
                 style={tw("text-" + (statusColor ? statusColor : "grey-slate"))}
               >

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Pebbit",
     "slug": "pebbit",
-    "version": "0.9.7",
+    "version": "0.9.8",
     "orientation": "portrait",
     "icon": "./src/assets/images/appIcon.png",
     "scheme": "pebbit",
@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.magna_numeris.pebbit",
-      "versionCode": 5
+      "versionCode": 6
     },
     "plugins": [
       [

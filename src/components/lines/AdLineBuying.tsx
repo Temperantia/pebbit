@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { useTranslation } from "react-i18next";
 
@@ -14,6 +14,7 @@ import AdStatusPending from "../status/AdStatusPending";
 import AdStatusReceived from "../status/AdStatusReceived";
 import StatusBanner from "../status/StatusBanner";
 import CryptoCurrency from "../core/CryptoCurrency";
+import { ellipsis } from "../../utils/string";
 
 const AdLineBuying = ({ ad }: { ad: Ad }) => {
   const { t } = useTranslation(["common", "statuses"]);
@@ -51,33 +52,34 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
   return (
     <View style={tw("my-2")}>
       <TouchableOpacity
-        style={tw("flex-row h-20 w-full border border-grey-slate rounded")}
+        style={tw("flex-row h-24 w-full border border-grey-slate rounded")}
         onPress={onClick}
       >
         {picture && (
-          <StatusBanner
-            picture={picture}
-            text={statusTextTitle}
-            color={statusColor}
+          <Image
+            style={tw("w-1/4 h-full")}
+            source={{
+              uri: picture,
+            }}
           />
         )}
 
         <View style={tw("p-2 w-3/4")}>
-          <View style={tw("flex-row justify-between items-start")}>
-            <View style={tw("w-1/2")}>
-              <Text style={{ fontFamily: "poppins-medium" }}>{ad.title}</Text>
-              <Text
-                style={tw("text-" + (statusColor ? statusColor : "grey-slate"))}
-              >
-                {statusTextDescription}
-              </Text>
-            </View>
-            <View>
-              <CryptoCurrency
-                currency={currency}
-                text={price.amount.toString()}
-              />
-            </View>
+          <View style={tw("flex h-full justify-between items-start")}>
+            <Text style={[tw("text-xs"), { fontFamily: "poppins-medium" }]}>
+              {ellipsis(ad.title, 30)}
+            </Text>
+            <CryptoCurrency
+              currency={currency}
+              text={price.amount.toString()}
+            />
+            <Text
+              style={tw(
+                "text-xs text-" + (statusColor ? statusColor : "grey-slate")
+              )}
+            >
+              {statusTextDescription}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
