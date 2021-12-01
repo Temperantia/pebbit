@@ -55,7 +55,7 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
             >
               <CryptoCurrency
                 currency={currency}
-                text={price.amount.toString()}
+                text={price?.amount?.toString()}
                 textColor={
                   currency === selectedCurrency
                     ? "text-black"

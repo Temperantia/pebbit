@@ -37,7 +37,7 @@ const CurrencyPicker = ({
           number
           price={currency}
           key={currency + "Amount"}
-          placeholder={"adCreation:askingPrice"}
+          placeholder={t("adCreation:askingPrice")}
           icon={currencies[currency].image}
           name={"prices." + currency + "-amount"}
           control={control}

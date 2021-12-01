@@ -73,7 +73,7 @@ const ProfileScreen = () => {
               <View style={tw("w-2/5")}>
                 <CryptoCurrency
                   currency={currency}
-                  text={price.amount.toString()}
+                  text={price?.amount?.toString()}
                 />
               </View>
             </View>

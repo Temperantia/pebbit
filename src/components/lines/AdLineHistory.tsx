@@ -44,7 +44,7 @@ const AdLineHistory = ({ ad }: { ad: Ad }) => {
           <Text style={{ fontFamily: "poppins-medium" }}>{ad.title}</Text>
           <CryptoCurrency
             currency={currency}
-            text={price.amount.toString()}
+            text={price?.amount?.toString()}
             delta={isSeller ? Delta.Positive : Delta.Negative}
           />
           <Text style={tw("text-xs text-grey-slate")}>

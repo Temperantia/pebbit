@@ -143,7 +143,7 @@ const TextInput = ({
           }
           value = value.replace(",", ".");
           return isNaN(value) || parseFloat(value) < currencies[price].minimum
-            ? t("invalideMinimumPrice") +
+            ? t("invalidMinimumPrice") +
                 " " +
                 currencies[price].minimum +
                 " " +

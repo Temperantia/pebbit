@@ -45,8 +45,7 @@ const CryptoCurrency = ({
       ]}
     >
       {(delta === Delta.Positive ? "+" : delta === Delta.Negative ? "-" : "") +
-        ellipsis(text, 8) +
-        (raw ? "" : " " + currencies[currency].symbol)}
+        (raw ? text : ellipsis(text, 8) + " " + currencies[currency].symbol)}
     </Text>
   </View>
 );

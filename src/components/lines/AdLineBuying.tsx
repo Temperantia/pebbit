@@ -71,7 +71,7 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
             </Text>
             <CryptoCurrency
               currency={currency}
-              text={price.amount.toString()}
+              text={price?.amount?.toString()}
             />
             <Text
               style={tw(

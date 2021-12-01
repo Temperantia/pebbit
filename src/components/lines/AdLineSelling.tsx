@@ -75,7 +75,7 @@ const AdLineSelling = ({
             </View>
             <CryptoCurrency
               currency={currency}
-              text={price.amount.toString()}
+              text={price?.amount?.toString()}
             />
           </View>
         </View>

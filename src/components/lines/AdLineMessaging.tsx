@@ -54,7 +54,10 @@ const AdLineMessaging = ({
               {statusTextDescription}
             </Text>
           </View>
-          <CryptoCurrency currency={currency} text={price.amount.toString()} />
+          <CryptoCurrency
+            currency={currency}
+            text={price?.amount?.toString()}
+          />
         </View>
       </View>
     </>

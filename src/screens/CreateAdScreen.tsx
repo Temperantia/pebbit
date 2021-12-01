@@ -43,12 +43,15 @@ const CreateAdScreen = () => {
     handleSubmit(async (ad) => {
       setLoading(true);
       ad.prices = Object.entries(ad.prices).reduce(
-        (prices: any, [key, price]) => {
+        (prices: any, [key, value]: any) => {
           const [currency, type] = key.split("-");
           if (!prices[currency]) {
             prices[currency] = {};
           }
-          prices[currency][type] = price;
+          if (type === "amount") {
+            value = parseFloat(value.replace(",", "."));
+          }
+          prices[currency][type] = value;
           return prices;
         },
         {}
