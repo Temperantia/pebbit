@@ -94,7 +94,9 @@ i18n.use(initReactI18next).init({
           "Otherwise, enter your email and password to sign in or create an account",
         disclaimer:
           "By signing up, you agree to our terms of service and privacy policy",
+        signIn: "Sign In",
         signOut: "Sign Out",
+        signInRequest: "Please sign in to purchase this item",
       },
       navigation: {
         home: "Home",

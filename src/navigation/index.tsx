@@ -7,15 +7,13 @@ import React from "react";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { AuthStackParamList, RootStackParamList } from "../types";
+import { RootStackParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import tailwindConfig from "../../tailwind.config";
 import Header from "../components/core/Header";
 import AuthScreen from "../screens/AuthScreen";
-import useAuth from "../hooks/useAuth";
 import OnboardingScreen from "../screens/OnboardingScreen";
-import { ActivityIndicator } from "react-native";
 import SettingsScreen from "../screens/SettingsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 
@@ -31,17 +29,9 @@ const theme = {
 };
 
 export default () => {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <ActivityIndicator color={tailwindConfig.theme.colors["red-main"]} />
-    );
-  }
-
   return (
     <NavigationContainer theme={theme} linking={LinkingConfiguration}>
-      {user ? <RootNavigator /> : <AuthNavigator />}
+      <RootNavigator />
     </NavigationContainer>
   );
 };
@@ -71,21 +61,16 @@ const RootNavigator = () => {
           header: () => <Header />,
         }}
       />
+      <Stack.Screen
+        name="SignIn"
+        component={AuthScreen}
+        options={{ header: () => <Header noMenu /> }}
+      />
+      <Stack.Screen
+        name="Onboarding"
+        component={OnboardingScreen}
+        options={{ header: () => <Header noMenu /> }}
+      />
     </Stack.Navigator>
-  );
-};
-
-const AuthStack = createStackNavigator<AuthStackParamList>();
-const AuthNavigator = () => {
-  return (
-    <AuthStack.Navigator
-      mode="modal"
-      screenOptions={{
-        header: () => <Header noMenu></Header>,
-      }}
-    >
-      <AuthStack.Screen name="SignIn" component={AuthScreen} />
-      <AuthStack.Screen name="Onboarding" component={OnboardingScreen} />
-    </AuthStack.Navigator>
   );
 };

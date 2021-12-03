@@ -23,6 +23,7 @@ import AdScreen from "../screens/AdScreen";
 import ExchangeScreen from "../screens/ExchangeScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import { openedFiltersState } from "../atoms";
+import useAuth from "../hooks/useAuth";
 
 const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
@@ -39,6 +40,7 @@ const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const BottomTabNavigator = () => {
+  const { user } = useAuth();
   const setOpenedFilters = useSetRecoilState(openedFiltersState);
 
   const listeners = {
@@ -49,7 +51,10 @@ const BottomTabNavigator = () => {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      tabBarOptions={{ showLabel: false }}
+      tabBarOptions={{
+        showLabel: false,
+        style: { display: user ? "flex" : "none" },
+      }}
     >
       <BottomTab.Screen
         name="Home"

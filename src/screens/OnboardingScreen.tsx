@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
@@ -9,6 +10,7 @@ import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
 
 const OnboardingScreen = () => {
+  const { navigate } = useNavigation();
   const { register } = useAuth();
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
@@ -17,6 +19,7 @@ const OnboardingScreen = () => {
       setLoading(true);
       await register(username, { name, street, city, country });
       setLoading(false);
+      navigate("Home");
     }),
     [handleSubmit, register, setLoading]
   );

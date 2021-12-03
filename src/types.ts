@@ -8,9 +8,6 @@ export type RootStackParamList = {
   Profile: undefined;
   Settings: undefined;
   NotFound: undefined;
-};
-
-export type AuthStackParamList = {
   SignIn: undefined;
   Onboarding: undefined;
 };

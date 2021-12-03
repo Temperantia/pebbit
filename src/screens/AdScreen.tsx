@@ -18,6 +18,7 @@ import AdStatusPaid from "../components/status/AdStatusPaid";
 import AdStatusSent from "../components/status/AdStatusSent";
 import AdStatusReceived from "../components/status/AdStatusReceived";
 import useAuth from "../hooks/useAuth";
+import AdStatusUnauthenticated from "../components/status/AdStatusUnauthenticated";
 
 const AdScreen = ({
   route: {
@@ -33,7 +34,12 @@ const AdScreen = ({
   const [adStatus, setAdStatus] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
-    if (!ad || !user) {
+    if (!ad) {
+      return;
+    }
+
+    if (!user) {
+      setAdStatus(<AdStatusUnauthenticated />);
       return;
     }
 

@@ -28,6 +28,7 @@ const AuthScreen = () => {
       setLoading(true);
       await signInWithEmail(email, password);
       setLoading(false);
+      navigate("Home");
     }),
     [handleSubmit, signInWithEmail, setLoading]
   );

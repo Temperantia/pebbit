@@ -39,7 +39,7 @@ type AuthContextData = {
   signInWithGoogle(): Promise<void>;
   signInWithApple(): Promise<void>;
   signInWithEmail(email: string, password: string): Promise<void>;
-  signOut(): void;
+  signOut(navigate: (route: string) => void): Promise<void>;
   register(username: string, address: Address): Promise<void>;
   saveProfile(data: {
     email: string;
@@ -162,10 +162,11 @@ export const AuthProvider: FC = ({ children }) => {
     setUser(user);
   };
 
-  const signOut = async () => {
+  const signOut = async (navigate: (route: string) => void): Promise<void> => {
     await auth.signOut();
     setUser(null);
     setNewUser(null);
+    navigate("Home");
   };
 
   const register = async (username: string, address: Address) => {

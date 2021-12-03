@@ -12,7 +12,7 @@ import SafeViewAndroid from "./SafeViewAndroid";
 
 const Header = ({ noMenu }: { noMenu?: boolean }) => {
   const { t } = useTranslation(["auth", "navigation"]);
-  const { signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const { navigate, getState } = useNavigation();
   const { routes } = getState();
   const [modalVisible, setModalVisible] = useState(false);
@@ -27,7 +27,10 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
     },
     [navigate, setModalVisible]
   );
-  const onSignOut = useCallback(signOut, [signOut]);
+  const onSignOut = useCallback(() => {
+    setModalVisible(false);
+    signOut(navigate);
+  }, [signOut, navigate]);
 
   return (
     <SafeAreaView
@@ -62,31 +65,41 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
                   : "text-white"
               }
               title={t("navigation:home")}
-              onPress={onNavigate("Root")}
+              onPress={onNavigate("Home")}
             />
-            <Button
-              color={
-                routes[routes.length - 1].name === "Profile"
-                  ? "text-red-main"
-                  : "text-white"
-              }
-              title={t("navigation:myProfile")}
-              onPress={onNavigate("Profile")}
-            />
-            <Button
-              color={
-                routes[routes.length - 1].name === "Settings"
-                  ? "text-red-main"
-                  : "text-white"
-              }
-              title={t("navigation:accountSettings")}
-              onPress={onNavigate("Settings")}
-            />
-            <Button
-              color="text-white"
-              title={t("auth:signOut")}
-              onPress={onSignOut}
-            />
+            {user ? (
+              <>
+                <Button
+                  color={
+                    routes[routes.length - 1].name === "Profile"
+                      ? "text-red-main"
+                      : "text-white"
+                  }
+                  title={t("navigation:myProfile")}
+                  onPress={onNavigate("Profile")}
+                />
+                <Button
+                  color={
+                    routes[routes.length - 1].name === "Settings"
+                      ? "text-red-main"
+                      : "text-white"
+                  }
+                  title={t("navigation:accountSettings")}
+                  onPress={onNavigate("Settings")}
+                />
+                <Button
+                  color="text-white"
+                  title={t("auth:signOut")}
+                  onPress={onSignOut}
+                />
+              </>
+            ) : (
+              <Button
+                color="text-white"
+                title={t("auth:signIn")}
+                onPress={onNavigate("SignIn")}
+              />
+            )}
           </View>
         </View>
       )}
