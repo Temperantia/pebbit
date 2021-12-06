@@ -12,7 +12,6 @@ import AdStatusPaid from "../status/AdStatusPaid";
 import AdStatusPay from "../status/AdStatusPay";
 import AdStatusPending from "../status/AdStatusPending";
 import AdStatusReceived from "../status/AdStatusReceived";
-import StatusBanner from "../status/StatusBanner";
 import CryptoCurrency from "../core/CryptoCurrency";
 import { ellipsis } from "../../utils/string";
 
@@ -83,34 +82,35 @@ const AdLineBuying = ({ ad }: { ad: Ad }) => {
           </View>
         </View>
       </TouchableOpacity>
-      {expanded ? (
-        <View>
-          {statusComponent}
+      {ad.status === "sent" &&
+        (expanded ? (
+          <View>
+            {statusComponent}
+            <TouchableOpacity
+              style={tw(
+                "py-2 flex-row items-center justify-center border rounded border-grey-slate"
+              )}
+              onPress={onExpand}
+            >
+              <Icon size={12} name="small/8/000000/collapse-arrow.png" />
+              <Text style={[tw("ml-2"), { fontFamily: "poppins-medium" }]}>
+                {t("accordionCollapse")}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
           <TouchableOpacity
             style={tw(
               "py-2 flex-row items-center justify-center border rounded border-grey-slate"
             )}
             onPress={onExpand}
           >
-            <Icon size={12} name="small/8/000000/collapse-arrow.png" />
+            <Icon size={12} name="small/8/000000/expand-arrow.png" />
             <Text style={[tw("ml-2"), { fontFamily: "poppins-medium" }]}>
-              {t("accordionCollapse")}
+              {t("accordionExpand")}
             </Text>
           </TouchableOpacity>
-        </View>
-      ) : (
-        <TouchableOpacity
-          style={tw(
-            "py-2 flex-row items-center justify-center border rounded border-grey-slate"
-          )}
-          onPress={onExpand}
-        >
-          <Icon size={12} name="small/8/000000/expand-arrow.png" />
-          <Text style={[tw("ml-2"), { fontFamily: "poppins-medium" }]}>
-            {t("accordionExpand")}
-          </Text>
-        </TouchableOpacity>
-      )}
+        ))}
     </View>
   );
 };

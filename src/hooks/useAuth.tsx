@@ -6,24 +6,14 @@ import React, {
   useState,
 } from "react";
 import firebase from "firebase";
-import * as GoogleAuthentication from "expo-google-app-auth";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { useTranslation } from "react-i18next";
+import * as GoogleSignIn from "expo-google-sign-in";
 
 import { auth, userCollection } from "../firebase";
 import { Address, User } from "../types";
-
-const google = {
-  clientId:
-    "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
-  androidClientId:
-    "876715407348-j2ai3kjuibqr48cs6l1kkhgbk0r0qlj1.apps.googleusercontent.com",
-  androidStandaloneAppClientId:
-    "876715407348-atebc1ufg3vjuf794gg4i5jl7p47mdae.apps.googleusercontent.com",
-  scopes: ["email"],
-};
 
 type NewUser = {
   email: string | null;
@@ -91,16 +81,16 @@ export const AuthProvider: FC = ({ children }) => {
   }, []);
 
   const signInWithGoogle = async () => {
-    const result = await GoogleAuthentication.logInAsync(google);
-    if (result.type === "success") {
-      const { idToken, accessToken } = result;
+    try {
+      await GoogleSignIn.initAsync();
+      await GoogleSignIn.askForPlayServicesAsync();
+      const result: any = await GoogleSignIn.signInAsync();
       const credentials = firebase.auth.GoogleAuthProvider.credential(
-        idToken,
-        accessToken
+        result.user.auth.idToken
       );
 
       await auth.signInWithCredential(credentials);
-    }
+    } catch (error) {}
   };
 
   const signInWithApple = async () => {
@@ -145,8 +135,12 @@ export const AuthProvider: FC = ({ children }) => {
       ...ad,
       id,
     }));
-    user.buyingList = ads.filter(({ userId }) => userId !== user.id);
-    user.sellingList = ads.filter(({ userId }) => userId === user.id);
+    user.buyingList = ads.filter(
+      ({ userId, status }) => userId !== user.id && status !== "complete"
+    );
+    user.sellingList = ads.filter(
+      ({ userId, status }) => userId === user.id && status !== "complete"
+    );
     user.messagingList = ads.filter(
       ({ messages, status }) =>
         !!messages && (status === "paid" || status === "sent")
@@ -155,7 +149,6 @@ export const AuthProvider: FC = ({ children }) => {
       ({ userId, status }) =>
         status === "complete" || (userId !== user.id && status === "received")
     );
-    // emulator crashes on that
     try {
       await registerForPushNotifications(user.id);
     } catch (error) {}
@@ -182,12 +175,12 @@ export const AuthProvider: FC = ({ children }) => {
     const { status: existingStatus } =
       await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
+    if (!existingStatus) {
       const { status } = await Notifications.requestPermissionsAsync();
       finalStatus = status;
     }
+
     if (finalStatus !== "granted") {
-      alert(t("errors:notificationToken"));
       return;
     }
     const data = (await Notifications.getExpoPushTokenAsync()).data;

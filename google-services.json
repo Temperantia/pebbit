@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "876715407348",
+    "project_id": "crypto-2293c",
+    "storage_bucket": "crypto-2293c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876715407348:android:2da70a7e5a29e805f52ba1",
+        "android_client_info": {
+          "package_name": "com.magna_numeris.pebbit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876715407348-ltnhu5vciuir3v5vt65ic34flvhefpde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXJPvexqlT5qVoR_CmEY1QcpJfP6I0d7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876715407348-3aqte946ocfhjhu05hvs4ftjfr8lvpcm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "876715407348-2uon6puq90m7b5as4nffa7e6nbpqkofk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.magna-numeris.pebbit"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
