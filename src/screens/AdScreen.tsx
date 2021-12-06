@@ -7,9 +7,9 @@ import { StackScreenProps } from "@react-navigation/stack";
 
 import tw from "../tailwind";
 import Icon from "../components/core/Icon";
-import { Ad, ListingParamList } from "../types";
+import { Ad, ListingParamList, User } from "../types";
 import { timeAgo } from "../utils/time";
-import { adCollection } from "../firebase";
+import { adCollection, userCollection } from "../firebase";
 import ScreenLoading from "../components/core/ScreenLoading";
 import AdStatusBuy from "../components/status/AdStatusBuy";
 import AdStatusPay from "../components/status/AdStatusPay";
@@ -19,6 +19,7 @@ import AdStatusSent from "../components/status/AdStatusSent";
 import AdStatusReceived from "../components/status/AdStatusReceived";
 import useAuth from "../hooks/useAuth";
 import AdStatusUnauthenticated from "../components/status/AdStatusUnauthenticated";
+import tailwindConfig from "../../tailwind.config";
 
 const AdScreen = ({
   route: {
@@ -32,6 +33,7 @@ const AdScreen = ({
     idField: "id",
   });
   const [adStatus, setAdStatus] = useState<JSX.Element | null>(null);
+  const [seller, setSeller] = useState<User | null>(null);
 
   useEffect(() => {
     if (!ad) {
@@ -42,6 +44,8 @@ const AdScreen = ({
       setAdStatus(<AdStatusUnauthenticated />);
       return;
     }
+
+    getSeller(ad);
 
     if (user.id === ad.buyer?.userId) {
       if (
@@ -67,6 +71,29 @@ const AdScreen = ({
     }
   }, [ad, user]);
 
+  const getSeller = async (ad: Ad) => {
+    const data = (await userCollection.doc(ad.userId).get()).data();
+    if (!data) {
+      return;
+    }
+    const ads = Object.entries(data.ads).map(([id, ad]) => ({
+      ...ad,
+      id,
+    }));
+    data.sellingList = ads.filter(({ userId }) => userId === data.id);
+    data.rates = (data.sellingList ?? [])
+      .filter(({ rate }) => !!rate)
+      .map(({ rate }) => rate) as number[];
+    data.rate =
+      data.rates.length > 0
+        ? Math.round(
+            data.rates.reduce((sum, value) => sum + value, 0) /
+              data.rates.length
+          )
+        : null;
+    setSeller(data);
+  };
+
   const onBack = useCallback(() => {
     goBack();
   }, [goBack]);
@@ -91,8 +118,8 @@ const AdScreen = ({
               </Text>
             </TouchableOpacity>
             <Image
-              style={tw("h-96")}
-              resizeMode="contain"
+              style={tw("h-32")}
+              resizeMode="cover"
               source={{ uri: ad.pictures[0] }}
             />
             <View style={tw("p-3")}>
@@ -127,7 +154,37 @@ const AdScreen = ({
                   {timeAgo.format(new Date(ad.created.seconds * 1000))}
                 </Text>
               </View>
-              {adStatus}
+              <View>
+                <Text
+                  style={[
+                    tw("text-base my-3"),
+                    { fontFamily: "poppins-semibold" },
+                  ]}
+                >
+                  About Seller
+                </Text>
+                <Text style={tw("text-xl")}>{seller?.username}</Text>
+                {seller && (
+                  <View style={tw("flex-row py-1")}>
+                    {[...Array(5).keys()].map((_value, index) => (
+                      <Icon
+                        key={index}
+                        size={20}
+                        color={tailwindConfig.theme.colors["gold-badge"]}
+                        name={
+                          "small/32/000000/star" +
+                          (seller.rate && seller.rate > index
+                            ? "-filled"
+                            : "") +
+                          ".png"
+                        }
+                      />
+                    ))}
+                    <Text>({seller.rates?.length})</Text>
+                  </View>
+                )}
+              </View>
+              <View style={tw("border border-grey-slate p-2")}>{adStatus}</View>
             </View>
           </View>
         </ScrollView>

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { Ref, useCallback } from "react";
 import { Control, Controller } from "react-hook-form";
 import { Text, View } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
@@ -12,6 +12,7 @@ const Select = ({
   label,
   placeholder,
   control,
+  innerRef,
   name,
   value,
   onValue,
@@ -23,6 +24,7 @@ const Select = ({
   label?: string;
   placeholder?: string;
   control?: Control<any>;
+  innerRef?: Ref<any>;
   name?: string;
   value?: any;
   onValue?: (value: any) => void;
@@ -30,19 +32,21 @@ const Select = ({
   onRenderItem?: (item: any) => JSX.Element;
 }) => {
   const onRenderCustomizedButtonChild = useCallback(
-    (item) => (
-      <View style={tw("flex-row items-center justify-between")}>
-        {item && onRenderButton ? (
-          onRenderButton(item)
-        ) : item ? (
-          <Text style={tw("text-black")}>{item}</Text>
-        ) : (
-          <Text style={tw("text-grey-slate")}>{placeholder}</Text>
-        )}
-        <Icon size={16} name="small/16/000000/expand-arrow.png" />
-      </View>
-    ),
-    [View, tw, Text, placeholder, Icon]
+    (item) => {
+      return (
+        <View style={tw("flex-row items-center justify-between")}>
+          {item && onRenderButton ? (
+            onRenderButton(item)
+          ) : item ? (
+            <Text style={tw("text-black")}>{item}</Text>
+          ) : (
+            <Text style={tw("text-grey-slate")}>{placeholder}</Text>
+          )}
+          <Icon size={16} name="small/16/000000/expand-arrow.png" />
+        </View>
+      );
+    },
+    [View, tw, Text, placeholder, Icon, onRenderButton]
   );
 
   const onRenderItemDefault = useCallback(
@@ -58,6 +62,7 @@ const Select = ({
     <View>
       {label && <Text style={tw("text-grey-slate text-xs")}>{label}</Text>}
       <SelectDropdown
+        ref={innerRef}
         defaultValue={value}
         data={data}
         buttonStyle={tw(

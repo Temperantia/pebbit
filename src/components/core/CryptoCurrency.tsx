@@ -47,6 +47,16 @@ const CryptoCurrency = ({
       {(delta === Delta.Positive ? "+" : delta === Delta.Negative ? "-" : "") +
         (raw ? text : ellipsis(text, 8) + " " + currencies[currency].symbol)}
     </Text>
+    {currency === "Binance Coin" && raw && (
+      <Text
+        style={[
+          tw("text-xs text-red-main"),
+          { fontFamily: "poppins-semibold" },
+        ]}
+      >
+        {" Binance Smart Chain"}
+      </Text>
+    )}
   </View>
 );
 

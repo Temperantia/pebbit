@@ -25,7 +25,9 @@ const ListingScreen = () => {
   const [order, setOrder] = useState<string>("Newest first");
 
   const adCollectionFiltered = useMemo(() => {
-    let collection = adCollection.where("status", "==", "new");
+    let collection = adCollection
+      .where("status", "==", "new")
+      .where("userId", "!=", user?.id ?? "");
 
     if (category !== "All") {
       collection = collection.where("category", "==", category);
@@ -38,10 +40,9 @@ const ListingScreen = () => {
     if (currency !== "All") {
       collection = collection.where("currencies", "array-contains", currency);
     }
-    return collection.orderBy(
-      "created",
-      order === "Newest first" ? "desc" : "asc"
-    );
+    return collection
+      .orderBy("userId", "asc")
+      .orderBy("created", order === "Newest first" ? "desc" : "asc");
   }, [location, currency, category, order]);
 
   const [ads, loading, error] = useCollectionDataOnce<Ad>(
@@ -53,9 +54,7 @@ const ListingScreen = () => {
     if (!ads) {
       return [];
     }
-    return ads.filter(
-      ({ userId, cooldown }) => userId !== user?.id && cooldown < now
-    );
+    return ads.filter(({ cooldown }) => cooldown < now);
   }, [ads]);
 
   /* const onSearch = useCallback(() => {

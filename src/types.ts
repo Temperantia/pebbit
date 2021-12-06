@@ -96,6 +96,8 @@ export type User = {
   sellingList?: Ad[];
   messagingList?: Ad[];
   history?: Ad[];
+  rates?: number[];
+  rate?: number | null;
 };
 
 export type Address = {

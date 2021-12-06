@@ -18,6 +18,8 @@ const HomeScreen = () => {
   const [ads, loading, error] = useCollectionDataOnce<Ad>(
     adCollection
       .where("status", "==", "new")
+      .where("userId", "!=", user?.id ?? "")
+      .orderBy("userId", "asc")
       .orderBy("created", "desc")
       .limit(4),
     { idField: "id" }
@@ -27,9 +29,7 @@ const HomeScreen = () => {
     if (!ads) {
       return [];
     }
-    return ads.filter(
-      ({ userId, cooldown }) => userId !== user?.id && cooldown < now
-    );
+    return ads.filter(({ cooldown }) => cooldown < now);
   }, [ads]);
 
   const onSeeAll = useCallback(() => {

@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from "react";
+import React, { Ref, useCallback, useRef, useState } from "react";
 import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import { useForm } from "react-hook-form";
 import "react-native-get-random-values";
 import { v4 } from "uuid";
 import { useNavigation } from "@react-navigation/core";
+import SelectDropdown from "react-native-select-dropdown";
 
 import { request, storage } from "../firebase";
 import TextInput from "../components/core/TextInput";
@@ -26,6 +27,7 @@ const uploadImage = async (uri: string) => {
 
 const CreateAdScreen = () => {
   const { navigate } = useNavigation();
+  const categoryRef: Ref<SelectDropdown> | null = useRef(null);
   const [loading, setLoading] = useState(false);
   const { control, handleSubmit, reset, watch } = useForm({
     defaultValues: {
@@ -41,37 +43,46 @@ const CreateAdScreen = () => {
 
   const onSubmit = useCallback(
     handleSubmit(async (ad) => {
-      setLoading(true);
-      ad.prices = Object.entries(ad.prices).reduce(
-        (prices: any, [key, value]: any) => {
-          const [currency, type] = key.split("-");
-          if (!prices[currency]) {
-            prices[currency] = {};
-          }
-          if (type === "amount") {
-            value = parseFloat(value.replace(",", "."));
-          }
-          prices[currency][type] = value;
-          return prices;
-        },
-        {}
-      );
+      try {
+        setLoading(true);
+        ad.prices = Object.entries(ad.prices).reduce(
+          (prices: any, [key, value]: any) => {
+            if (!value) {
+              return prices;
+            }
+            const [currency, type] = key.split("-");
+            if (!prices[currency]) {
+              prices[currency] = {};
+            }
+            if (type === "amount") {
+              value = parseFloat(value.replace(",", "."));
+            }
+            prices[currency][type] = value;
+            return prices;
+          },
+          {}
+        );
 
-      ad.pictures = ad.pictures.filter((picture) => !!picture);
-      for (const [index, picture] of ad.pictures.entries()) {
-        ad.pictures[index] = await uploadImage(picture);
+        ad.pictures = ad.pictures.filter((picture) => !!picture);
+        for (const [index, picture] of ad.pictures.entries()) {
+          ad.pictures[index] = await uploadImage(picture);
+        }
+        await request("sell", ad);
+        setLoading(false);
+        reset({
+          category: null,
+          title: "",
+          description: "",
+          prices: {},
+          currencies: [],
+          pictures: ["", "", "", "", "", ""],
+        });
+        categoryRef.current?.reset();
+        navigate("Exchange", { screen: "ExchangeScreen" });
+      } catch (error) {
+        setLoading(false);
+        alert(error);
       }
-      await request("sell", ad);
-      setLoading(false);
-      reset({
-        category: null,
-        title: "",
-        description: "",
-        prices: {},
-        currencies: [],
-        pictures: ["", "", "", "", "", ""],
-      });
-      navigate("Exchange", { screen: "ExchangeScreen" });
     }),
     [reset, navigate, handleSubmit, setLoading, uploadImage, request, Object]
   );
@@ -101,6 +112,7 @@ const CreateAdScreen = () => {
             placeholder="Category"
             name="category"
             control={control}
+            innerRef={categoryRef}
           />
         </View>
         <View style={tw("mb-2")}>

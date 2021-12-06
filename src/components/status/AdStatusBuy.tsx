@@ -29,13 +29,18 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
   );
 
   const onBuy = useCallback(async () => {
-    setLoading(true);
-    await request("buy?id=" + ad.id + "&currency=" + selectedCurrency);
-    setLoading(false);
+    try {
+      setLoading(true);
+      await request("buy?id=" + ad.id + "&currency=" + selectedCurrency);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      alert(error);
+    }
   }, [setLoading, ad, request, selectedCurrency]);
 
   return (
-    <View style={tw("h-96")}>
+    <View style={tw("h-40")}>
       <View style={tw("my-2")}>
         <Text style={[tw("my-3"), { fontFamily: "poppins-medium" }]}>
           {t("adBuying:priceSelection1")}
