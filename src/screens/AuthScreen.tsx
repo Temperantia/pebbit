@@ -19,7 +19,7 @@ import { keyboardVerticalOffset } from "../constants/Layout";
 
 const AuthScreen = () => {
   const { t } = useTranslation(["auth", "common"]);
-  const { signInWithEmail, newUser } = useAuth();
+  const { signInWithEmail, user, newUser } = useAuth();
   const { navigate } = useNavigation();
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +28,6 @@ const AuthScreen = () => {
       setLoading(true);
       await signInWithEmail(email, password);
       setLoading(false);
-      navigate("Home");
     }),
     [handleSubmit, signInWithEmail, setLoading]
   );
@@ -36,8 +35,10 @@ const AuthScreen = () => {
   useEffect(() => {
     if (newUser) {
       navigate("Onboarding");
+    } else if (user) {
+      navigate("Home");
     }
-  }, [newUser]);
+  }, [newUser, user]);
 
   return (
     <KeyboardAvoidingView
