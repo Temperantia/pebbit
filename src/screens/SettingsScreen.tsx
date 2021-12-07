@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 
 import Button from "../components/core/Button";
 import TextInput from "../components/core/TextInput";
@@ -39,7 +45,7 @@ const SettingsScreen = () => {
   );
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
       <ScrollView style={tw("my-5")}>

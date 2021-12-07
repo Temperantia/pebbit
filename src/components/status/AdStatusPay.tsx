@@ -14,6 +14,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
   const { t } = useTranslation(["adBuying"]);
   const { user } = useAuth();
   const [timeLeft, setTimeLeft] = useState<string | null>(null);
+  const [distance, setDistance] = useState<number>(0);
   let interval: NodeJS.Timer;
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
     clearInterval(interval);
     interval = setInterval(() => {
       const now = Date.now() / 1000;
-      const distance = ad.cooldown - now;
+      setDistance(ad.cooldown - now);
       const minutes = Math.floor((distance % (60 * 60)) / 60);
       const seconds = Math.floor(distance % 60);
       setTimeLeft(minutes + ":" + seconds);
@@ -63,10 +64,10 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
 
       <View
         style={tw(
-          "flex-row justify-between items-center my-2 p-2 border border-black rounded bg-purple-main"
+          "flex-row items-center my-2 p-2 border border-black rounded bg-purple-main"
         )}
       >
-        <Text>{ad.buyer.inputAddress}</Text>
+        <Text style={tw("w-11/12")}>{ad.buyer.inputAddress}</Text>
         <Icon
           size={20}
           color={tailwindConfig.theme.colors["red-main"]}
@@ -83,7 +84,9 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
           color={tailwindConfig.theme.colors["red-main"]}
           name="small/16/000000/clock.png"
         />
-        <Text style={tw("ml-1")}>{timeLeft}</Text>
+        <Text style={tw("ml-1")}>
+          {distance < 0 ? t("adBuying:timeExpired") : timeLeft}
+        </Text>
       </View>
     </View>
   );

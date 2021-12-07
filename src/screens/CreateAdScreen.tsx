@@ -1,5 +1,11 @@
 import React, { Ref, useCallback, useRef, useState } from "react";
-import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
 import { useForm } from "react-hook-form";
 import "react-native-get-random-values";
 import { v4 } from "uuid";
@@ -27,6 +33,7 @@ const uploadImage = async (uri: string) => {
 
 const CreateAdScreen = () => {
   const { navigate } = useNavigation();
+  const scrollRef: Ref<ScrollView> | null = useRef(null);
   const categoryRef: Ref<SelectDropdown> | null = useRef(null);
   const [loading, setLoading] = useState(false);
   const { control, handleSubmit, reset, watch } = useForm({
@@ -78,21 +85,35 @@ const CreateAdScreen = () => {
           pictures: ["", "", "", "", "", ""],
         });
         categoryRef.current?.reset();
+        scrollRef.current?.scrollTo(0);
         navigate("Exchange", { screen: "ExchangeScreen" });
       } catch (error) {
         setLoading(false);
         alert(error);
       }
     }),
-    [reset, navigate, handleSubmit, setLoading, uploadImage, request, Object]
+    [
+      reset,
+      navigate,
+      handleSubmit,
+      setLoading,
+      uploadImage,
+      request,
+      Object,
+      alert,
+    ]
   );
 
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
-      <ScrollView style={tw("px-5")}>
+      <ScrollView
+        style={tw("px-5")}
+        keyboardDismissMode="interactive"
+        ref={scrollRef}
+      >
         <View style={tw("flex-row justify-center my-4")}>
           <Text style={[tw("text-xl"), { fontFamily: "poppins-semibold" }]}>
             Post an Ad

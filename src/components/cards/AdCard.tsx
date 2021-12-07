@@ -27,7 +27,7 @@ const AdCard = ({
   const price = prices[currency + "-amount"];
   return (
     <View style={tw("flex-row p-2 border border-grey-slate rounded")}>
-      <View style={tw("w-1/3 mr-4")}>
+      <View style={tw("w-1/3 pr-4")}>
         {!!picture && (
           <Image
             style={tw("w-full h-16 mb-2")}

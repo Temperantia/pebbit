@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { Text, View } from "react-native";
+import React, { useCallback, useState } from "react";
+import { ActivityIndicator, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import tw from "../../tailwind";
@@ -11,11 +11,18 @@ import { request } from "../../firebase";
 
 const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
   const { t } = useTranslation(["adBuying"]);
+  const [loading, setLoading] = useState(false);
   const onRate = useCallback(
-    (rate) => () => {
-      request("rate?ad=" + ad.id + "&rate=" + (rate + 1));
+    (rate) => async () => {
+      setLoading(true);
+      try {
+        await request("rate?ad=" + ad.id + "&rate=" + (rate + 1));
+      } catch (error) {
+        alert(error);
+      }
+      setLoading(false);
     },
-    [request, ad]
+    [request, ad, setLoading, alert]
   );
 
   return (
@@ -47,23 +54,27 @@ const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
           : t("adBuying:ratingRequest")}
       </Text>
       <View style={tw("flex-row")}>
-        {[...Array(5).keys()].map((_value, index) => (
-          <Icon
-            key={index}
-            size={32}
-            color={
-              tailwindConfig.theme.colors[
-                ad.rate && ad.rate > index ? "gold-badge" : "grey-slate"
-              ]
-            }
-            name={
-              "small/32/000000/star" +
-              (ad.rate && ad.rate > index ? "-filled" : "") +
-              ".png"
-            }
-            onPress={ad.rate ? undefined : onRate(index)}
-          />
-        ))}
+        {loading ? (
+          <ActivityIndicator color={tailwindConfig.theme.colors["red-main"]} />
+        ) : (
+          [...Array(5).keys()].map((_value, index) => (
+            <Icon
+              key={index}
+              size={32}
+              color={
+                tailwindConfig.theme.colors[
+                  ad.rate && ad.rate > index ? "gold-badge" : "grey-slate"
+                ]
+              }
+              name={
+                "small/32/000000/star" +
+                (ad.rate && ad.rate > index ? "-filled" : "") +
+                ".png"
+              }
+              onPress={ad.rate ? undefined : onRate(index)}
+            />
+          ))
+        )}
       </View>
     </View>
   );

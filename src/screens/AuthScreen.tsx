@@ -42,10 +42,10 @@ const AuthScreen = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior="padding"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
-      <ScrollView contentContainerStyle={tw("justify-evenly h-full mx-5")}>
+      <ScrollView style={tw("h-full px-5")}>
         <View style={tw("my-6 items-center")}>
           <Text style={[tw("text-lg"), { fontFamily: "poppins-medium" }]}>
             {t("auth:title")}

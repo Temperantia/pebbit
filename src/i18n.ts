@@ -112,6 +112,7 @@ i18n.use(initReactI18next).init({
         priceSelection1: "Price ",
         priceSelection2: "(select one)",
         buy: "BUY IT NOW",
+        timeExpired: "Time Expired",
         send1: "Please send ",
         sendBold: "exactly ",
         send2: " to the address listed below:",

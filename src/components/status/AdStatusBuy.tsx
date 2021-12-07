@@ -37,38 +37,48 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
       setLoading(false);
       alert(error);
     }
-  }, [setLoading, ad, request, selectedCurrency]);
+  }, [setLoading, ad, request, selectedCurrency, alert]);
 
   return (
-    <View style={tw("h-40")}>
+    <View style={tw("h-32 justify-evenly")}>
       <View style={tw("my-2")}>
-        <Text style={[tw("my-3"), { fontFamily: "poppins-medium" }]}>
-          {t("adBuying:priceSelection1")}
-          <Text style={tw("text-grey-slate text-xs")}>
-            {t("adBuying:priceSelection2")}
+        {Object.keys(ad.currencies).length > 1 && (
+          <Text style={[tw("my-3"), { fontFamily: "poppins-medium" }]}>
+            {t("adBuying:priceSelection1")}
+            <Text style={tw("text-grey-slate text-xs")}>
+              {t("adBuying:priceSelection2")}
+            </Text>
           </Text>
-        </Text>
+        )}
         <View style={tw("flex-row")}>
-          {Object.entries(ad.prices).map(([currency, price]) => (
-            <TouchableOpacity
-              key={currency}
-              style={tw(
-                "rounded mx-1 w-1/3 border border-grey-slate py-1 px-2 items-center" +
-                  (currency === selectedCurrency ? " bg-purple-main" : "")
-              )}
-              onPress={onSelectCurrency(currency)}
-            >
+          {Object.entries(ad.prices).map(([currency, price]) =>
+            Object.keys(ad.currencies).length > 1 ? (
+              <TouchableOpacity
+                key={currency}
+                style={tw(
+                  "rounded mx-1 w-1/3 border border-grey-slate py-1 px-2 items-center" +
+                    (currency === selectedCurrency ? " bg-purple-main" : "")
+                )}
+                onPress={onSelectCurrency(currency)}
+              >
+                <CryptoCurrency
+                  currency={currency}
+                  text={price?.amount?.toString()}
+                  textColor={
+                    currency === selectedCurrency
+                      ? "text-black"
+                      : "text-grey-slate"
+                  }
+                />
+              </TouchableOpacity>
+            ) : (
               <CryptoCurrency
                 currency={currency}
                 text={price?.amount?.toString()}
-                textColor={
-                  currency === selectedCurrency
-                    ? "text-black"
-                    : "text-grey-slate"
-                }
+                textColor="text-black"
               />
-            </TouchableOpacity>
-          ))}
+            )
+          )}
         </View>
       </View>
       <Button

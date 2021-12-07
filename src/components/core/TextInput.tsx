@@ -93,7 +93,7 @@ const TextInput = ({
         {icon && <Image style={tw("w-8 h-8 mr-2")} source={icon} />}
         {left}
         <RNTextInput
-          autoCorrect={false}
+          keyboardAppearance="dark"
           editable={!copy}
           style={[tw("flex-grow"), { fontFamily: "poppins-medium" }]}
           placeholderTextColor={tailwindConfig.theme.colors["grey-slate"]}
@@ -110,8 +110,11 @@ const TextInput = ({
       </View>
       {error && <Text style={tw("text-red-main")}>{error.message}</Text>}
       {Platform.OS === "ios" && (
-        <InputAccessoryView nativeID="done">
-          <Button onPress={onDismiss} title="Done" />
+        <InputAccessoryView
+          nativeID="done"
+          backgroundColor={tailwindConfig.theme.colors["black-background-1"]}
+        >
+          <Button onPress={onDismiss} title="Done" color="white" />
         </InputAccessoryView>
       )}
     </View>
