@@ -48,7 +48,7 @@ const AdLineSelling = ({
   }, [status, info]);
 
   return (
-    <View style={tw("my-2")}>
+    <View style={tw("m-2")}>
       <TouchableOpacity
         style={tw("flex-row h-24 w-full border border-grey-slate rounded")}
         onPress={onClick}
