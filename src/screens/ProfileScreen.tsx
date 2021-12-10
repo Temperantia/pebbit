@@ -49,38 +49,44 @@ const ProfileScreen = () => {
       </View>
       <View style={tw("p-5 items-center")}>
         <Text>Recent Transactions</Text>
-        {recentTransactions.map(({ id, pictures, title, userId, prices }) => {
-          const isSeller = userId === user?.id;
-          const picture = pictures.find((picture) => !!picture);
-          const [currency, price] = Object.entries(prices)[0];
-          return (
-            <View style={tw("flex-row items-center my-4")} key={id}>
-              <Image
-                style={tw("w-1/5 h-full")}
-                source={{
-                  uri: picture,
-                }}
-              />
-              <View style={tw("w-2/5 pl-2")}>
-                <Text>{title}</Text>
-                <Text
-                  style={[
-                    tw(isSeller ? "text-green-main" : "text-red-main"),
-                    { fontFamily: "poppins-semibold" },
-                  ]}
-                >
-                  {isSeller ? "Sold" : "Bought"}
-                </Text>
-              </View>
-              <View style={tw("w-2/5")}>
-                <CryptoCurrency
-                  currency={currency}
-                  text={price?.amount?.toString()}
+        {recentTransactions.length === 0 ? (
+          <View style={tw("items-center")}>
+            <Text>No ads here yet!</Text>
+          </View>
+        ) : (
+          recentTransactions.map(({ id, pictures, title, userId, prices }) => {
+            const isSeller = userId === user?.id;
+            const picture = pictures.find((picture) => !!picture);
+            const [currency, price] = Object.entries(prices)[0];
+            return (
+              <View style={tw("flex-row items-center my-4")} key={id}>
+                <Image
+                  style={tw("w-1/5 h-full")}
+                  source={{
+                    uri: picture,
+                  }}
                 />
+                <View style={tw("w-2/5 pl-2")}>
+                  <Text>{title}</Text>
+                  <Text
+                    style={[
+                      tw(isSeller ? "text-green-main" : "text-red-main"),
+                      { fontFamily: "poppins-semibold" },
+                    ]}
+                  >
+                    {isSeller ? "Sold" : "Bought"}
+                  </Text>
+                </View>
+                <View style={tw("w-2/5")}>
+                  <CryptoCurrency
+                    currency={currency}
+                    text={price?.amount?.toString()}
+                  />
+                </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })
+        )}
       </View>
     </View>
   );
