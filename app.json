@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.magna_numeris.pebbit",
-      "versionCode": 17,
+      "versionCode": 19,
       "googleServicesFile": "./google-services.json"
     },
     "plugins": [

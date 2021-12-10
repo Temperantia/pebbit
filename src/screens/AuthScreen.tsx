@@ -16,16 +16,20 @@ import SocialButton from "../components/auth/SocialButton";
 import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
 import { keyboardVerticalOffset } from "../constants/Layout";
+import BackArrow from "../components/core/BackArrow";
+import { auth } from "../firebase";
 
 const AuthScreen = () => {
   const { t } = useTranslation(["auth", "common"]);
-  const { signInWithEmail, user, newUser } = useAuth();
+  const { signInWithEmail, user, newUser, authUser } = useAuth();
   const { navigate } = useNavigation();
   const { control, handleSubmit } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
+
   const onSignIn = useCallback(
     handleSubmit(async ({ email, password }) => {
       setLoading(true);
+      await auth.signOut();
       await signInWithEmail(email, password);
       setLoading(false);
     }),
@@ -33,12 +37,17 @@ const AuthScreen = () => {
   );
 
   useEffect(() => {
-    if (newUser) {
-      navigate("Onboarding");
+    if (newUser && authUser) {
+      if (
+        authUser.providerData[0]?.providerId !== "password" ||
+        authUser.emailVerified
+      ) {
+        navigate("Onboarding");
+      }
     } else if (user) {
       navigate("Home");
     }
-  }, [newUser, user]);
+  }, [authUser, newUser, user]);
 
   return (
     <KeyboardAvoidingView
@@ -46,7 +55,8 @@ const AuthScreen = () => {
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
       <ScrollView style={tw("h-full px-5")}>
-        <View style={tw("my-6 items-center")}>
+        <BackArrow label="Back" />
+        <View style={tw("my-2 items-center")}>
           <Text style={[tw("text-lg"), { fontFamily: "poppins-medium" }]}>
             {t("auth:title")}
           </Text>
@@ -69,6 +79,10 @@ const AuthScreen = () => {
         <View style={tw("items-center bg-black-background-1 bg-opacity-5")}>
           <Text style={tw("px-4 py-3 text-grey-slate")}>
             {t("auth:disclaimer")}
+          </Text>
+          <Text style={tw("px-4 py-3")}>
+            {authUser?.providerData[0]?.providerId === "password" &&
+              "We have sent an email to your address, please confirm before you continue. "}
           </Text>
           <View style={tw("p-2 w-full")}>
             <Button

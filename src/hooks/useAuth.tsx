@@ -118,7 +118,8 @@ export const AuthProvider: FC = ({ children }) => {
 
   const signInWithEmail = async (email: string, password: string) => {
     try {
-      await auth.createUserWithEmailAndPassword(email, password);
+      const result = await auth.createUserWithEmailAndPassword(email, password);
+      await result.user?.sendEmailVerification();
     } catch (error) {
       try {
         await auth.signInWithEmailAndPassword(email, password);
