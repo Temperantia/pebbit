@@ -6,6 +6,7 @@ import Icon from "../components/core/Icon";
 import CryptoCurrency from "../components/core/CryptoCurrency";
 import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
+import BackArrow from "../components/core/BackArrow";
 
 const ProfileScreen = () => {
   const { user } = useAuth();
@@ -25,6 +26,7 @@ const ProfileScreen = () => {
 
   return (
     <View>
+      <BackArrow label="Back" />
       <View style={tw("p-5 border-b border-grey-slate")}>
         <Text style={tw("text-4xl")}>{user?.username}</Text>
         {rate && (

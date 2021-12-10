@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
+import BackArrow from "../components/core/BackArrow";
 
 import Button from "../components/core/Button";
 import TextInput from "../components/core/TextInput";
@@ -36,6 +37,7 @@ const OnboardingScreen = () => {
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
       <ScrollView style={tw("h-full px-5")}>
+        <BackArrow label="Back" />
         <View style={tw("my-2 items-center")}>
           <Text style={[tw("text-lg"), { fontFamily: "poppins-medium" }]}>
             Set up your account

@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
+import BackArrow from "../components/core/BackArrow";
 
 import Button from "../components/core/Button";
 import TextInput from "../components/core/TextInput";
@@ -48,11 +49,12 @@ const SettingsScreen = () => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
-      <ScrollView style={tw("my-5")}>
+      <ScrollView style={tw("my-2")}>
+        <BackArrow label="Back" />
         {authUser?.providerData.find(
           (provider) => provider?.providerId === "password"
         ) && (
-          <View style={tw("p-5 border-b border-grey-slate")}>
+          <View style={tw("py-2 px-5 border-b border-grey-slate")}>
             <Text style={tw("text-base")}>Account Information</Text>
             <Text>Edit your email, password or phone number</Text>
             <View style={tw("mb-2")}>

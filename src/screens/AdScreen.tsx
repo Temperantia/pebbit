@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, Text, View } from "react-native";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useNavigation } from "@react-navigation/core";
 import { useTranslation } from "react-i18next";
 import { StackScreenProps } from "@react-navigation/stack";
 
@@ -20,6 +19,7 @@ import AdStatusReceived from "../components/status/AdStatusReceived";
 import useAuth from "../hooks/useAuth";
 import AdStatusUnauthenticated from "../components/status/AdStatusUnauthenticated";
 import tailwindConfig from "../../tailwind.config";
+import BackArrow from "../components/core/BackArrow";
 
 const AdScreen = ({
   route: {
@@ -28,7 +28,6 @@ const AdScreen = ({
 }: StackScreenProps<ListingParamList, "AdScreen">) => {
   const { t } = useTranslation(["navigation"]);
   const { user } = useAuth();
-  const { goBack } = useNavigation();
   const [ad, loading] = useDocumentData<Ad>(adCollection.doc(id), {
     idField: "id",
   });
@@ -94,29 +93,12 @@ const AdScreen = ({
     setSeller(data);
   };
 
-  const onBack = useCallback(() => {
-    goBack();
-  }, [goBack]);
-
   return (
     <ScreenLoading loading={loading}>
       {ad && (
         <ScrollView>
           <View style={{ flex: 1 }}>
-            <TouchableOpacity
-              style={[tw("my-5 flex-row items-center mx-3")]}
-              onPress={onBack}
-            >
-              <Icon size={16} name="small/16/000000/back.png" />
-              <Text
-                style={[
-                  tw("ml-2 text-red-main"),
-                  { fontFamily: "poppins-medium" },
-                ]}
-              >
-                {t("navigation:backToResults")}
-              </Text>
-            </TouchableOpacity>
+            <BackArrow label={t("navigation:backToResults")} />
             <Image
               style={tw("h-32")}
               resizeMode="cover"
