@@ -73,6 +73,7 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
               </TouchableOpacity>
             ) : (
               <CryptoCurrency
+                key={currency}
                 currency={currency}
                 text={price?.amount?.toString()}
                 textColor="text-black"
