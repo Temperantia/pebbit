@@ -20,7 +20,11 @@ const PicturePicker = ({ control }: { control: Control<any> }) => {
           return;
         }
 
-        const pickerResult = await ImagePicker.launchImageLibraryAsync();
+        const pickerResult = await ImagePicker.launchImageLibraryAsync({
+          allowsEditing: true,
+          aspect: [5, 2],
+          quality: 0.5,
+        });
         if (pickerResult.cancelled === true) {
           return;
         }
