@@ -61,9 +61,9 @@ const AdLineSelling = ({
           />
         )}
 
-        <View style={tw("p-2 w-3/4")}>
+        <View style={tw("p-1 w-3/4")}>
           <View style={tw("flex-row justify-between items-start")}>
-            <View style={tw("w-2/5")}>
+            <View style={tw("w-1/2")}>
               <Text style={{ fontFamily: "poppins-medium" }}>
                 {ellipsis(title, 30)}
               </Text>
