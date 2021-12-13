@@ -26,12 +26,11 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
           user?.id +
           "&nonce=CryptAPIPebbit&value_coin=999"
       );
-    }, 20000); */
-
-    clearInterval(interval);
+    }, 20000); */ clearInterval(interval);
     interval = setInterval(() => {
-      const now = Date.now() / 1000;
-      setDistance(ad.cooldown - now);
+      const now = Math.round(Date.now() / 1000);
+      const distance = ad.cooldown - now;
+      setDistance(distance);
       const minutes = Math.floor((distance % (60 * 60)) / 60);
       const seconds = Math.floor(distance % 60);
       setTimeLeft(minutes + ":" + seconds);
