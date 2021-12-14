@@ -41,8 +41,9 @@ const Select = ({
 }) => {
   const {
     t,
-    i18n: { language },
+    i18n: { resolvedLanguage },
   } = useTranslation(["common"]);
+
   const onRenderCustomizedButtonChild = useCallback(
     (item) => {
       return (
@@ -54,9 +55,9 @@ const Select = ({
               {item === "All"
                 ? t("common:all")
                 : category
-                ? categories[item][language]
+                ? categories[item][resolvedLanguage]
                 : country
-                ? countries[item][language]
+                ? countries[item][resolvedLanguage]
                 : order
                 ? t("common:" + item)
                 : item}
@@ -76,8 +77,10 @@ const Select = ({
       <Text>
         {item === "All"
           ? t("common:all")
+          : category
+          ? categories[item][resolvedLanguage]
           : country
-          ? countries[item][language]
+          ? countries[item][resolvedLanguage]
           : item === "newestFirst"
           ? t("common:newestFirst")
           : item === "oldestFirst"
@@ -85,7 +88,7 @@ const Select = ({
           : item}
       </Text>
     ),
-    [Text]
+    [Text, t]
   );
 
   const children = (

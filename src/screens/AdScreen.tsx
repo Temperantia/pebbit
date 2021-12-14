@@ -28,7 +28,7 @@ const AdScreen = ({
 }: StackScreenProps<ListingParamList, "AdScreen">) => {
   const {
     t,
-    i18n: { language },
+    i18n: { resolvedLanguage },
   } = useTranslation(["navigation", "listing"]);
   const { user } = useAuth();
   const [ad, loading] = useDocumentData<Ad>(adCollection.doc(id), {
@@ -136,7 +136,7 @@ const AdScreen = ({
                 )}
               >
                 <Text style={tw("text-grey-slate")}>
-                  {new timeAgo(language).format(
+                  {new timeAgo(resolvedLanguage).format(
                     new Date(ad.created.seconds * 1000)
                   )}
                 </Text>

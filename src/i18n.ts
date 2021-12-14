@@ -391,9 +391,9 @@ i18n.use(languageDetector() as any).init({
         description: "Description",
         chooseCurrencies1: "Vous pouvez choisir jusqu'à",
         chooseCurrencies2: "monnaies.",
-        escrowAgreement: "ACCORD DE MAIN TIERCE",
+        escrowAgreement: "ACCORD DE MISE SOUS SÉQUESTRE",
         escrowDescription:
-          "Une main tierce est un emplacement neutre de rétention où nous mettons les fonds de l'acheteur de côté jusqu'à ce que la transaction soit terminée. Les fonds y restent jusqu'à ce que le vendeur remplisse ses obligations et que l'acheteur indique la transaction comme terminée. Si un accord n'est pas trouvé sous 30 jours après acceptation de l'offre, les fonds seront retournés à l'acheteur.",
+          "Une mise sous séquestre est un emplacement neutre de rétention où nous mettons les fonds de l'acheteur de côté jusqu'à ce que la transaction soit terminée. Les fonds y restent jusqu'à ce que le vendeur remplisse ses obligations et que l'acheteur indique la transaction comme terminée. Si un accord n'est pas trouvé sous 30 jours après acceptation de l'offre, les fonds seront retournés à l'acheteur.",
         pictures: "Photos",
         addPictures:
           "Ajoutez jusqu'à 6 photos. Vous devez avoir au moins une photo.",

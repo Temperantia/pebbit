@@ -32,7 +32,7 @@ const FiltersListing = ({
 }) => {
   const {
     t,
-    i18n: { language },
+    i18n: { resolvedLanguage },
   } = useTranslation(["common"]);
   const [openedFilters, setOpenedFilters] = useRecoilState(openedFiltersState);
 
@@ -55,7 +55,7 @@ const FiltersListing = ({
         text={currency === "All" ? t("common:all") : currency}
       />
     ),
-    [CryptoCurrency]
+    [CryptoCurrency, t]
   );
 
   const onRenderCurrencyItem = useCallback(
@@ -66,7 +66,7 @@ const FiltersListing = ({
         text={currency === "All" ? t("common:all") : currency}
       />
     ),
-    [CryptoCurrency]
+    [CryptoCurrency, t]
   );
 
   return openedFilters ? (
@@ -104,7 +104,7 @@ const FiltersListing = ({
             )}
             onPress={onSetCategory(key)}
           >
-            <Text>{values[language]}</Text>
+            <Text>{values[resolvedLanguage]}</Text>
           </TouchableOpacity>
         ))}
       </View>

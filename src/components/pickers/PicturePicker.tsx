@@ -33,7 +33,7 @@ const PicturePicker = ({ control }: { control: Control<any> }) => {
 
         onChange(pictures);
       },
-    [ImagePicker, alert]
+    [ImagePicker, alert, t]
   );
 
   return (
