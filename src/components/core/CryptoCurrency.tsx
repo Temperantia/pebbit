@@ -54,7 +54,7 @@ const CryptoCurrency = ({
           { fontFamily: "poppins-semibold" },
         ]}
       >
-        {" Binance Smart Chain"}
+        {" BNB Binance Smart Chain"}
       </Text>
     )}
   </View>
