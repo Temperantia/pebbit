@@ -14,6 +14,7 @@ import StatusBanner from "../status/StatusBanner";
 import tailwindConfig from "../../../tailwind.config";
 import CryptoCurrency from "../core/CryptoCurrency";
 import { ellipsis } from "../../utils/string";
+import Button from "../core/Button";
 
 const AdLineSelling = ({
   ad: { id, title, pictures, prices, status, buyer },
@@ -23,8 +24,8 @@ const AdLineSelling = ({
   const { t } = useTranslation(["common", "statuses", "shipping"]);
   const { navigate } = useNavigation();
   const [expanded, setExpanded] = useState(false);
-  const { control, watch } = useForm();
-  const info = watch();
+  const [loading, setLoading] = useState(false);
+  const { control, handleSubmit } = useForm();
   const picture = pictures.find((picture) => !!picture);
   const [currency, price] = Object.entries(prices)[0];
   const statusColor = statusColors[status] ?? "";
@@ -39,13 +40,16 @@ const AdLineSelling = ({
     navigate("AdScreen", { id });
   }, [navigate, id]);
 
-  useEffect(() => {
-    if (status === "paid" && info.service && info.number) {
-      request(
-        "send?ad=" + id + "&service=" + info.service + "&number=" + info.number
+  const onUpdate = useCallback(
+    handleSubmit(async ({ service, number }) => {
+      setLoading(true);
+      await request(
+        "send?ad=" + id + "&service=" + service + "&number=" + number
       );
-    }
-  }, [status, info]);
+      setLoading(false);
+    }),
+    [handleSubmit, request, id, setLoading]
+  );
 
   return (
     <View style={tw("m-2")}>
@@ -111,14 +115,17 @@ const AdLineSelling = ({
               control={control}
               name="service"
             />
-            {!!info.service && (
-              <TextInput
-                copy
-                label={t("shipping:trackingNumber")}
-                control={control}
-                name="number"
-              />
-            )}
+            <TextInput
+              copy
+              label={t("shipping:trackingNumber")}
+              control={control}
+              name="number"
+            />
+            <Button
+              title={t("shipping:confirm")}
+              loading={loading}
+              onPress={onUpdate}
+            />
             <TouchableOpacity
               style={tw(
                 "py-2 flex-row items-center justify-center border rounded border-grey-slate"
