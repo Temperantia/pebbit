@@ -18,7 +18,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
   let interval: NodeJS.Timer;
 
   useEffect(() => {
-    /*  setTimeout(() => {
+    /* setTimeout(() => {
       request(
         "paymentComplete?ad=" +
           ad.id +
@@ -26,7 +26,9 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
           user?.id +
           "&nonce=CryptAPIPebbit&value_coin=999"
       );
-    }, 20000); */ clearInterval(interval);
+    }, 20000);
+    */
+    clearInterval(interval);
     interval = setInterval(() => {
       const now = Math.round(Date.now() / 1000);
       const distance = ad.cooldown - now;
@@ -55,8 +57,9 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
           {t("adBuying:sendBold")}
         </Text>
         <CryptoCurrency
+          raw
           currency={ad.buyer.currency}
-          text={ad.prices[ad.buyer.currency].amount.toString()}
+          text={(ad.prices[ad.buyer.currency].amount + ad.buyer.fee).toString()}
         />
         <Text>{t("adBuying:send2")}</Text>
       </View>
@@ -83,6 +86,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
           color={tailwindConfig.theme.colors["red-main"]}
           name="small/16/000000/clock.png"
         />
+
         <Text style={tw("ml-1")}>
           {distance < 0 ? t("adBuying:timeExpired") : timeLeft}
         </Text>

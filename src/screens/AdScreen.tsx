@@ -26,7 +26,10 @@ const AdScreen = ({
     params: { id },
   },
 }: StackScreenProps<ListingParamList, "AdScreen">) => {
-  const { t } = useTranslation(["navigation"]);
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation(["navigation", "listing"]);
   const { user } = useAuth();
   const [ad, loading] = useDocumentData<Ad>(adCollection.doc(id), {
     idField: "id",
@@ -133,7 +136,9 @@ const AdScreen = ({
                 )}
               >
                 <Text style={tw("text-grey-slate")}>
-                  {timeAgo.format(new Date(ad.created.seconds * 1000))}
+                  {new timeAgo(language).format(
+                    new Date(ad.created.seconds * 1000)
+                  )}
                 </Text>
               </View>
               <View>
@@ -143,7 +148,7 @@ const AdScreen = ({
                     { fontFamily: "poppins-semibold" },
                   ]}
                 >
-                  About Seller
+                  {t("listing:aboutSeller")}
                 </Text>
                 <Text style={tw("text-xl")}>{seller?.username}</Text>
                 {seller && (

@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/core";
 import React, { useCallback, useState } from "react";
 import { Image, SafeAreaView, TouchableOpacity, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import tailwindConfig from "../../../tailwind.config";
 import useAuth from "../../hooks/useAuth";
@@ -11,7 +12,10 @@ import Icon from "./Icon";
 import SafeViewAndroid from "./SafeViewAndroid";
 
 const Header = ({ noMenu }: { noMenu?: boolean }) => {
-  const { t } = useTranslation(["auth", "navigation"]);
+  const {
+    t,
+    i18n: { changeLanguage },
+  } = useTranslation(["auth", "navigation"]);
   const { user, signOut } = useAuth();
   const { navigate, getState } = useNavigation();
   const { routes } = getState();
@@ -31,6 +35,17 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
     setModalVisible(false);
     signOut(navigate);
   }, [signOut, navigate]);
+
+  const onChangeLanguage = useCallback(
+    (locale) => async () => {
+      changeLanguage(locale);
+      await AsyncStorage.setItem(
+        "@i18next-async-storage/user-language",
+        locale
+      );
+    },
+    [changeLanguage, AsyncStorage]
+  );
 
   return (
     <SafeAreaView
@@ -57,7 +72,16 @@ const Header = ({ noMenu }: { noMenu?: boolean }) => {
       </View>
       {modalVisible && (
         <View>
-          <View style={tw("w-full bg-black-background-2")}>
+          <View style={tw("w-full items-center bg-black-background-2")}>
+            <View style={tw("flex-row")}>
+              <TouchableOpacity onPress={onChangeLanguage("en")}>
+                <Icon name="color/48/000000/usa-circular.png" size={20} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={onChangeLanguage("fr")}>
+                <Icon name="color/48/000000/france-circular.png" size={20} />
+              </TouchableOpacity>
+            </View>
+
             <Button
               color={
                 routes[routes.length - 1].name === "Root"

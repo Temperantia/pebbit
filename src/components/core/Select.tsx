@@ -2,11 +2,16 @@ import React, { Ref, useCallback } from "react";
 import { Control, Controller } from "react-hook-form";
 import { Text, View } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
+import { useTranslation } from "react-i18next";
 
 import tw from "../../tailwind";
 import Icon from "./Icon";
+import { categories, countries } from "../../constants";
 
 const Select = ({
+  category,
+  country,
+  order,
   data,
   style,
   label,
@@ -19,6 +24,9 @@ const Select = ({
   onRenderButton,
   onRenderItem,
 }: {
+  category?: boolean;
+  country?: boolean;
+  order?: boolean;
   data: string[];
   style?: string;
   label?: string;
@@ -31,6 +39,10 @@ const Select = ({
   onRenderButton?: (item: any) => JSX.Element;
   onRenderItem?: (item: any) => JSX.Element;
 }) => {
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation(["common"]);
   const onRenderCustomizedButtonChild = useCallback(
     (item) => {
       return (
@@ -38,7 +50,17 @@ const Select = ({
           {item && onRenderButton ? (
             onRenderButton(item)
           ) : item ? (
-            <Text style={tw("text-black")}>{item}</Text>
+            <Text style={tw("text-black")}>
+              {item === "All"
+                ? t("common:all")
+                : category
+                ? categories[item][language]
+                : country
+                ? countries[item][language]
+                : order
+                ? t("common:" + item)
+                : item}
+            </Text>
           ) : (
             <Text style={tw("text-grey-slate")}>{placeholder}</Text>
           )}
@@ -46,11 +68,21 @@ const Select = ({
         </View>
       );
     },
-    [View, tw, Text, placeholder, Icon, onRenderButton]
+    [View, tw, Text, placeholder, Icon, onRenderButton, t]
   );
 
   const onRenderItemDefault = useCallback(
-    (item) => <Text>{item}</Text>,
+    (item) => (
+      <Text>
+        {item === "All"
+          ? t("common:all")
+          : item === "newestFirst"
+          ? t("common:newestFirst")
+          : item === "oldestFirst"
+          ? t("common:oldestFirst")
+          : item}
+      </Text>
+    ),
     [Text]
   );
 

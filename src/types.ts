@@ -80,6 +80,7 @@ export type Ad = {
     currency: string;
     inputAddress: string;
     address: Address;
+    fee: number;
   };
   messages?: Message[];
   rate?: number;

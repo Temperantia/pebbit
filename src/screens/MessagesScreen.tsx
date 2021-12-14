@@ -9,9 +9,9 @@ import {
   View,
 } from "react-native";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useNavigation } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 import tw from "../tailwind";
 import Icon from "../components/core/Icon";
@@ -24,19 +24,20 @@ import { request, userCollection } from "../firebase";
 import tailwindConfig from "../../tailwind.config";
 import { format } from "date-fns";
 import { keyboardVerticalOffset } from "../constants/Layout";
+import BackArrow from "../components/core/BackArrow";
 
 const MessagesScreen = ({
   route: {
     params: { id },
   },
 }: StackScreenProps<ExchangeParamList, "MessagesScreen">) => {
+  const { t } = useTranslation(["messaging"]);
   const { user } = useAuth();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       content: "",
     },
   });
-  const { goBack } = useNavigation();
   const [loading, setLoading] = useState<boolean>(false);
   const flatListRef = useRef<FlatList>(null);
   const [userData, dataLoading] = useDocumentData<User>(
@@ -46,10 +47,6 @@ const MessagesScreen = ({
     }
   );
   const ad = useMemo(() => userData?.ads[id], [userData]);
-
-  const onBack = useCallback(() => {
-    goBack();
-  }, [goBack]);
 
   const onSend = useCallback(
     handleSubmit(async ({ content }) => {
@@ -69,20 +66,7 @@ const MessagesScreen = ({
       <ScreenLoading loading={dataLoading}>
         {ad && (
           <View style={tw("h-full")}>
-            <TouchableOpacity
-              style={tw("my-5 flex-row items-center mx-3")}
-              onPress={onBack}
-            >
-              <Icon size={16} name="small/16/000000/back.png" />
-              <Text
-                style={[
-                  tw("ml-2 text-red-main"),
-                  { fontFamily: "poppins-medium" },
-                ]}
-              >
-                Back to Messages
-              </Text>
-            </TouchableOpacity>
+            <BackArrow label={t("messaging:backToMessages")} />
             <AdLineMessaging disabled ad={ad} />
             <View style={tw("px-5 py-2 border-b border-grey-slate")}>
               <Text>
@@ -124,7 +108,7 @@ const MessagesScreen = ({
               multiline
               name="content"
               control={control}
-              placeholder="Type here to send a message..."
+              placeholder={t("messaging:typeAMessage")}
               right={
                 loading ? (
                   <ActivityIndicator

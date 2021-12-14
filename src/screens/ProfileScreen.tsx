@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import tailwindConfig from "../../tailwind.config";
 import Icon from "../components/core/Icon";
@@ -9,6 +10,7 @@ import tw from "../tailwind";
 import BackArrow from "../components/core/BackArrow";
 
 const ProfileScreen = () => {
+  const { t } = useTranslation(["common", "profile"]);
   const { user } = useAuth();
   const rates: number[] = (user?.sellingList ?? [])
     .filter(({ rate }) => !!rate)
@@ -48,10 +50,10 @@ const ProfileScreen = () => {
         )}
       </View>
       <View style={tw("p-5 items-center")}>
-        <Text>Recent Transactions</Text>
+        <Text>{t("profile:recentTransactions")}</Text>
         {recentTransactions.length === 0 ? (
           <View style={tw("items-center")}>
-            <Text>No ads here yet!</Text>
+            <Text>{t("common:noAdsYet")}</Text>
           </View>
         ) : (
           recentTransactions.map(({ id, pictures, title, userId, prices }) => {

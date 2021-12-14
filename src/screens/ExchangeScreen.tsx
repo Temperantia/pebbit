@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import tw from "../tailwind";
 import MessagingList from "../components/lists/MessagingList";
@@ -8,14 +9,15 @@ import SellingList from "../components/lists/SellingList";
 import HistoryList from "../components/lists/HistoryList";
 
 const tabs: { [tab: string]: JSX.Element } = {
-  Selling: <SellingList />,
-  Buying: <BuyingList />,
-  Messages: <MessagingList />,
-  History: <HistoryList />,
+  selling: <SellingList />,
+  buying: <BuyingList />,
+  messages: <MessagingList />,
+  history: <HistoryList />,
 };
 
 const ExchangeScreen = () => {
-  const [currentTab, setCurrentTab] = useState("Selling");
+  const { t } = useTranslation(["navigation"]);
+  const [currentTab, setCurrentTab] = useState("selling");
 
   const onSetCurrentTab = useCallback(
     (tab) => () => {
@@ -39,7 +41,7 @@ const ExchangeScreen = () => {
                 { fontFamily: "poppins-semibold" },
               ]}
             >
-              {tab}
+              {t("navigation:" + tab)}
             </Text>
           </TouchableOpacity>
         ))}

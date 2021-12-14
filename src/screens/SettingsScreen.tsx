@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -17,6 +18,7 @@ import useAuth from "../hooks/useAuth";
 import tw from "../tailwind";
 
 const SettingsScreen = () => {
+  const { t } = useTranslation(["common", "profile"]);
   const { goBack } = useNavigation();
   const { user, authUser, saveProfile } = useAuth();
   const { control, handleSubmit, reset } = useForm({
@@ -55,10 +57,16 @@ const SettingsScreen = () => {
           (provider) => provider?.providerId === "password"
         ) && (
           <View style={tw("py-2 px-5 border-b border-grey-slate")}>
-            <Text style={tw("text-base")}>Account Information</Text>
-            <Text>Edit your email, password or phone number</Text>
+            <Text style={tw("text-base")}>
+              {t("profile:accountInformation")}
+            </Text>
+            <Text>{t("profile:editInfo")}</Text>
             <View style={tw("mb-2")}>
-              <TextInput name="email" control={control} label="Email" />
+              <TextInput
+                name="email"
+                control={control}
+                label={t("profile:email")}
+              />
             </View>
             <View style={tw("mb-2")}>
               <TextInput
@@ -66,7 +74,7 @@ const SettingsScreen = () => {
                 optional
                 name="password"
                 control={control}
-                label="Current Password (required if changing email or password)"
+                label={t("profile:password")}
               />
             </View>
             <View style={tw("mb-2")}>
@@ -75,7 +83,7 @@ const SettingsScreen = () => {
                 optional
                 name="newPassword"
                 control={control}
-                label="New Password"
+                label={t("profile:newPassword")}
               />
             </View>
             <View style={tw("mb-2")}>
@@ -83,22 +91,19 @@ const SettingsScreen = () => {
                 optional
                 name="phone"
                 control={control}
-                label="Phone Number"
+                label={t("profile:phoneNumber")}
               />
             </View>
           </View>
         )}
         <View style={tw("p-5")}>
-          <Text style={tw("mb-2 text-base")}>Shipping Information</Text>
-          <Text style={tw("mb-2")}>
-            This is what sellers will use to ship your purchased items, please
-            ensure this information is correct.
-          </Text>
+          <Text style={tw("mb-2 text-base")}>{t("profile:shippingInfo")}</Text>
+          <Text style={tw("mb-2")}>{t("profile:shippingDescription")}</Text>
           <View style={tw("mb-2")}>
             <TextInput
               name="address.name"
               control={control}
-              label="Addressee Name"
+              label={t("profile:addresseeName")}
               value={user?.address.name ?? ""}
             />
           </View>
@@ -106,7 +111,7 @@ const SettingsScreen = () => {
             <TextInput
               name="address.street"
               control={control}
-              label="Street Address or PO Box #"
+              label={t("profile:streetAddress")}
               value={user?.address.street ?? ""}
             />
           </View>
@@ -114,7 +119,7 @@ const SettingsScreen = () => {
             <TextInput
               name="address.city"
               control={control}
-              label="City or Town, other Principal Subdivision, and Postage"
+              label={t("profile:city")}
               value={user?.address.city ?? ""}
             />
           </View>
@@ -122,7 +127,7 @@ const SettingsScreen = () => {
             <TextInput
               name="address.country"
               control={control}
-              label="Country"
+              label={t("profile:country")}
               value={user?.address.country ?? ""}
             />
           </View>
@@ -131,7 +136,7 @@ const SettingsScreen = () => {
           <View>
             <Button
               save
-              title="Save Changes"
+              title={t("profile:saveChanges")}
               loading={loading}
               onPress={onSave}
             />

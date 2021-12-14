@@ -83,7 +83,7 @@ const AuthScreen = () => {
           <Text style={tw("px-4 py-3")}>
             {newUser &&
               authUser?.providerData[0]?.providerId === "password" &&
-              "We have sent an email to your address, please confirm before you continue. "}
+              t("auth:emailConfirmation")}
           </Text>
           <View style={tw("p-2 w-full")}>
             <Button

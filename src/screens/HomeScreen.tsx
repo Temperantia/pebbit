@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/core";
+import { useTranslation } from "react-i18next";
 
 import { adCollection } from "../firebase";
 import ScreenLoading from "../components/core/ScreenLoading";
@@ -12,6 +13,7 @@ import AdPreview from "../components/cards/AdPreview";
 import useAuth from "../hooks/useAuth";
 
 const HomeScreen = () => {
+  const { t } = useTranslation(["home"]);
   const now = Math.round(Date.now() / 1000);
   const { user } = useAuth();
   const { navigate } = useNavigation();
@@ -41,7 +43,7 @@ const HomeScreen = () => {
       {ads && (
         <ScrollView>
           <Text style={tw("text-center underline my-4 text-red-main")}>
-            Recently Posted
+            {t("home:recentlyPosted")}
           </Text>
           <View style={tw("flex-row flex-wrap")}>
             {adsFiltered.map((ad) => (
@@ -53,7 +55,7 @@ const HomeScreen = () => {
               style={tw("border border-black rounded px-8 py-2")}
               onPress={onSeeAll}
             >
-              <Text>See all</Text>
+              <Text> {t("home:seeAll")}</Text>
             </TouchableOpacity>
             {/*  <Text style={[tw("text-xl mt-2"), { fontFamily: "poppins-bold" }]}>
               Featured Categories

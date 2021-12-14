@@ -30,7 +30,10 @@ const FiltersListing = ({
   setCurrency: (currency: string) => void;
   setOrder: (order: string) => void;
 }) => {
-  const { t } = useTranslation(["common"]);
+  const {
+    t,
+    i18n: { language },
+  } = useTranslation(["common"]);
   const [openedFilters, setOpenedFilters] = useRecoilState(openedFiltersState);
 
   const onCloseFilters = useCallback(() => {
@@ -45,12 +48,24 @@ const FiltersListing = ({
   );
 
   const onRenderCurrencyButton = useCallback(
-    (currency) => <CryptoCurrency raw currency={currency} text={currency} />,
+    (currency) => (
+      <CryptoCurrency
+        raw
+        currency={currency}
+        text={currency === "All" ? t("common:all") : currency}
+      />
+    ),
     [CryptoCurrency]
   );
 
   const onRenderCurrencyItem = useCallback(
-    (currency) => <CryptoCurrency raw currency={currency} text={currency} />,
+    (currency) => (
+      <CryptoCurrency
+        raw
+        currency={currency}
+        text={currency === "All" ? t("common:all") : currency}
+      />
+    ),
     [CryptoCurrency]
   );
 
@@ -81,15 +96,15 @@ const FiltersListing = ({
         >
           <Text>{t("common:all")}</Text>
         </TouchableOpacity>
-        {categories.map((c) => (
+        {Object.entries(categories).map(([key, values]) => (
           <TouchableOpacity
-            key={c}
+            key={key}
             style={tw(
-              "px-1 " + (c === category ? "bg-red-main bg-opacity-30" : "")
+              "px-1 " + (key === category ? "bg-red-main bg-opacity-30" : "")
             )}
-            onPress={onSetCategory(c)}
+            onPress={onSetCategory(key)}
           >
-            <Text>{c}</Text>
+            <Text>{values[language]}</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -98,8 +113,9 @@ const FiltersListing = ({
           {t("common:location")}
         </Text>
         <Select
+          country
           style="border-red-main"
-          data={[t("common:all"), ...countries]}
+          data={["All", ...Object.keys(countries)]}
           value={location}
           onValue={setLocation}
         />
@@ -110,7 +126,7 @@ const FiltersListing = ({
         </Text>
         <Select
           style="border-red-main"
-          data={[t("common:all"), ...Object.keys(currencies)]}
+          data={["All", ...Object.keys(currencies)]}
           value={currency}
           onValue={setCurrency}
           onRenderButton={onRenderCurrencyButton}
@@ -122,8 +138,9 @@ const FiltersListing = ({
           {t("common:dateListed")}
         </Text>
         <Select
+          order
           style="border-red-main"
-          data={[t("common:newestFirst"), t("common:oldestFirst")]}
+          data={["newestFirst", "oldestFirst"]}
           value={order}
           onValue={setOrder}
         />

@@ -11,6 +11,7 @@ import "react-native-get-random-values";
 import { v4 } from "uuid";
 import { useNavigation } from "@react-navigation/core";
 import SelectDropdown from "react-native-select-dropdown";
+import { useTranslation } from "react-i18next";
 
 import { request, storage } from "../firebase";
 import TextInput from "../components/core/TextInput";
@@ -32,6 +33,7 @@ const uploadImage = async (uri: string) => {
 };
 
 const CreateAdScreen = () => {
+  const { t } = useTranslation(["adCreation"]);
   const { navigate } = useNavigation();
   const scrollRef: Ref<ScrollView> | null = useRef(null);
   const categoryRef: Ref<SelectDropdown> | null = useRef(null);
@@ -116,21 +118,26 @@ const CreateAdScreen = () => {
       >
         <View style={tw("flex-row justify-center my-4")}>
           <Text style={[tw("text-xl"), { fontFamily: "poppins-semibold" }]}>
-            Post an Ad
+            {t("adCreation:postAnAd")}
           </Text>
         </View>
         <View style={tw("mb-2")}>
           <Text style={[tw("text-lg"), { fontFamily: "poppins-semibold" }]}>
-            Ad Details
+            {t("adCreation:adDetails")}
           </Text>
         </View>
         <View style={tw("mb-2")}>
-          <TextInput name="title" placeholder="Title" control={control} />
+          <TextInput
+            name="title"
+            placeholder={t("adCreation:title")}
+            control={control}
+          />
         </View>
         <View style={tw("mb-2")}>
           <Select
-            data={categories}
-            placeholder="Category"
+            category
+            data={Object.keys(categories)}
+            placeholder={t("adCreation:category")}
             name="category"
             control={control}
             innerRef={categoryRef}
@@ -141,31 +148,31 @@ const CreateAdScreen = () => {
             multiline
             height="h-24"
             name="description"
-            placeholder="Description"
+            placeholder={t("adCreation:description")}
             control={control}
           />
         </View>
         <Text>
-          You may choose up to {Object.keys(currencies).length} currencies.
+          {t("adCreation:chooseCurrencies1") +
+            " " +
+            Object.keys(currencies).length +
+            " " +
+            t("adCreation:chooseCurrencies2")}
         </Text>
         <CurrencyPicker newAd={newAd} control={control} />
         <View style={tw("my-3")}>
           <Text style={[tw("text-grey-slate"), { fontFamily: "poppins-bold" }]}>
-            ESCROW AGREEMENT
+            {t("adCreation:escrowAgreement")}
           </Text>
           <Text style={tw("text-grey-slate")}>
-            Escrow is a neutral holding place where we put the buyer's funds
-            aside until the transaction is done. The funds stay there until the
-            seller fulfills their obligations and the buyer marks the
-            transaction as complete. If an agreement is not made within 30 days
-            of the accepted offer, the funds will be returned to the buyer.
+            {t("adCreation:escrowDescription")}
           </Text>
         </View>
         <View style={tw("my-3")}>
-          <Text style={{ fontFamily: "poppins-semibold" }}>Pictures</Text>
-          <Text style={tw("text-xs")}>
-            Add up to 6 pictures/videos. You must have at least one picture.
+          <Text style={{ fontFamily: "poppins-semibold" }}>
+            {t("adCreation:pictures")}
           </Text>
+          <Text style={tw("text-xs")}>{t("adCreation:addPictures")}</Text>
         </View>
         <PicturePicker control={control} />
         {!!newAd.title &&
@@ -173,13 +180,18 @@ const CreateAdScreen = () => {
           Object.keys(newAd.prices).length > 0 && (
             <View>
               <Text style={[tw("my-4"), { fontFamily: "poppins-semibold" }]}>
-                Ad Preview
+                {t("adCreation:adPreview")}
               </Text>
               <AdCard data={newAd} />
             </View>
           )}
         <View style={tw("my-4")}>
-          <Button black title="Post Ad" loading={loading} onPress={onSubmit} />
+          <Button
+            black
+            title={t("adCreation:postAd")}
+            loading={loading}
+            onPress={onSubmit}
+          />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

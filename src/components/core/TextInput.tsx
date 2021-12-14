@@ -58,7 +58,7 @@ const TextInput = ({
   name?: string;
   onValue?: (value: string) => void;
 }) => {
-  const { t } = useTranslation(["errors"]);
+  const { t } = useTranslation(["errors", "common"]);
 
   const onDismiss = useCallback(() => {
     Keyboard.dismiss();
@@ -114,7 +114,7 @@ const TextInput = ({
           nativeID="done"
           backgroundColor={tailwindConfig.theme.colors["black-background-1"]}
         >
-          <Button onPress={onDismiss} title="Done" color="white" />
+          <Button onPress={onDismiss} title={t("common:done")} color="white" />
         </InputAccessoryView>
       )}
     </View>

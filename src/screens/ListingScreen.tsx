@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useCollectionDataOnce } from "react-firebase-hooks/firestore";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useSetRecoilState } from "recoil";
+import { useTranslation } from "react-i18next";
 
 import tw from "../tailwind";
 import { adCollection } from "../firebase";
@@ -16,13 +17,14 @@ import { openedFiltersState } from "../atoms";
 import FiltersListing from "../components/panels/FiltersListing";
 
 const ListingScreen = () => {
+  const { t } = useTranslation(["listing"]);
   const { user } = useAuth();
   const setOpenedFilters = useSetRecoilState(openedFiltersState);
   const [now] = useState<number>(Math.round(Date.now() / 1000));
   const [category, setCategory] = useState<string>("All");
   const [location, setLocation] = useState<string>("All");
   const [currency, setCurrency] = useState<string>("All");
-  const [order, setOrder] = useState<string>("Newest first");
+  const [order, setOrder] = useState<string>("newestFirst");
 
   const adCollectionFiltered = useMemo(() => {
     let collection = adCollection
@@ -42,7 +44,7 @@ const ListingScreen = () => {
     }
     return collection
       .orderBy("userId", "asc")
-      .orderBy("created", order === "Newest first" ? "desc" : "asc");
+      .orderBy("created", order === "newestFirst" ? "desc" : "asc");
   }, [location, currency, category, order]);
 
   const [ads, loading, error] = useCollectionDataOnce<Ad>(
@@ -88,11 +90,12 @@ const ListingScreen = () => {
             <View>
               <View style={[tw("px-3 py-1"), { height: "10%" }]}>
                 <Text>
-                  {adsFiltered.length} Results:{" "}
+                  {adsFiltered.length + " " + t("listing:results") + ": "}
                   <Text style={{ fontFamily: "poppins-semibold" }}>
-                    {category}
-                  </Text>{" "}
-                  in {location}
+                    {category === "All" ? t("common:all") : category}
+                  </Text>
+                  {" - "}
+                  {location === "All" ? t("common:all") : location}
                 </Text>
                 <View style={tw("flex-row justify-end")}>
                   <TouchableOpacity
@@ -105,7 +108,7 @@ const ListingScreen = () => {
                         size={16}
                         name="small/16/000000/filter.png"
                       />
-                      <Text>Filter</Text>
+                      <Text>{t("listing:filter")}</Text>
                     </View>
                   </TouchableOpacity>
                 </View>

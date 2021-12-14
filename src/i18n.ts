@@ -1,12 +1,9 @@
 import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import * as Localization from "expo-localization";
+import languageDetector from "./languageDetector";
 
-i18n.use(initReactI18next).init({
-  lng: Localization.locale,
-  fallbackLng: "en",
-  nonExplicitSupportedLngs: true,
+i18n.use(languageDetector() as any).init({
   defaultNS: "common",
+  fallbackLng: "en",
   resources: {
     en: {
       common: {
@@ -23,6 +20,8 @@ i18n.use(initReactI18next).init({
         accordionExpand: "Expand Details",
         accordionCollapse: "Collapse Details",
         submit: "SUBMIT",
+        done: "Done",
+        noAdsYet: "No ads here yet!",
       },
       errors: {
         isRequired: "Is required",
@@ -97,16 +96,63 @@ i18n.use(initReactI18next).init({
         signIn: "Sign In",
         signOut: "Sign Out",
         signInRequest: "Please sign in to purchase this item",
+        emailConfirmation:
+          "We have sent an email to your address, please confirm before you continue.",
+        setUpAccount: "Set up your account",
+        pleaseCreateUsername:
+          "Please create a username, you cannot change this later",
+        pleaseEnterShipping:
+          "Please enter your shipping information, this is what sellers will use to ship your purchased items, please ensure this information is correct. You can change this later.",
+        yourName: "Addressee Name",
+        streetAddress: "Street Address or PO Box #",
+        city: "City or Town, other Principal Subdivision, and Postage",
+        country: "Country",
+        continue: "CONTINUE",
+      },
+      profile: {
+        recentTransactions: "Recent Transactions",
+        accountInformation: "Account Information",
+        editInfo: "Edit your email, password or phone number",
+        email: "Email",
+        password: "Current Password (required if changing email or password)",
+        newPassword: "New Password",
+        phoneNumber: "Phone Number",
+        shippingInfo: "Shipping Information",
+        shippingDescription:
+          "This is what sellers will use to ship your purchased items, please ensure this information is correct.",
+        addresseeName: "Addressee Name",
+        streetAddress: "Street Address or PO Box #",
+        city: "City or Town, other Principal Subdivision, and Postage",
+        country: "Country",
+        saveChanges: "Save Changes",
       },
       navigation: {
         home: "Home",
         myProfile: "My Profile",
         accountSettings: "Account Settings",
         backToResults: "Back to Results",
+        selling: "Selling",
+        buying: "Buying",
+        messages: "Messages",
+        history: "History",
+      },
+      home: {
+        seeAll: "See all",
+        recentlyPosted: "Recently Posted",
+      },
+      messaging: {
+        backToMessages: "Back to Messages",
+        typeAMessage: "Type here to send a message...",
+      },
+      listing: {
+        results: "Results",
+        filter: "Filter",
+        aboutSeller: "About Seller",
       },
       shipping: {
         service: "Shipping service:",
         trackingNumber: "Tracking number:",
+        confirm: "CONFIRM",
       },
       adBuying: {
         priceSelection1: "Price ",
@@ -137,6 +183,219 @@ i18n.use(initReactI18next).init({
         askingPrice: "Asking Price",
         addAddress1: "Add your ",
         addAddress2: " wallet address below.",
+        postAnAd: "Post an Ad",
+        adDetails: "Ad Details",
+        title: "Title",
+        category: "Category",
+        description: "Description",
+        chooseCurrencies1: "You may choose up to",
+        chooseCurrencies2: "currencies.",
+        escrowAgreement: "ESCROW AGREEMENT",
+        escrowDescription:
+          "Escrow is a neutral holding place where we put the buyer's funds aside until the transaction is done. The funds stay there until the seller fulfills their obligations and the buyer marks the transaction as complete. If an agreement is not made within 30 days of the accepted offer, the funds will be returned to the buyer.",
+        pictures: "Pictures",
+        addPictures:
+          "Add up to 6 pictures. You must have at least one picture.",
+        adPreview: "Ad Preview",
+        postAd: "Post Ad",
+      },
+    },
+    fr: {
+      common: {
+        ads: "annonces",
+        category: "Catégorie",
+        all: "Tout",
+        location: "Pays",
+        currency: "Monnaie",
+        currencies: "Monnaies",
+        dateListed: "Date de création",
+        completedOn: "Effectuée le",
+        newestFirst: "Le plus récent d'abord",
+        oldestFirst: "Le moins récent d'abord",
+        accordionExpand: "Plus de détail",
+        accordionCollapse: "Moins de détail",
+        submit: "VALIDER",
+        done: "Ok",
+        noAdsYet: "Pas encore d'annonces ici !",
+      },
+      errors: {
+        isRequired: "Requis",
+        invalidEmail: "Invalide",
+        invalidPassword:
+          "Votre mot de passe doit contenir au moins 8 caractères, une lettre, un chiffre et un caractère spécial",
+        invalidMinimumPrice: "Le prix doit être au moins de",
+        wrongCredentials: "Identifiants incorrects",
+        wrongPassword: "Mot de passe incorrect",
+        notificationToken: "Echec d'obtention du jeton de notification !",
+        noCurrencySelected: "Au moins 1 monnaie",
+        noPictureSelected: "Au moins 1 photo",
+        cameraPermission: "La permission pour accéder aux photos est requise !",
+      },
+      statuses: {
+        new: {
+          buying: {
+            title: "",
+            description: "Listé",
+          },
+          messaging: {
+            title: "",
+            description: "Listé",
+          },
+          selling: {
+            title: "",
+            description: "Listé",
+          },
+        },
+        paid: {
+          buying: { title: "PAYÉ", description: "En attente du vendeur ..." },
+          messaging: {
+            title: "PAYÉ",
+            description: "En attente du vendeur ...",
+          },
+          selling: {
+            title: "PAYÉ",
+            description: "En attente du vendeur ...",
+          },
+        },
+        sent: {
+          buying: { title: "ENVOYÉ", description: "" },
+          messaging: {
+            title: "ENVOYÉ",
+            description: "En attente de l'acheteur ...",
+          },
+          selling: {
+            title: "ENVOYÉ",
+            description: "",
+          },
+        },
+        received: {
+          buying: { title: "REÇU", description: "" },
+          messaging: { title: "REÇU", description: "" },
+          selling: { title: "REÇU", description: "" },
+        },
+        complete: {
+          buying: { title: "VENDU", description: "Vendu" },
+          history: { sold: "VENDU", bought: "Acheté" },
+          messaging: { title: "VENDU", description: "Vendu" },
+          selling: { title: "VENDU", description: "Vendu" },
+        },
+      },
+      auth: {
+        password: "Mot de passe",
+        signInWith: "Se connecter avec",
+        title: "Se connecter ou Créer un Compte",
+        description:
+          "Ou alors, entrez votre email et mot de passe pour vous connecter ou créer un compte",
+        disclaimer:
+          "En vous inscrivant, vous acceptez nos conditions d'utilisation et politique de confidentialité",
+        signIn: "Se Connecter",
+        signOut: "Se Déconnecter",
+        signInRequest: "Veuillez vous connecter pour acheter ce produit",
+        emailConfirmation:
+          "Nous avons envoyé un email à votre adresse, veuillez confirmer avant de continuer.",
+        setUpAccount: "Configurez votre compte",
+        pleaseCreateUsername:
+          "Veuillez créer un nom d'utilisateur, vous ne pouvez pas le changer plus tard",
+        pleaseEnterShipping:
+          "Veuillez entrer vos informations de livraison, les vendeurs utiliseront ceci pour vous envoyer vos produits, veuillez vous assurer de la conformité de ces informations. Vous pouvez les changer plus tard.",
+        yourName: "Nom du Destinaire",
+        streetAddress: "Adresse ou Boîte Postale",
+        city: "Ville",
+        country: "Pays",
+        continue: "CONTINUER",
+      },
+      profile: {
+        recentTransactions: "Transactions Récentes",
+        accountInformation: "Informations du Compte",
+        editInfo:
+          "Mettre à jour votre email, mot de passe ou numéro de téléphone",
+        email: "Email",
+        password:
+          "Mot de passe actuel (requis si vous changez d'email ou de mot de passe)",
+        newPassword: "Nouveau Mot de passe",
+        phoneNumber: "Numéro de téléphone",
+        shippingInfo: "Informations de Livraison",
+        shippingDescription:
+          "Les vendeurs utiliseront ceci pour vous envoyer vos produits, veuillez vous assurer de la conformité de ces informations.",
+        addresseeName: "Nom du Destinataire",
+        streetAddress: "Adresse ou Boîte Postale",
+        city: "Ville",
+        country: "Pays",
+        saveChanges: "Sauvegarder",
+      },
+      navigation: {
+        home: "Accueil",
+        myProfile: "Mon Profil",
+        accountSettings: "Réglages",
+        backToResults: "Retour aux Résultats",
+        selling: "Ventes",
+        buying: "Achats",
+        messages: "Messages",
+        history: "Historique",
+      },
+      home: {
+        seeAll: "Voir Tout",
+        recentlyPosted: "Récemment Posté",
+      },
+      messaging: {
+        backToMessages: "Retour aux Messages",
+        typeAMessage: "Envoyer un message ...",
+      },
+      listing: {
+        results: "Résultats",
+        filter: "Filtrer",
+        aboutSeller: "À propos du Vendeur",
+      },
+      shipping: {
+        service: "Service de livraison :",
+        trackingNumber: "Numéro de suivi :",
+        confirm: "CONFIRMER",
+      },
+      adBuying: {
+        priceSelection1: "Prix ",
+        priceSelection2: "(sélectionnez)",
+        buy: "ACHETER MAINTENANT",
+        timeExpired: "Temps expiré",
+        send1: "Veuillez envoyer ",
+        sendBold: "exactement ",
+        send2: " à l'adresse indiquée ci dessous :",
+        sendDisclaimer:
+          "Cela ne peut pas être remboursé, veuillez vous assurer que le montant soit correct.",
+        paymentReceived: "Paiment reçu, merci pour votre achat",
+        pendingPayment:
+          "Paiement en cours, en attente de la confirmation de bloc",
+        pendingWait: "Veuillez attendre ...",
+        processTime:
+          "Veuillez attendre jusqu'à 10 minutes pour que le paiement soit traité",
+        waitingSeller: "En attente du vendeur ...",
+        sentIndication: "Le vendeur a indiqué que le produit a été envoyé",
+        sentConfirmation: "Confirmer la Transaction",
+        sentGuarantee:
+          "Si rien n'est fait sous 14 jours les fonds seront débloqués automatiquement",
+        receivedConfirmation: "Merci pour votre confirmation",
+        receivedTransaction: "Transaction Terminée",
+        ratingRequest: "Merci de noter votre expérience avec ce vendeur",
+        ratingConfirmation: "Merci pour votre évaluation",
+      },
+      adCreation: {
+        askingPrice: "Prix demandé",
+        addAddress1: "Ajoutez votre ",
+        addAddress2: " adresse de wallet ci-dessous.",
+        postAnAd: "Poster une Annonce",
+        adDetails: "Détails d'Annonce",
+        title: "Titre",
+        category: "Catégorie",
+        description: "Description",
+        chooseCurrencies1: "Vous pouvez choisir jusqu'à",
+        chooseCurrencies2: "monnaies.",
+        escrowAgreement: "ACCORD DE MAIN TIERCE",
+        escrowDescription:
+          "Une main tierce est un emplacement neutre de rétention où nous mettons les fonds de l'acheteur de côté jusqu'à ce que la transaction soit terminée. Les fonds y restent jusqu'à ce que le vendeur remplisse ses obligations et que l'acheteur indique la transaction comme terminée. Si un accord n'est pas trouvé sous 30 jours après acceptation de l'offre, les fonds seront retournés à l'acheteur.",
+        pictures: "Photos",
+        addPictures:
+          "Ajoutez jusqu'à 6 photos. Vous devez avoir au moins une photo.",
+        adPreview: "Aperçu de l'Annonce",
+        postAd: "Poster l'Annonce",
       },
     },
   },
