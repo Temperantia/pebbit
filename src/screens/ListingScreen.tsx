@@ -84,9 +84,9 @@ const ListingScreen = () => {
               onSearch={onSearch}
             />
           </View> */}
-          <View style={tw("relative flex-1")}>
-            <View style={tw("justify-center")}>
-              <View style={tw("px-3 py-1")}>
+          <View style={tw("relative h-full")}>
+            <View>
+              <View style={[tw("px-3 py-1"), { height: "10%" }]}>
                 <Text>
                   {adsFiltered.length} Results:{" "}
                   <Text style={{ fontFamily: "poppins-semibold" }}>
@@ -110,11 +110,13 @@ const ListingScreen = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <AdList
-                ads={adsFiltered}
-                numColumns={2}
-                renderItem={onRenderAdLine}
-              />
+              <View style={{ height: "90%" }}>
+                <AdList
+                  ads={adsFiltered}
+                  numColumns={2}
+                  renderItem={onRenderAdLine}
+                />
+              </View>
             </View>
             <FiltersListing
               category={category}
