@@ -76,6 +76,8 @@ const Select = ({
       <Text>
         {item === "All"
           ? t("common:all")
+          : country
+          ? countries[item][language]
           : item === "newestFirst"
           ? t("common:newestFirst")
           : item === "oldestFirst"
