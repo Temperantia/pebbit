@@ -166,7 +166,11 @@ const AdScreen = ({
                   </View>
                 )}
               </View>
-              <View style={tw("border border-grey-slate p-2")}>{adStatus}</View>
+              {adStatus && (
+                <View style={tw("border border-grey-slate p-2")}>
+                  {adStatus}
+                </View>
+              )}
             </View>
           </View>
         </ScrollView>
