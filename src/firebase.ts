@@ -4,16 +4,19 @@ import "firebase/storage";
 import "firebase/firestore";
 
 import credentials from "./firebase-credentials.json";
+import testCredentials from "./firebase-credentials-test.json";
 import { Ad, User, Order } from "./types";
 
 if (firebase.apps.length === 0) {
-  firebase.initializeApp(credentials);
+  firebase.initializeApp(
+    process.env.NODE_ENV === "production" ? credentials : testCredentials
+  );
 }
 
 const functionsEndpoint =
   "https://us-central1-crypto-2293c.cloudfunctions.net/";
 
-const converter = <T,>() => ({
+const converter = <T>() => ({
   toFirestore: (data: T) => data,
   fromFirestore: (snap: firebase.firestore.QueryDocumentSnapshot) =>
     snap.data() as T,

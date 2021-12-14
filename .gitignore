@@ -12,7 +12,7 @@ web-build/
 # macOS
 .DS_Store
 
-firebase-credentials.json
+google-services.json
 *.log
 
 # Logs
