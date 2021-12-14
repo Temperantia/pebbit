@@ -1,4 +1,5 @@
 import i18n from "i18next";
+
 import languageDetector from "./languageDetector";
 
 i18n.use(languageDetector() as any).init({
@@ -153,6 +154,7 @@ i18n.use(languageDetector() as any).init({
         service: "Shipping service:",
         trackingNumber: "Tracking number:",
         confirm: "CONFIRM",
+        shipTo: "Ship to:",
       },
       adBuying: {
         priceSelection1: "Price ",
@@ -350,6 +352,7 @@ i18n.use(languageDetector() as any).init({
         service: "Service de livraison :",
         trackingNumber: "Numéro de suivi :",
         confirm: "CONFIRMER",
+        shipTo: "Envoyer à :",
       },
       adBuying: {
         priceSelection1: "Prix ",

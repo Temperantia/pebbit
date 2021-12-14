@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useForm } from "react-hook-form";
 import { useNavigation } from "@react-navigation/core";
@@ -87,7 +87,7 @@ const AdLineSelling = ({
       {status === "paid" &&
         (expanded ? (
           <View>
-            <Text>Ship to:</Text>
+            <Text>{t("shipping:shipTo")}</Text>
             <View style={tw("flex-row")}>
               <Icon
                 size={24}
