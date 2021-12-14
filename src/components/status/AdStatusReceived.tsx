@@ -36,7 +36,7 @@ const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
       )}
       <View
         style={tw(
-          "flex-row justify-center rounded border border-grey-slate py-2"
+          "flex-row justify-center items-center rounded border border-grey-slate py-2"
         )}
       >
         <Icon
@@ -44,7 +44,7 @@ const AdStatusReceived = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
           color={tailwindConfig.theme.colors["green-main"]}
           name="small/32/000000/ok.png"
         />
-        <Text style={tw("ml-3 text-grey-slate text-lg")}>
+        <Text style={tw("ml-1 text-grey-slate text-base")}>
           {t("adBuying:receivedTransaction")}
         </Text>
       </View>

@@ -32,7 +32,7 @@ const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
       ) : (
         <TouchableOpacity
           style={tw(
-            "flex-row justify-center rounded bg-black-background-2 py-2"
+            "flex-row justify-center items-center rounded bg-black-background-2 py-2"
           )}
           onPress={onConfirm}
         >
@@ -43,7 +43,7 @@ const AdStatusSent = ({ ad, amount }: { ad: Ad; amount?: boolean }) => {
           />
           <Text
             style={[
-              tw("ml-3 text-white text-lg"),
+              tw("ml-1 text-white text-base"),
               { fontFamily: "poppins-medium" },
             ]}
           >
