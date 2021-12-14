@@ -45,7 +45,7 @@ const ListingScreen = () => {
     return collection
       .orderBy("userId", "asc")
       .orderBy("created", order === "newestFirst" ? "desc" : "asc");
-  }, [location, currency, category, order]);
+  }, [user, location, currency, category, order]);
 
   const [ads, loading, error] = useCollectionDataOnce<Ad>(
     adCollectionFiltered,
