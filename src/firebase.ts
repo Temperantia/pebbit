@@ -14,7 +14,9 @@ if (firebase.apps.length === 0) {
 }
 
 const functionsEndpoint =
-  "https://us-central1-crypto-2293c.cloudfunctions.net/";
+  process.env.NODE_ENV === "production"
+    ? "https://us-central1-crypto-2293c.cloudfunctions.net/"
+    : "https://us-central1-pebbit-test.cloudfunctions.net/";
 
 const converter = <T>() => ({
   toFirestore: (data: T) => data,
