@@ -60,8 +60,8 @@ const MessagesScreen = ({
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={keyboardVerticalOffset}
+      behavior="position"
+      keyboardVerticalOffset={keyboardVerticalOffset + 50}
     >
       <ScreenLoading loading={dataLoading}>
         {ad && (
