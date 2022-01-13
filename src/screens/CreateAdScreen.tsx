@@ -87,7 +87,7 @@ const CreateAdScreen = () => {
           pictures: ["", "", "", "", "", ""],
         });
         categoryRef.current?.reset();
-        scrollRef.current?.scrollTo(0);
+        scrollRef.current?.scrollTo({ y: 0 });
         navigate("Exchange", { screen: "ExchangeScreen" });
       } catch (error) {
         setLoading(false);
