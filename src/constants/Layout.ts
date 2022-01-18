@@ -2,7 +2,7 @@ import { Dimensions, Platform } from "react-native";
 
 const width = Dimensions.get("window").width;
 export const height = Dimensions.get("window").height;
-export const keyboardVerticalOffset = Platform.OS === "ios" ? 80 : 0;
+export const keyboardVerticalOffset = 100;
 
 export default {
   window: {

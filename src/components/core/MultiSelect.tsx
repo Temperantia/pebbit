@@ -91,13 +91,13 @@ const MultiSelect = ({
           <View style={tw("my-2 bg-white")}>
             <TouchableOpacity
               style={tw(
-                "w-full flex-row items-center justify-between px-4 border border-grey-slate rounded h-10"
+                "w-full flex-row items-center justify-between px-4 border border-grey-slate rounded h-16"
               )}
               onPress={toggleVisible}
             >
               <View>
                 {value.length > 0 ? (
-                  <View style={tw("flex-row")}>
+                  <View style={tw("w-full flex-row flex-wrap")}>
                     {value.map((item: string) => onListItem(item))}
                   </View>
                 ) : (

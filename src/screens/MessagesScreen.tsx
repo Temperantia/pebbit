@@ -70,7 +70,7 @@ const MessagesScreen = ({
             <AdLineMessaging disabled ad={ad} />
             <View style={tw("px-5 py-2 border-b border-grey-slate")}>
               <Text>
-                {user?.id === ad.userId ? ad.buyer.username : ad.username}
+                {user?.id === ad.userId ? ad.buyer?.username : ad.username}
               </Text>
             </View>
             <FlatList
