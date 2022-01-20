@@ -2,10 +2,10 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "APP_ENV=test expo r -c",
-    "build:android:test": "APP_ENV=test yarn build:android",
-    "build:ios:test": "APP_ENV=test yarn build:ios",
-    "build:android": "APP_ENV=production expo build:android",
-    "build:ios": "APP_ENV=production expo build:ios",
+    "build:android:test": "APP_ENV=test expo build:android",
+    "build:ios:test": "APP_ENV=test expo build:ios",
+    "build:android": "APP_ENV=prod expo build:android",
+    "build:ios": "APP_ENV=prod expo build:ios",
     "tailwind": "npx create-tailwind-rn"
   },
   "dependencies": {
@@ -37,7 +37,6 @@
     "react-hook-form": "^7.15.3",
     "react-i18next": "^11.14.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
-    "react-native-dotenv": "^3.3.1",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-random-values": "^1.7.0",
     "react-native-global-props": "^1.1.5",

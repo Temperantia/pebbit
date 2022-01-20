@@ -2,12 +2,14 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/storage";
 import "firebase/firestore";
+import Constants from "expo-constants";
 
 import { Ad, User, Order } from "./types";
-import { FUNCTIONS_ENDPOINT, FIREBASE_CONFIG } from "@env";
 
 if (firebase.apps.length === 0) {
-  firebase.initializeApp(JSON.parse(FIREBASE_CONFIG));
+  firebase.initializeApp(
+    JSON.parse(Constants?.manifest?.extra?.firebaseConfig)
+  );
 }
 
 const converter = <T>() => ({
@@ -37,7 +39,7 @@ export const request = async (endpoint: string, body?: any) => {
     return;
   }
   const token = await currentUser.getIdToken(true);
-  const url = FUNCTIONS_ENDPOINT + endpoint;
+  const url = Constants?.manifest?.extra?.functionsEndpoint + endpoint;
   const result = await fetch(url, {
     method: body ? "POST" : "GET",
     headers: {
