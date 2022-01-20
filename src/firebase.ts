@@ -3,20 +3,12 @@ import "firebase/auth";
 import "firebase/storage";
 import "firebase/firestore";
 
-import credentials from "./firebase-credentials.json";
-import testCredentials from "./firebase-credentials-test.json";
 import { Ad, User, Order } from "./types";
+import { FUNCTIONS_ENDPOINT, FIREBASE_CONFIG } from "@env";
 
 if (firebase.apps.length === 0) {
-  firebase.initializeApp(
-    process.env.NODE_ENV === "production" ? credentials : testCredentials
-  );
+  firebase.initializeApp(JSON.parse(FIREBASE_CONFIG));
 }
-
-const functionsEndpoint =
-  process.env.NODE_ENV === "production"
-    ? "https://us-central1-crypto-2293c.cloudfunctions.net/"
-    : "https://us-central1-pebbit-test.cloudfunctions.net/";
 
 const converter = <T>() => ({
   toFirestore: (data: T) => data,
@@ -45,7 +37,7 @@ export const request = async (endpoint: string, body?: any) => {
     return;
   }
   const token = await currentUser.getIdToken(true);
-  const url = functionsEndpoint + endpoint;
+  const url = FUNCTIONS_ENDPOINT + endpoint;
   const result = await fetch(url, {
     method: body ? "POST" : "GET",
     headers: {
