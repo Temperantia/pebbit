@@ -152,7 +152,7 @@ i18n.use(languageDetector() as any).init({
       },
       shipping: {
         service: "Shipping service:",
-        trackingNumber: "Tracking number:",
+        trackingNumber: "Tracking Number:",
         confirm: "CONFIRM",
         shipTo: "Ship to:",
       },
