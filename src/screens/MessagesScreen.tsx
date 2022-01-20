@@ -4,6 +4,7 @@ import {
   FlatList,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -39,7 +40,7 @@ const MessagesScreen = ({
     },
   });
   const [loading, setLoading] = useState<boolean>(false);
-  const flatListRef = useRef<FlatList>(null);
+  const flatListRef = useRef<ScrollView>(null);
   const [userData, dataLoading] = useDocumentData<User>(
     userCollection.doc(user?.id),
     {
@@ -60,50 +61,55 @@ const MessagesScreen = ({
 
   return (
     <KeyboardAvoidingView
-      behavior="position"
-      keyboardVerticalOffset={keyboardVerticalOffset + 50}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={keyboardVerticalOffset}
     >
       <ScreenLoading loading={dataLoading}>
         {ad && (
-          <View style={tw("h-full")}>
+          <View style={tw("flex-col h-full")}>
             <BackArrow label={t("messaging:backToMessages")} />
-            <AdLineMessaging disabled ad={ad} />
-            <View style={tw("px-5 py-2 border-b border-grey-slate")}>
-              <Text>
-                {user?.id === ad.userId ? ad.buyer?.username : ad.username}
-              </Text>
-            </View>
-            <FlatList
-              ref={flatListRef}
-              data={ad.messages}
-              contentContainerStyle={tw("px-5 py-2")}
-              onContentSizeChange={() =>
-                flatListRef.current?.scrollToEnd({ animated: true })
-              }
-              onLayout={() =>
-                flatListRef.current?.scrollToEnd({ animated: true })
-              }
-              renderItem={({ item: { content, author, created } }) => (
-                <View style={tw(author.id === user?.id ? "" : "items-end")}>
-                  <View
-                    style={tw(
-                      "w-5/6 my-2 px-2 py-1 " +
-                        (author.id === user?.id
-                          ? " bg-grey-slate bg-opacity-20"
-                          : " bg-red-main  bg-opacity-10")
-                    )}
-                  >
-                    <Text>{content}</Text>
-                    <View style={tw("items-end")}>
-                      <Text style={tw("text-xs")}>
-                        {format(new Date(created.seconds * 1000), "d/M/yy h:m")}
-                      </Text>
+            <ScrollView ref={flatListRef} style={tw("flex-grow")}>
+              <AdLineMessaging disabled ad={ad} />
+              <View style={tw("px-5 py-2 border-b border-grey-slate")}>
+                <Text>
+                  {user?.id === ad.userId ? ad.buyer?.username : ad.username}
+                </Text>
+              </View>
+              <FlatList
+                data={ad.messages}
+                contentContainerStyle={tw("px-5 py-2")}
+                onContentSizeChange={() =>
+                  flatListRef.current?.scrollToEnd({ animated: true })
+                }
+                onLayout={() =>
+                  flatListRef.current?.scrollToEnd({ animated: true })
+                }
+                renderItem={({ item: { content, author, created } }) => (
+                  <View style={tw(author.id === user?.id ? "" : "items-end")}>
+                    <View
+                      style={tw(
+                        "w-5/6 my-2 px-2 py-1 " +
+                          (author.id === user?.id
+                            ? " bg-grey-slate bg-opacity-20"
+                            : " bg-red-main  bg-opacity-10")
+                      )}
+                    >
+                      <Text>{content}</Text>
+                      <View style={tw("items-end")}>
+                        <Text style={tw("text-xs")}>
+                          {format(
+                            new Date(created.seconds * 1000),
+                            "d/M/yy h:m"
+                          )}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
-              )}
-              keyExtractor={({ created }) => created.seconds.toString()}
-            />
+                )}
+                keyExtractor={({ created }) => created.seconds.toString()}
+              />
+            </ScrollView>
+
             <TextInput
               multiline
               name="content"
