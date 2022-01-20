@@ -33,7 +33,7 @@ export const categories: {
   },
   Multimedia: {
     fr: "Multimédia",
-    en: "Multimedia",
+    en: "Computers & Electronics",
   },
   "Music & Instruments": {
     fr: "Musique & Instruments",
