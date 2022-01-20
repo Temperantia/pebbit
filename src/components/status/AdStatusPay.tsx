@@ -18,16 +18,18 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
   let interval: NodeJS.Timer;
 
   useEffect(() => {
-    /* setTimeout(() => {
-      request(
-        "paymentComplete?ad=" +
-          ad.id +
-          "&userId=" +
-          user?.id +
-          "&nonce=CryptAPIPebbit&value_coin=999"
-      );
-    }, 20000);
-    */
+    if (process.env.NODE_ENV === "development") {
+      setTimeout(() => {
+        request(
+          "paymentComplete?ad=" +
+            ad.id +
+            "&userId=" +
+            user?.id +
+            "&value_coin=999"
+        );
+      }, 15000);
+    }
+
     clearInterval(interval);
     interval = setInterval(() => {
       const now = Math.round(Date.now() / 1000);

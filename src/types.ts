@@ -83,6 +83,8 @@ export type Ad = {
     fee: number;
   };
   messages?: Message[];
+  service?: string;
+  number?: string;
   rate?: number;
 };
 
