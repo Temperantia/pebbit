@@ -1,9 +1,9 @@
 export default {
   name: "Pebbit",
   slug: "pebbit",
-  version: "0.9.30",
+  version: "0.9.31",
   android: {
-    versionCode: 32,
+    versionCode: 33,
     package: "com.magna_numeris.pebbit",
     googleServicesFile: "./google-services.json",
   },
@@ -48,6 +48,7 @@ export default {
     ],
   ],
   extra: {
+    appEnv: process.env.APP_ENV,
     functionsEndpoint:
       process.env.APP_ENV === "prod"
         ? "https://us-central1-crypto-2293c.cloudfunctions.net/"
