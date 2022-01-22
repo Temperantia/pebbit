@@ -18,7 +18,7 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
   let interval: NodeJS.Timer;
 
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.APP_ENV === "test") {
       setTimeout(() => {
         request(
           "paymentComplete?ad=" +
