@@ -33,7 +33,7 @@ const AuthScreen = () => {
       await signInWithEmail(email, password);
       setLoading(false);
     }),
-    [handleSubmit, signInWithEmail, setLoading]
+    [handleSubmit, auth, signInWithEmail, setLoading]
   );
 
   useEffect(() => {

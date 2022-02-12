@@ -41,7 +41,7 @@ export default {
     [
       "expo-notifications",
       {
-        icon: "./src/assets/images/icon.png",
+        icon: "./src/assets/images/appIcon.png",
         color: "#ffffff",
         sounds: ["./src/assets/sounds/rock-debris-spill-SBA-300114527.wav"],
       },
