@@ -1,11 +1,11 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "APP_ENV=test expo r -c",
-    "build:android:test": "APP_ENV=test expo build:android",
-    "build:ios:test": "APP_ENV=test expo build:ios",
-    "build:android": "APP_ENV=prod expo build:android",
-    "build:ios": "APP_ENV=prod expo build:ios",
+    "start": "expo r -c",
+    "build:android:test": "expo build:android",
+    "build:ios:test": "expo build:ios",
+    "build:android": "expo build:android",
+    "build:ios": "expo build:ios",
     "tailwind": "npx create-tailwind-rn"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "@react-navigation/native": "~5.8.10",
     "@react-navigation/stack": "~5.12.8",
     "date-fns": "^2.25.0",
+    "dotenv": "^16.0.0",
     "expo": "~42.0.1",
     "expo-apple-authentication": "^4.0.3",
     "expo-asset": "~8.3.2",
