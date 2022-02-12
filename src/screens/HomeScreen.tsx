@@ -11,6 +11,7 @@ import CategoryList from "../components/lists/CategoryList";
 import tw from "../tailwind";
 import AdPreview from "../components/cards/AdPreview";
 import useAuth from "../hooks/useAuth";
+import Popup from "../components/core/Popup";
 
 const HomeScreen = () => {
   const { t } = useTranslation(["home"]);
@@ -41,7 +42,7 @@ const HomeScreen = () => {
   return (
     <ScreenLoading loading={loading} error={error}>
       {ads && (
-        <ScrollView>
+        <ScrollView style={tw("relative")}>
           <Text style={tw("text-center underline my-4 text-red-main")}>
             {t("home:recentlyPosted")}
           </Text>
@@ -71,6 +72,16 @@ const HomeScreen = () => {
               { name: "Home & Garden" },
             ]}
           /> */}
+          <View
+            style={{
+              position: "absolute",
+              width: "50%",
+              top: 15,
+              right: 5,
+            }}
+          >
+            <Popup />
+          </View>
         </ScrollView>
       )}
     </ScreenLoading>
