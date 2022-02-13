@@ -1,26 +1,59 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Text, View } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { theme } from "../../../tailwind.config";
 import Button from "./Button";
 import tw from "../../tailwind";
+import { t } from "i18next";
 
-const Popup = () => {
-  return (
+const Popup = ({ type, point }: { type: string; point: string }) => {
+  const [seen, setSeen] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetch = async () => {
+      await AsyncStorage.removeItem(type);
+      setSeen(await AsyncStorage.getItem(type));
+    };
+    fetch();
+  }, [type]);
+
+  const onSkip = useCallback(async () => {
+    await AsyncStorage.setItem(type, "seen");
+    setSeen("seen");
+  }, [AsyncStorage, setSeen, type]);
+
+  return seen ? (
+    <></>
+  ) : (
     <View style={tw("relative")}>
-      <View style={tw("absolute -top-3 right-2")}>
+      <View
+        style={tw(
+          "absolute" +
+            (point === "top-right" ? " -top-3 right-2" : " -bottom-3 left-20")
+        )}
+      >
         <View
-          style={{
-            width: 0,
-            height: 0,
-            backgroundColor: "transparent",
-            borderStyle: "solid",
-            borderLeftWidth: 20,
-            borderRightWidth: 20,
-            borderBottomWidth: 20,
-            borderLeftColor: "transparent",
-            borderRightColor: "transparent",
-            borderBottomColor: theme.colors["black-background-1"],
-          }}
+          style={[
+            {
+              width: 0,
+              height: 0,
+              backgroundColor: "transparent",
+              borderStyle: "solid",
+              borderLeftWidth: 20,
+              borderRightWidth: 20,
+              borderLeftColor: "transparent",
+              borderRightColor: "transparent",
+            },
+            point === "top-right"
+              ? {
+                  borderBottomColor: theme.colors["black-background-1"],
+                  borderBottomWidth: 20,
+                }
+              : {
+                  borderTopColor: theme.colors["black-background-1"],
+                  borderTopWidth: 20,
+                },
+          ]}
         ></View>
       </View>
       <View
@@ -31,11 +64,13 @@ const Popup = () => {
       >
         <View>
           <Text style={tw("text-center text-white px-4 py-3")}>
-            Hey, Welcome to Pebbit! Let's not waste more time and get you an
-            account right away!
+            {t("onboarding:" + type + ".title")}
           </Text>
-          <View style={tw("m-4")}>
-            <Button title="Skip" onPress={() => {}} />
+          <Text style={tw("text-center text-white px-4 py-3")}>
+            {t("onboarding:" + type + ".description")}
+          </Text>
+          <View style={tw("m-4 items-center")}>
+            <Button onboarding title={t("onboarding:skip")} onPress={onSkip} />
           </View>
         </View>
       </View>
