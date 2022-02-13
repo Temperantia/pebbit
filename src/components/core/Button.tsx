@@ -8,6 +8,7 @@ const Button = ({
   black,
   color,
   save,
+  onboarding,
   loading,
   title,
   onPress,
@@ -15,6 +16,7 @@ const Button = ({
   black?: boolean;
   color?: string;
   save?: boolean;
+  onboarding?: boolean;
   loading?: boolean;
   title: string;
   onPress: () => void;
@@ -29,6 +31,8 @@ const Button = ({
             ? ""
             : save || black
             ? " bg-black-background-2 py-3"
+            : onboarding
+            ? " w-32 bg-red-main py-2"
             : " bg-red-main py-5")
       )}
       onPress={onPress}
@@ -42,6 +46,8 @@ const Button = ({
               ? "text-white"
               : black
               ? "text-red-main"
+              : onboarding
+              ? "text-white"
               : "text-white text-2xl"
           ),
           { fontFamily: "poppins-semibold" },

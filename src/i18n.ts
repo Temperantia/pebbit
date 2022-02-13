@@ -201,6 +201,18 @@ i18n.use(languageDetector() as any).init({
         adPreview: "Ad Preview",
         postAd: "Post Ad",
       },
+      onboarding: {
+        skip: "OK",
+        welcome: {
+          title: "Welcome to Pebbit!",
+          description:
+            "Let's not waste more time and get you an account right away!",
+        },
+        sell: {
+          title: "Congratulations for your account!",
+          description: "Now let's sell your first item thanks to Pebbit!",
+        },
+      },
     },
     fr: {
       common: {
@@ -399,6 +411,14 @@ i18n.use(languageDetector() as any).init({
           "Ajoutez jusqu'à 6 photos. Vous devez avoir au moins une photo.",
         adPreview: "Aperçu de l'Annonce",
         postAd: "Poster l'Annonce",
+      },
+      onboarding: {
+        skip: "OK",
+        welcome: {
+          title: "Bienvenue chez Pebbit !",
+          description:
+            "Ne perdons pas un instant et créons un compte dès maintenant !",
+        },
       },
     },
   },

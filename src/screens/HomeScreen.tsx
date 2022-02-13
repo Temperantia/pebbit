@@ -11,9 +11,10 @@ import CategoryList from "../components/lists/CategoryList";
 import tw from "../tailwind";
 import AdPreview from "../components/cards/AdPreview";
 import useAuth from "../hooks/useAuth";
+import Popup from "../components/core/Popup";
 
 const HomeScreen = () => {
-  const { t } = useTranslation(["home"]);
+  const { t } = useTranslation(["home", "onboarding"]);
   const now = Math.round(Date.now() / 1000);
   const { user } = useAuth();
   const { navigate } = useNavigation();
@@ -41,7 +42,7 @@ const HomeScreen = () => {
   return (
     <ScreenLoading loading={loading} error={error}>
       {ads && (
-        <ScrollView>
+        <ScrollView contentContainerStyle={tw("h-full")}>
           <Text style={tw("text-center underline my-4 text-red-main")}>
             {t("home:recentlyPosted")}
           </Text>
@@ -71,6 +72,26 @@ const HomeScreen = () => {
               { name: "Home & Garden" },
             ]}
           /> */}
+          <View
+            style={{
+              position: "absolute",
+              width: "50%",
+              top: 15,
+              right: 5,
+            }}
+          >
+            <Popup type="welcome" point="top-right" />
+          </View>
+          <View
+            style={{
+              position: "absolute",
+              width: "50%",
+              bottom: 15,
+              right: 50,
+            }}
+          >
+            <Popup type="sell" point="bottom" />
+          </View>
         </ScrollView>
       )}
     </ScreenLoading>
