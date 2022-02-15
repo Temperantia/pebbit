@@ -205,8 +205,7 @@ i18n.use(languageDetector() as any).init({
         skip: "OK",
         welcome: {
           title: "Welcome to Pebbit!",
-          description:
-            "Let's not waste more time and get you an account right away!",
+          description: "Let's get you an account right away!",
         },
         sell: {
           title: "Congratulations for your account!",
@@ -416,8 +415,11 @@ i18n.use(languageDetector() as any).init({
         skip: "OK",
         welcome: {
           title: "Bienvenue chez Pebbit !",
-          description:
-            "Ne perdons pas un instant et créons un compte dès maintenant !",
+          description: "Créons un compte dès maintenant !",
+        },
+        sell: {
+          title: "Félicitations pour ce compte !",
+          description: "A présent, vendons ensemble votre premier article !",
         },
       },
     },

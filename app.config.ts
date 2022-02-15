@@ -3,9 +3,9 @@ import "dotenv/config";
 export default {
   name: "Pebbit",
   slug: "pebbit",
-  version: "0.9.33",
+  version: "0.9.34",
   android: {
-    versionCode: 35,
+    versionCode: 36,
     package: "com.magna_numeris.pebbit",
     googleServicesFile: "./google-services.json",
   },
