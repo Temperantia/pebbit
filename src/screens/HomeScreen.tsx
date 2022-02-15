@@ -72,26 +72,30 @@ const HomeScreen = () => {
               { name: "Home & Garden" },
             ]}
           /> */}
-          <View
-            style={{
-              position: "absolute",
-              width: "50%",
-              top: 15,
-              right: 5,
-            }}
-          >
-            <Popup type="welcome" point="top-right" />
-          </View>
-          <View
-            style={{
-              position: "absolute",
-              width: "50%",
-              bottom: 15,
-              right: 50,
-            }}
-          >
-            <Popup type="sell" point="bottom" />
-          </View>
+          {!user && (
+            <View
+              style={{
+                position: "absolute",
+                width: "50%",
+                top: 15,
+                right: 5,
+              }}
+            >
+              <Popup type="welcome" point="top-right" />
+            </View>
+          )}
+          {user && (
+            <View
+              style={{
+                position: "absolute",
+                width: "50%",
+                bottom: 15,
+                right: 50,
+              }}
+            >
+              <Popup type="sell" point="bottom" />
+            </View>
+          )}
         </ScrollView>
       )}
     </ScreenLoading>

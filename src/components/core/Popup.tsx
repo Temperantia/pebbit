@@ -11,7 +11,6 @@ const Popup = ({ type, point }: { type: string; point: string }) => {
 
   useEffect(() => {
     const fetch = async () => {
-      await AsyncStorage.removeItem(type);
       setSeen(await AsyncStorage.getItem(type));
     };
     fetch();
