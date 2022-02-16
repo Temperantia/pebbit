@@ -2,8 +2,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo r -c",
-    "build:android:test": "expo build:android",
-    "build:ios:test": "expo build:ios",
+    "build": "ts-node scripts/build.ts && echo 'APP_ENV=prod' > .env && prettier --write . && yarn build:android && yarn build:ios",
     "build:android": "expo build:android",
     "build:ios": "expo build:ios",
     "tailwind": "npx create-tailwind-rn"
@@ -53,11 +52,15 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@expo/config-types": "^44.0.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "@types/react-native-dotenv": "^0.2.0",
     "@types/react-native-global-props": "^1.1.0",
     "@types/uuid": "^8.3.1",
+    "node-ts": "^5.1.2",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.5.0",
     "typescript": "~4.0.0"
   },
   "private": true

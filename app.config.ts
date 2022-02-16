@@ -1,11 +1,11 @@
 import "dotenv/config";
-
-export default {
+import { ExpoConfig } from "@expo/config-types";
+const config: ExpoConfig = {
   name: "Pebbit",
   slug: "pebbit",
-  version: "0.9.35",
+  version: "0.9.37",
   android: {
-    versionCode: 37,
+    versionCode: 39,
     package: "com.magna_numeris.pebbit",
     googleServicesFile: "./google-services.json",
   },
@@ -28,9 +28,7 @@ export default {
     resizeMode: "cover",
     backgroundColor: "#ffffff",
   },
-  updates: {
-    fallbackToCacheTimeout: 0,
-  },
+  updates: { fallbackToCacheTimeout: 0 },
   assetBundlePatterns: ["**/*"],
   plugins: [
     [
@@ -61,3 +59,4 @@ export default {
         : '{"apiKey": "AIzaSyDlSg1y7gCtonpo6dHjkZJWNsrDp5_EBUM","authDomain": "pebbit-test.firebaseapp.com","projectId": "pebbit-test","storageBucket": "pebbit-test.appspot.com","messagingSenderId": "156877205943","appId": "1:156877205943:web:5d21f5cf9b5f79bbcef832","measurementId": "G-3JDHFTBFYV"}',
   },
 };
+export default config;
