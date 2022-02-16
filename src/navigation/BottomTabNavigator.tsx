@@ -24,19 +24,20 @@ import ExchangeScreen from "../screens/ExchangeScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import { openedFiltersState } from "../atoms";
 import useAuth from "../hooks/useAuth";
+import { t } from "i18next";
 
 const postAdSvg = `<?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 278.5 333.9" style="enable-background:new 0 0 278.5 333.9;" xml:space="preserve">
-<g>
-	<path d="M192.8,0.1c0,0-100.4-0.6-101.8,0.8v27h73v82h87v175c0,0,0,19.5-19.5,19.5H47c0,0-19.7,2-19.7-19.8V88.9H0v198
-		c0,0-2,47,47,47h185c0,0,46.5,0,46.5-46.5V85.9L192.8,0.1z M192,80.9v-39c1.1,0,40,39,40,39H192z"/>
-	<polygon points="45,109.9 73,109.9 73,69.9 111,69.9 111,44.9 73,44.9 73,7.9 45,7.9 45,44.9 8,44.9 8,71.9 45,71.9 	"/>
-	<rect x="83" y="163.9" width="109" height="26"/>
-	<rect x="83" y="219.9" width="80" height="26"/>
-</g>
-</svg>`;
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 115.3 145.5" style="enable-background:new 0 0 115.3 145.5;" xml:space="preserve">
+<path d="M61.5,107.7c0.7,0,1.3-0.6,1.3-1.3V84.9h21.6c0.7,0,1.3-0.6,1.3-1.3V73.1c0-0.7-0.6-1.3-1.3-1.3H62.8V50.3
+	c0-0.7-0.6-1.3-1.3-1.3H51c-0.7,0-1.3,0.6-1.3,1.3v21.5H28.2c-0.7,0-1.3,0.6-1.3,1.3v10.5c0,0.7,0.6,1.3,1.3,1.3h21.5v21.5
+	c0,0.7,0.6,1.3,1.3,1.3H61.5z"/>
+<path d="M113.6,28.3L84.6,1.4C83.6,0.5,82.3,0,81,0H8.1C3.6,0,0,3.6,0,8.1v129.2c0,4.5,3.6,8.1,8.1,8.1h99.1c4.5,0,8.1-3.6,8.1-8.1
+	V32.1C115.3,30.7,114.7,29.3,113.6,28.3z M83.7,7.9l25.9,24H86.5c-1.5,0-2.8-1.2-2.8-2.8V7.9z M110,137.4c0,1.5-1.2,2.8-2.8,2.8H8.1
+	c-1.5,0-2.8-1.2-2.8-2.8V8.1c0-1.5,1.2-2.8,2.8-2.8h70.3v23.8c0,4.5,3.6,8.1,8.1,8.1H110V137.4z"/>
+</svg>
+`;
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 const BottomTabNavigator = () => {
@@ -52,7 +53,6 @@ const BottomTabNavigator = () => {
     <BottomTab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
-        showLabel: false,
         style: { display: user ? "flex" : "none" },
       }}
     >
@@ -66,6 +66,7 @@ const BottomTabNavigator = () => {
               color={color}
             />
           ),
+          tabBarLabel: t("navigation:home"),
         }}
         listeners={listeners}
       />
@@ -76,6 +77,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="windows/48/000000/list.png" color={color} />
           ),
+          tabBarLabel: t("navigation:browse"),
         }}
       />
       <BottomTab.Screen
@@ -85,6 +87,7 @@ const BottomTabNavigator = () => {
           tabBarIcon: ({ color }) => (
             <SvgXml width={30} height={30} xml={postAdSvg} fill={color} />
           ),
+          tabBarLabel: t("navigation:post"),
         }}
         listeners={listeners}
       />
@@ -98,6 +101,7 @@ const BottomTabNavigator = () => {
               color={color}
             />
           ),
+          tabBarLabel: t("navigation:exchanges"),
         }}
         listeners={listeners}
       />

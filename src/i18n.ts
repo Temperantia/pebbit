@@ -136,6 +136,10 @@ i18n.use(languageDetector() as any).init({
         buying: "Buying",
         messages: "Messages",
         history: "History",
+        browse: "Browse",
+        post: "Post",
+        account: "Account",
+        exchanges: "Exchanges",
       },
       home: {
         seeAll: "See all",
@@ -345,6 +349,10 @@ i18n.use(languageDetector() as any).init({
         buying: "Achats",
         messages: "Messages",
         history: "Historique",
+        browse: "Acheter",
+        post: "Poster",
+        account: "Compte",
+        exchanges: "Échange",
       },
       home: {
         seeAll: "Voir Tout",
