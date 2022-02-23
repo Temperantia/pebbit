@@ -2,7 +2,8 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo r -c",
-    "build": "ts-node scripts/build.ts && echo 'APP_ENV=prod' > .env && prettier --write . && yarn build:android && yarn build:ios",
+    "prettier": "prettier --write .",
+    "build": "ts-node scripts/build.ts && echo 'APP_ENV=prod' > .env",
     "build:android": "expo build:android",
     "build:ios": "expo build:ios",
     "tailwind": "npx create-tailwind-rn"
