@@ -1,22 +1,7 @@
 import { writeFileSync } from "fs";
 import config from "../app.config";
 
-const version = config.version;
-const versionCode = config.android?.versionCode;
-
 const newConfig = config;
-
-const versionSplit = version?.split(".") ?? "1.0.0";
-newConfig.version =
-  versionSplit[0] +
-  "." +
-  versionSplit[1] +
-  "." +
-  (parseInt(versionSplit[2]) + 1);
-newConfig.android = {
-  ...newConfig.android,
-  versionCode: (versionCode ?? 0) + 1,
-};
 
 newConfig.extra = {
   appEnv: process.env.APP_ENV,

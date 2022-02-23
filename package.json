@@ -3,7 +3,8 @@
   "scripts": {
     "start": "expo r -c",
     "prettier": "prettier --write .",
-    "build": "ts-node scripts/build.ts && echo 'APP_ENV=prod' > .env",
+    "dev": "echo 'APP_ENV=dev' > .env && ts-node scripts/dev.ts && prettier --write app.config.ts",
+    "build": "echo 'APP_ENV=prod' > .env && ts-node scripts/build.ts && prettier --write app.config.ts",
     "build:android": "expo build:android",
     "build:ios": "expo build:ios",
     "tailwind": "npx create-tailwind-rn"
