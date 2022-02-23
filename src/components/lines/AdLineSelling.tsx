@@ -15,6 +15,7 @@ import tailwindConfig from "../../../tailwind.config";
 import CryptoCurrency from "../core/CryptoCurrency";
 import { ellipsis } from "../../utils/string";
 import Button from "../core/Button";
+import Modal from "../core/Modal";
 
 const AdLineSelling = ({
   ad: { id, title, pictures, prices, status, buyer },
@@ -24,6 +25,8 @@ const AdLineSelling = ({
   const { t } = useTranslation(["common", "statuses", "shipping"]);
   const { navigate } = useNavigation();
   const [expanded, setExpanded] = useState(false);
+  const [menu, setMenu] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const { control, handleSubmit } = useForm();
   const picture = pictures.find((picture) => !!picture);
@@ -51,6 +54,20 @@ const AdLineSelling = ({
     [handleSubmit, request, id, setLoading]
   );
 
+  const onMenu = useCallback(() => {
+    setMenu(!menu);
+  }, [setMenu, menu]);
+
+  const onShowDelete = useCallback(() => {
+    setMenu(false);
+    setDeleteModal(!deleteModal);
+  }, [setMenu, setDeleteModal, deleteModal]);
+
+  const onValidateDeletion = useCallback(async () => {
+    await request(`remove?id=${id}`);
+    setDeleteModal(false);
+  }, [setDeleteModal, request, id]);
+
   return (
     <View style={tw("m-2")}>
       <TouchableOpacity
@@ -77,13 +94,43 @@ const AdLineSelling = ({
                 {statusTextDescription}
               </Text>
             </View>
-            <CryptoCurrency
-              currency={currency}
-              text={price?.amount?.toString()}
-            />
+            <View style={tw("items-end")}>
+              <CryptoCurrency
+                currency={currency}
+                text={price?.amount?.toString()}
+              />
+              {status === "new" && (
+                <Icon
+                  size={24}
+                  color={tailwindConfig.theme.colors["red-main"]}
+                  name="small/24/000000/menu-2.png"
+                  onPress={onMenu}
+                />
+              )}
+              {menu && (
+                <View style={tw("bg-white w-20 rounded-md")}>
+                  <Text
+                    style={[
+                      tw("w-full px-3 py-2"),
+                      { fontFamily: "poppins-medium" },
+                    ]}
+                    onPress={onShowDelete}
+                  >
+                    {t("common:remove")}
+                  </Text>
+                </View>
+              )}
+            </View>
           </View>
         </View>
       </TouchableOpacity>
+      <Modal
+        text={t("common:removeFromStore")}
+        visible={deleteModal}
+        onDismiss={onShowDelete}
+        onValidate={onValidateDeletion}
+      />
+
       {status === "paid" &&
         (expanded ? (
           <View>
