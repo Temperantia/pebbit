@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { writeFileSync } from "fs";
 import config from "../app.config";
 

@@ -47,10 +47,10 @@ const config: ExpoConfig = {
     ],
   ],
   extra: {
-    appEnv: "prod",
-    functionsEndpoint: "https://us-central1-crypto-2293c.cloudfunctions.net/",
+    appEnv: "dev",
+    functionsEndpoint: "https://us-central1-pebbit-test.cloudfunctions.net/",
     firebaseConfig:
-      '{"apiKey": "AIzaSyCwTK8s0P6tUqEevJ61Ycut12lrtTJ18Og","authDomain": "crypto-2293c.firebaseapp.com","projectId": "crypto-2293c","storageBucket": "crypto-2293c.appspot.com","messagingSenderId": "876715407348","appId": "1:876715407348:web:3aec09ff57df5a54f52ba1","measurementId": "G-FC15NDED83"}',
+      '{"apiKey": "AIzaSyDlSg1y7gCtonpo6dHjkZJWNsrDp5_EBUM","authDomain": "pebbit-test.firebaseapp.com","projectId": "pebbit-test","storageBucket": "pebbit-test.appspot.com","messagingSenderId": "156877205943","appId": "1:156877205943:web:5d21f5cf9b5f79bbcef832","measurementId": "G-3JDHFTBFYV"}',
   },
 };
 export default config;
