@@ -166,7 +166,7 @@ i18n.use(languageDetector() as any).init({
       adBuying: {
         priceSelection1: "Price ",
         priceSelection2: "(select one)",
-        buy: "BUY IT NOW",
+        buyManual: "BUY IT MANUALLY",
         timeExpired: "Time Expired",
         send1: "Please send ",
         sendBold: "exactly ",
@@ -382,7 +382,7 @@ i18n.use(languageDetector() as any).init({
       adBuying: {
         priceSelection1: "Prix ",
         priceSelection2: "(sélectionnez)",
-        buy: "ACHETER MAINTENANT",
+        buyManual: "ACHETER MANUELLEMENT",
         timeExpired: "Temps expiré",
         send1: "Veuillez envoyer ",
         sendBold: "exactement ",

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Clipboard, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
+import Constants from "expo-constants";
 
 import tw from "../../tailwind";
 import Icon from "../core/Icon";
@@ -18,14 +19,14 @@ const AdStatusPay = ({ ad }: { ad: Ad }) => {
   let interval: NodeJS.Timer;
 
   useEffect(() => {
-    if (process.env.APP_ENV === "test") {
+    if (Constants.manifest?.extra?.appEnv === "dev") {
       setTimeout(() => {
         request(
           "paymentComplete?ad=" +
             ad.id +
             "&userId=" +
             user?.id +
-            "&value_coin=999"
+            "&value_coin=9999999"
         );
       }, 15000);
     }

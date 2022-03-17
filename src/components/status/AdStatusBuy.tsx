@@ -7,10 +7,13 @@ import tw from "../../tailwind";
 import Button from "../core/Button";
 import { Ad } from "../../types";
 import CryptoCurrency from "../core/CryptoCurrency";
+import useAuth from "../../hooks/useAuth";
 
 const AdStatusBuy = ({ ad }: { ad: Ad }) => {
+  const { signInCoinbase } = useAuth();
   const { t } = useTranslation(["adBuying"]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingCoinbase, setLoadingCoinbase] = useState<boolean>(false);
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>(null);
 
   useEffect(() => {
@@ -19,7 +22,7 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
     }
 
     setSelectedCurrency(Object.entries(ad.prices)[0][0]);
-  }, [ad, setSelectedCurrency]);
+  }, [ad, setSelectedCurrency, Object]);
 
   const onSelectCurrency = useCallback(
     (currency) => () => {
@@ -38,6 +41,23 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
       alert(error);
     }
   }, [setLoading, ad, request, selectedCurrency, alert]);
+
+  const onBuyCoinbase = useCallback(async () => {
+    try {
+      setLoadingCoinbase(true);
+      if (await signInCoinbase()) {
+        console.log("ok");
+        await request(
+          "buyWithCoinbase?id=" + ad.id + "&currency=" + selectedCurrency
+        );
+      }
+
+      setLoadingCoinbase(false);
+    } catch (error) {
+      setLoadingCoinbase(false);
+      alert(error);
+    }
+  }, [setLoadingCoinbase, ad, request, selectedCurrency, alert]);
 
   return (
     <View style={tw("h-32 justify-evenly")}>
@@ -82,9 +102,18 @@ const AdStatusBuy = ({ ad }: { ad: Ad }) => {
           )}
         </View>
       </View>
+      <View style={tw("my-2")}>
+        <Button
+          coinbase
+          black
+          loading={loadingCoinbase}
+          onPress={onBuyCoinbase}
+        />
+      </View>
+
       <Button
         black
-        title={t("adBuying:buy")}
+        title={t("adBuying:buyManual")}
         loading={loading}
         onPress={onBuy}
       />

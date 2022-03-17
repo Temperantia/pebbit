@@ -11,8 +11,10 @@ import { Platform } from "react-native";
 import * as AppleAuthentication from "expo-apple-authentication";
 import { useTranslation } from "react-i18next";
 import * as GoogleSignIn from "expo-google-sign-in";
+import * as WebBrowser from "expo-web-browser";
+import * as AuthSession from "expo-auth-session";
 
-import { auth, userCollection } from "../firebase";
+import { auth, getToken, userCollection } from "../firebase";
 import { Address, User } from "../types";
 
 type NewUser = {
@@ -38,6 +40,7 @@ type AuthContextData = {
     password: string;
     newPassword: string;
   }): Promise<void>;
+  signInCoinbase(): Promise<boolean>;
 };
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -241,6 +244,24 @@ export const AuthProvider: FC = ({ children }) => {
     }
   };
 
+  const signInCoinbase = async () => {
+    console.log(user?.coinbase);
+    if (!user?.coinbase?.refreshToken) {
+      const redirectUrl = `https://us-central1-pebbit-test.cloudfunctions.net/signInCoinbase`;
+
+      await WebBrowser.openBrowserAsync(
+        `https://www.coinbase.com/oauth/authorize?client_id=51fe81e072c40600a6626caa9bdc29c7056ccf2a6f7e17e46e7d269be8bcf523&redirect_uri=${redirectUrl}&state=${await getToken()}&response_type=code&scope=wallet:accounts:read,wallet:transactions:send&meta[send_limit_amount]=1&account=all`
+      );
+
+      const doc = await userCollection.doc(user?.id).get();
+      const data = doc.data();
+      if (!data?.coinbase?.refreshToken) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -254,6 +275,7 @@ export const AuthProvider: FC = ({ children }) => {
         signOut,
         register,
         saveProfile,
+        signInCoinbase,
       }}
     >
       {children}

@@ -101,6 +101,7 @@ export type User = {
   history?: Ad[];
   rates?: number[];
   rate?: number | null;
+  coinbase?: { refreshToken: string };
 };
 
 export type Address = {

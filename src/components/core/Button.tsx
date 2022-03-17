@@ -1,10 +1,11 @@
 import React from "react";
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native";
 
 import tailwindConfig from "../../../tailwind.config";
 import tw from "../../tailwind";
 
 const Button = ({
+  coinbase,
   black,
   color,
   save,
@@ -13,12 +14,13 @@ const Button = ({
   title,
   onPress,
 }: {
+  coinbase?: boolean;
   black?: boolean;
   color?: string;
   save?: boolean;
   onboarding?: boolean;
   loading?: boolean;
-  title: string;
+  title?: string;
   onPress: () => void;
 }) => {
   return loading ? (
@@ -37,24 +39,31 @@ const Button = ({
       )}
       onPress={onPress}
     >
-      <Text
-        style={[
-          tw(
-            !!color
-              ? color
-              : save
-              ? "text-white"
-              : black
-              ? "text-red-main"
-              : onboarding
-              ? "text-white"
-              : "text-white text-2xl"
-          ),
-          { fontFamily: "poppins-semibold" },
-        ]}
-      >
-        {title}
-      </Text>
+      {coinbase ? (
+        <Image
+          style={tw("w-20 h-6")}
+          source={require("../../assets/images/coinbase.png")}
+        />
+      ) : (
+        <Text
+          style={[
+            tw(
+              !!color
+                ? color
+                : save
+                ? "text-white"
+                : black
+                ? "text-red-main"
+                : onboarding
+                ? "text-white"
+                : "text-white text-2xl"
+            ),
+            { fontFamily: "poppins-semibold" },
+          ]}
+        >
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
